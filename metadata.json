@@ -1,0 +1,6 @@
+{
+  "name": "DARCORP",
+  "description": "Multi-Company Enterprise Platform, Smart Attendance, 3-Tier Chat & Partner Portal with Bilingual Support",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
