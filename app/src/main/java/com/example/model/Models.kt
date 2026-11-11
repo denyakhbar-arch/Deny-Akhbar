@@ -71,6 +71,19 @@ data class AttendanceRecord(
     val status: String = "Terverifikasi"
 )
 
+data class BiometricFaceProfile(
+    val userId: String,
+    val userName: String,
+    val isRegistered: Boolean = false,
+    val registrationDate: String = "",
+    val confidenceScore: Float = 0f,
+    val biometricHash: String = "",
+    val antiSpoofingPassed: Boolean = false,
+    val livenessScore: Float = 0.98f,
+    val featureVectorSize: Int = 512,
+    val registeredBy: String = "SCBD Biometric Terminal Engine v2.4"
+)
+
 enum class ChatTier(val id: Int, val titleId: String, val titleEn: String, val descriptionId: String, val descriptionEn: String) {
     TIER_1_EXECUTIVE(
         1,
@@ -127,6 +140,13 @@ data class VaultDocument(
     val format: String = "JPG"
 )
 
+enum class PartnerComplianceStatus(val code: String, val labelId: String, val labelEn: String) {
+    PENDING("PENDING", "Menunggu Verifikasi", "Pending"),
+    VERIFIED("VERIFIED", "Terverifikasi Legal", "Verified"),
+    ACTIVE("ACTIVE", "Aktif Beroperasi", "Active"),
+    UNDER_REVIEW("UNDER_REVIEW", "Dalam Peninjauan", "Under Legal Review")
+}
+
 data class FormF1Submission(
     val id: String,
     val partnerType: String, // "Pembeli (Buyer)" or "Penyuplai (Supplier)"
@@ -144,7 +164,8 @@ data class FormF1Submission(
     val currency: String = "IDR",
     val submittedAt: String,
     val deliveredToLegal: Boolean = true,
-    val deliveredToDirut: Boolean = true
+    val deliveredToDirut: Boolean = true,
+    val complianceStatus: PartnerComplianceStatus = PartnerComplianceStatus.ACTIVE
 )
 
 data class FormF2Agreement(
@@ -159,5 +180,77 @@ data class FormF2Agreement(
     val signaturePoints: List<Offset>,
     val signedAt: String,
     val agreementDocumentNumber: String,
-    val contractStatus: String = "Resmi Terikat (Legally Binding)"
+    val contractStatus: String = "Resmi Terikat (Legally Binding)",
+    val complianceStatus: PartnerComplianceStatus = PartnerComplianceStatus.VERIFIED
 )
+
+// -------------------------------------------------------------
+// PAID SERVICES & DIRECT PAYMENT MODELS (VIRTUAL ACCOUNT & E-WALLET)
+// -------------------------------------------------------------
+enum class ServiceTargetAudience(val labelId: String, val labelEn: String) {
+    PERORANGAN("Khusus Perorangan (Individual)", "Personal / Individual Clients"),
+    BADAN_USAHA_NON_MITRA("Khusus Badan Usaha Non-Mitra", "Non-Partner Business Entities"),
+    SEMUA("Semua Kategori", "All Categories")
+}
+
+data class PaidServiceItem(
+    val id: String,
+    val titleId: String,
+    val titleEn: String,
+    val category: String,
+    val descriptionId: String,
+    val descriptionEn: String,
+    val price: Long,
+    val formattedPrice: String,
+    val durationId: String,
+    val durationEn: String,
+    val targetAudience: ServiceTargetAudience,
+    val features: List<String>,
+    val isPopular: Boolean = false
+)
+
+enum class PaymentMethodType(val labelId: String, val labelEn: String) {
+    VIRTUAL_ACCOUNT("Virtual Account Bank", "Bank Virtual Account"),
+    E_WALLET("Dompet Digital (E-Wallet)", "E-Wallet"),
+    QRIS("QRIS Dinamis Nasional", "National QRIS")
+}
+
+data class PaymentChannel(
+    val code: String,
+    val name: String,
+    val type: PaymentMethodType,
+    val accountNumber: String,
+    val accountHolder: String,
+    val fee: Long = 0,
+    val formattedFee: String = "Gratis",
+    val instructionsId: List<String>,
+    val instructionsEn: List<String>,
+    val badgeColor: Long = 0xFF1E3A8A
+)
+
+enum class PaymentStatus(val labelId: String, val labelEn: String, val colorHex: Long) {
+    PENDING("Menunggu Pembayaran", "Pending Payment", 0xFFD97706),
+    PAID("Lunas Terbayar", "Paid & Activated", 0xFF16A34A),
+    EXPIRED("Kedaluwarsa", "Expired", 0xFFDC2626)
+}
+
+data class ServicePaymentInvoice(
+    val invoiceId: String,
+    val serviceId: String,
+    val serviceTitle: String,
+    val customerName: String,
+    val customerType: String,
+    val amount: Long,
+    val formattedAmount: String,
+    val channel: PaymentChannel,
+    val status: PaymentStatus = PaymentStatus.PAID,
+    val createdAt: String,
+    val paidAt: String? = null,
+    val referenceNumber: String,
+    val receiptPdfHash: String,
+    val proofAttachmentType: String? = null,
+    val proofAttachmentUri: String? = null,
+    val proofNotes: String? = null,
+    val hasProofUploaded: Boolean = false
+)
+

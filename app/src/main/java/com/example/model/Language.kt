@@ -11,7 +11,7 @@ object Strings {
         return when (key) {
             // Navigation
             "nav_home" -> if (id) "Beranda" else "Home"
-            "nav_about" -> if (id) "Tentang DARCORP" else "About DARCORP"
+            "nav_about" -> if (id) "Tentang DARcorporate" else "About DARcorporate"
             "nav_features" -> if (id) "Fitur Unggulan" else "Key Features"
             "nav_ecosystem" -> if (id) "Ekosistem" else "Ecosystem"
             "nav_download" -> if (id) "Unduh Aplikasi" else "Download App"
@@ -49,7 +49,7 @@ object Strings {
             "feature_partners_desc" -> if (id) "Calon Buyer & Supplier login dengan Google, isi formulir penawaran harga (F1) dan tanda tangan kesepakatan MoA digital (F2)." else "Buyers & Suppliers login with Google, submit price quotations (F1), and sign legally binding digital agreements (F2)."
 
             // Download Modal / Card
-            "download_modal_title" -> if (id) "Unduh Aplikasi DARCORP" else "Download DARCORP Mobile Application"
+            "download_modal_title" -> if (id) "Unduh Aplikasi DARcorporate" else "Download DARcorporate Mobile Application"
             "download_modal_subtitle" -> if (id) "Instal langsung di perangkat smartphone untuk akses cepat, notifikasi real-time, dan absensi otomatis." else "Install directly on your smartphone for fast access, real-time push alerts, and automated attendance."
             "download_android_note" -> if (id) "Paket APK Resmi (v2.4.0) • Ukuran 24.8 MB • Verifikasi SHA-256 Aman" else "Official APK Package (v2.4.0) • Size 24.8 MB • Verified SHA-256 Secure"
             "download_ios_note" -> if (id) "Tersedia di Apple TestFlight & Enterprise Deployment • iOS 15.0+" else "Available on Apple TestFlight & Enterprise Deployment • iOS 15.0+"

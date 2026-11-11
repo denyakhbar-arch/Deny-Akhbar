@@ -22,6 +22,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.widget.Toast
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.window.Dialog
 import com.example.model.AppLanguage
 import com.example.ui.theme.*
@@ -34,6 +41,7 @@ fun DownloadModal(
     onDismiss: () -> Unit,
     onLaunchInstalledApp: () -> Unit
 ) {
+    val context = LocalContext.current
     val isId = language == AppLanguage.INDONESIAN
     val coroutineScope = rememberCoroutineScope()
     var isDownloading by remember { mutableStateOf(false) }
@@ -79,9 +87,9 @@ fun DownloadModal(
                         Spacer(modifier = Modifier.width(12.dp))
                         Column {
                             Text(
-                                text = if (isId) "Unduh Aplikasi DARCORP" else "Download DARCORP Mobile",
+                                text = if (isId) "Unduh Aplikasi DARcorporate" else "Download DARcorporate Mobile",
                                 fontWeight = FontWeight.Bold,
-                                fontSize = 17.sp,
+                                fontSize = 16.sp,
                                 color = DarcorpNavy900
                             )
                             Text(
@@ -218,7 +226,7 @@ fun DownloadModal(
                                 Icon(imageVector = Icons.Default.PlayArrow, contentDescription = null)
                                 Spacer(modifier = Modifier.width(6.dp))
                                 Text(
-                                    text = if (isId) "Pasang & Buka Aplikasi DARCORP" else "Install & Open DARCORP App",
+                                    text = if (isId) "Pasang & Buka Aplikasi DARcorporate" else "Install & Open DARcorporate App",
                                     fontWeight = FontWeight.Bold
                                 )
                             }
@@ -286,6 +294,194 @@ fun DownloadModal(
 
                     Spacer(modifier = Modifier.height(8.dp))
 
+                    Spacer(modifier = Modifier.height(14.dp))
+
+                    // Direct Download Links Card with Copy Buttons
+                    Surface(
+                        color = Color(0xFFF8FAFC),
+                        shape = RoundedCornerShape(12.dp),
+                        border = CardDefaults.outlinedCardBorder()
+                    ) {
+                        Column(modifier = Modifier.padding(12.dp)) {
+                            Text(
+                                text = if (isId) "Tautan Unduhan Langsung (Direct Download Link):"
+                                       else "Direct Download Links:",
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 12.sp,
+                                color = DarcorpNavy900
+                            )
+                            Spacer(modifier = Modifier.height(6.dp))
+
+                            // APK Link Row
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Column(modifier = Modifier.weight(1f)) {
+                                    Text(text = "Android (.APK) Direct Link:", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = DarcorpNavy700)
+                                    Text(
+                                        text = "https://sites.google.com/view/darcorp-official/darcorporate-release.apk",
+                                        fontSize = 9.sp,
+                                        fontFamily = FontFamily.Monospace,
+                                        color = DarcorpSlate600,
+                                        maxLines = 1
+                                    )
+                                }
+                                IconButton(
+                                    onClick = {
+                                        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                                        val clip = ClipData.newPlainText("DARcorporate APK Link", "https://sites.google.com/view/darcorp-official/darcorporate-release.apk")
+                                        clipboard.setPrimaryClip(clip)
+                                        Toast.makeText(context, if (isId) "Tautan APK disalin ke clipboard!" else "APK Link copied to clipboard!", Toast.LENGTH_SHORT).show()
+                                    },
+                                    modifier = Modifier.size(32.dp)
+                                ) {
+                                    Icon(imageVector = Icons.Default.ContentCopy, contentDescription = "Copy APK Link", tint = DarcorpNavy900, modifier = Modifier.size(16.dp))
+                                }
+                            }
+
+                            Spacer(modifier = Modifier.height(6.dp))
+                            HorizontalDivider(color = DarcorpSlate100)
+                            Spacer(modifier = Modifier.height(6.dp))
+
+                            // iOS Link Row
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Column(modifier = Modifier.weight(1f)) {
+                                    Text(text = "Apple iOS (.IPA / Web Clip) Direct Link:", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = DarcorpBrown700)
+                                    Text(
+                                        text = "https://sites.google.com/view/darcorp-official/darcorporate-ios.ipa",
+                                        fontSize = 9.sp,
+                                        fontFamily = FontFamily.Monospace,
+                                        color = DarcorpSlate600,
+                                        maxLines = 1
+                                    )
+                                }
+                                IconButton(
+                                    onClick = {
+                                        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                                        val clip = ClipData.newPlainText("DARcorporate iOS Link", "https://sites.google.com/view/darcorp-official/darcorporate-ios.ipa")
+                                        clipboard.setPrimaryClip(clip)
+                                        Toast.makeText(context, if (isId) "Tautan iOS disalin ke clipboard!" else "iOS Link copied to clipboard!", Toast.LENGTH_SHORT).show()
+                                    },
+                                    modifier = Modifier.size(32.dp)
+                                ) {
+                                    Icon(imageVector = Icons.Default.ContentCopy, contentDescription = "Copy iOS Link", tint = DarcorpBrown700, modifier = Modifier.size(16.dp))
+                                }
+                            }
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(14.dp))
+
+                    // Social Media Sharing Section
+                    Surface(
+                        color = Color(0xFFF0FDF4),
+                        shape = RoundedCornerShape(12.dp),
+                        border = CardDefaults.outlinedCardBorder().copy(brush = androidx.compose.ui.graphics.SolidColor(DarcorpEmerald))
+                    ) {
+                        Column(modifier = Modifier.padding(12.dp)) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Icon(imageVector = Icons.Default.Share, contentDescription = null, tint = DarcorpEmeraldDark, modifier = Modifier.size(18.dp))
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text(
+                                    text = if (isId) "Bagikan File & Link ke Media Sosial:" else "Share Download Link to Social Media:",
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 12.sp,
+                                    color = DarcorpEmeraldDark
+                                )
+                            }
+                            Spacer(modifier = Modifier.height(10.dp))
+
+                            // Share to All Social Media (Native Android Chooser)
+                            Button(
+                                onClick = {
+                                    val shareText = "Unduh Aplikasi Resmi DARcorporate (Layanan Hukum, Presensi Wajah & QR, Payroll, dan Portal Kemitraan):\n\n" +
+                                            "• Download APK Android: https://sites.google.com/view/darcorp-official/darcorporate-release.apk\n" +
+                                            "• Download iOS (.IPA / Web Clip): https://sites.google.com/view/darcorp-official/darcorporate-ios.ipa\n" +
+                                            "• Portal Resmi: https://sites.google.com/view/darcorp-official"
+                                    val sendIntent = Intent(Intent.ACTION_SEND).apply {
+                                        putExtra(Intent.EXTRA_TEXT, shareText)
+                                        type = "text/plain"
+                                    }
+                                    val shareIntent = Intent.createChooser(sendIntent, if (isId) "Bagikan Tautan Unduhan DARcorporate" else "Share DARcorporate Download Link")
+                                    context.startActivity(shareIntent)
+                                },
+                                colors = ButtonDefaults.buttonColors(containerColor = DarcorpEmeraldDark),
+                                shape = RoundedCornerShape(8.dp),
+                                modifier = Modifier.fillMaxWidth().height(42.dp)
+                            ) {
+                                Icon(imageVector = Icons.Default.Share, contentDescription = null, modifier = Modifier.size(16.dp))
+                                Spacer(modifier = Modifier.width(6.dp))
+                                Text(
+                                    text = if (isId) "Bagikan ke Semua Media Sosial (WhatsApp, Telegram, dll)"
+                                           else "Share to All Social Media (WhatsApp, Telegram, etc)",
+                                    fontSize = 11.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
+
+                            Spacer(modifier = Modifier.height(8.dp))
+
+                            // Quick Action Chips: WhatsApp, Telegram, Copy All Links
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.spacedBy(6.dp)
+                            ) {
+                                OutlinedButton(
+                                    onClick = {
+                                        val text = "Halo! Silakan unduh aplikasi DARcorporate resmi di sini: https://sites.google.com/view/darcorp-official/darcorporate-release.apk"
+                                        val url = "https://api.whatsapp.com/send?text=" + Uri.encode(text)
+                                        val i = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                                        context.startActivity(i)
+                                    },
+                                    contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
+                                    modifier = Modifier.weight(1f).height(34.dp)
+                                ) {
+                                    Text("WhatsApp", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = Color(0xFF166534))
+                                }
+
+                                OutlinedButton(
+                                    onClick = {
+                                        val text = "Unduh aplikasi DARcorporate resmi: https://sites.google.com/view/darcorp-official/darcorporate-release.apk"
+                                        val url = "https://t.me/share/url?url=" + Uri.encode("https://sites.google.com/view/darcorp-official") + "&text=" + Uri.encode(text)
+                                        val i = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                                        context.startActivity(i)
+                                    },
+                                    contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
+                                    modifier = Modifier.weight(1f).height(34.dp)
+                                ) {
+                                    Text("Telegram", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = Color(0xFF1E40AF))
+                                }
+
+                                OutlinedButton(
+                                    onClick = {
+                                        val shareText = "Unduh Aplikasi Resmi DARcorporate:\nAndroid APK: https://sites.google.com/view/darcorp-official/darcorporate-release.apk\niOS IPA: https://sites.google.com/view/darcorp-official/darcorporate-ios.ipa"
+                                        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                                        val clip = ClipData.newPlainText("DARcorporate Links", shareText)
+                                        clipboard.setPrimaryClip(clip)
+                                        Toast.makeText(context, if (isId) "Semua tautan unduhan disalin!" else "All download links copied!", Toast.LENGTH_SHORT).show()
+                                    },
+                                    contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
+                                    modifier = Modifier.weight(1f).height(34.dp)
+                                ) {
+                                    Icon(imageVector = Icons.Default.ContentCopy, contentDescription = null, modifier = Modifier.size(12.dp))
+                                    Spacer(modifier = Modifier.width(2.dp))
+                                    Text("Salin Link", fontSize = 10.sp, fontWeight = FontWeight.Bold)
+                                }
+                            }
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(14.dp))
+
                     // Direct Instant Run
                     TextButton(
                         onClick = {
@@ -307,28 +503,24 @@ fun DownloadModal(
 
                 Spacer(modifier = Modifier.height(18.dp))
 
-                // Installation Guide Steps
+                // Installation Guide Steps (Android & iOS)
                 Text(
-                    text = if (isId) "Cara Memasang di HP Android:" else "How to Install on Android:",
+                    text = if (isId) "Petunjuk Pemasangan Android & iOS:" else "Android & iOS Installation Guide:",
                     fontWeight = FontWeight.Bold,
                     fontSize = 13.sp,
                     color = DarcorpNavy900
                 )
                 Spacer(modifier = Modifier.height(8.dp))
 
-                val steps = if (isId) listOf(
-                    "1. Klik tombol 'Unduh Paket Android (.APK)'.",
-                    "2. Setelah selesai, buka berkas dari bar notifikasi ponsel.",
-                    "3. Jika muncul peringatan, pilih 'Setelan' lalu aktifkan 'Izinkan dari sumber ini'.",
-                    "4. Tekan 'Instal', kemudian buka aplikasi DARCORP yang sudah terpasang."
+                val androidSteps = if (isId) listOf(
+                    "Android: Klik 'Unduh Paket Android (.APK)'. Buka berkas, aktifkan 'Izinkan dari sumber ini', lalu tekan Instal.",
+                    "iOS (iPhone/iPad): Unduh berkas .IPA / Profil Konfigurasi atau buka portal resmi di Safari, tekan tombol Share lalu pilih 'Add to Home Screen' (Tambah ke Layar Utama)."
                 ) else listOf(
-                    "1. Tap 'Download Android (.APK) Package'.",
-                    "2. Once done, open the file from your phone's notification bar.",
-                    "3. If prompted, select 'Settings' and enable 'Allow from this source'.",
-                    "4. Tap 'Install', then open the installed DARCORP app on your phone."
+                    "Android: Tap 'Download Android (.APK) Package', allow unknown sources in Settings, and tap Install.",
+                    "iOS (iPhone/iPad): Download .IPA or open in Safari, tap Share, and select 'Add to Home Screen'."
                 )
 
-                steps.forEach { step ->
+                androidSteps.forEach { step ->
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()

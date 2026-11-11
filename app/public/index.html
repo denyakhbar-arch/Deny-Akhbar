@@ -1,0 +1,1479 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DARcorporate - Ekosistem Multi-Badan Usaha & Perorangan Terpadu</title>
+  <meta name="description" content="Aplikasi layanan hukum dengan ekosistem multi-Badan Usaha & Perorangan terpadu. Presensi pintar GPS, wajah & QR code, payroll, tata kelola legalitas, dan portal kemitraan Form F1 & F2.">
+  <link rel="icon" type="image/png" href="./dar_emblem.png">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            darcorp: {
+              bg: '#F0F9FF',
+              light100: '#E0F2FE',
+              light200: '#BAE6FD',
+              light300: '#7DD3FC',
+              brown900: '#451A03',
+              brown800: '#5A2A0C',
+              brown700: '#78350F',
+              brown600: '#92400E',
+              brown500: '#B45309',
+              cream: '#FEF3C7',
+              gold: '#D97706',
+              crimson: '#DC2626',
+              emerald: '#10B981',
+              emeraldDark: '#065F46'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #F0F9FF;
+      color: #1E293B;
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    }
+    .watermark-bg {
+      background-image: url('./dar_emblem.png');
+      background-repeat: no-repeat;
+      background-position: center 22%;
+      background-size: 550px auto;
+      background-attachment: fixed;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .pulse-glow {
+      box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+    }
+  </style>
+</head>
+<body class="min-h-screen relative watermark-bg">
+
+  <!-- Top Google Sites Banner (Cokelat Tua) -->
+  <div class="bg-darcorp-brown900 text-slate-300 text-xs py-2 px-4 border-b border-darcorp-brown800">
+    <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
+      <div class="flex items-center space-x-2">
+        <i class="fa-solid fa-globe text-darcorp-cream"></i>
+        <span>sites.google.com/view/darcorp-official</span>
+        <span class="hidden sm:inline bg-darcorp-brown800 text-darcorp-cream px-2 py-0.5 rounded text-[10px] font-bold">PORTAL RESMI LEGAL</span>
+      </div>
+      <div class="flex items-center space-x-3">
+        <!-- Language Switcher -->
+        <button id="langToggleBtn" onclick="toggleLanguage()" class="bg-darcorp-brown800 hover:bg-darcorp-brown700 text-darcorp-cream px-3 py-1 rounded-full text-xs font-semibold flex items-center space-x-1 border border-darcorp-brown700 transition">
+          <span id="langFlag">🇮🇩</span>
+          <span id="langLabel">ID | EN</span>
+        </button>
+        <!-- Google Sign-In Header Button -->
+        <button onclick="openModal('loginChoiceModal')" class="bg-white hover:bg-slate-100 text-slate-800 px-3 py-1 rounded-full text-xs font-bold flex items-center space-x-1 shadow transition">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/><path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.17 0 9.97 0 12s.45 3.83 1.25 5.42l4.03-3.15z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/></svg>
+          <span data-i18n="login_nav_title">LOG IN</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Navbar (Bar Tombol Cokelat) -->
+  <header class="bg-darcorp-brown800 shadow-lg sticky top-0 z-40 border-b border-darcorp-brown700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
+      <!-- Logo & Emblem -->
+      <a href="#" class="flex items-center space-x-3 group">
+        <div class="w-11 h-11 bg-white rounded-xl shadow p-1 border border-darcorp-brown600 flex items-center justify-center transition group-hover:scale-105">
+          <img src="./dar_emblem.png" alt="DAR Emblem" class="w-full h-full object-contain">
+        </div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="text-white text-xl sm:text-2xl font-black tracking-wider">DARcorporate</span>
+            <span class="bg-darcorp-brown700 text-darcorp-cream text-[10px] font-bold px-2 py-0.5 rounded border border-darcorp-brown600">ENTERPRISE</span>
+          </div>
+          <p class="text-darcorp-light200 text-xs hidden sm:block" data-i18n="nav_tagline">Ekosistem Tata Kelola Multi-Badan Usaha & Perorangan</p>
+        </div>
+      </a>
+
+      <!-- Menu Utama: HOME, COMPANY PROFILE, LOG IN -->
+      <nav class="hidden md:flex items-center space-x-1 sm:space-x-2 bg-darcorp-brown900/60 p-1.5 rounded-xl border border-darcorp-brown700">
+        <!-- 1. HOME -->
+        <a href="#" class="text-darcorp-cream bg-darcorp-brown700 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center space-x-1.5 shadow-sm transition hover:bg-darcorp-brown600">
+          <i class="fa-solid fa-house text-amber-300"></i>
+          <span>HOME</span>
+        </a>
+        <!-- 2. COMPANY PROFILE -->
+        <button onclick="openModal('companyProfileModal')" class="text-slate-200 hover:text-white hover:bg-darcorp-brown700 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center space-x-1.5 transition">
+          <i class="fa-solid fa-building-shield text-darcorp-cream"></i>
+          <span>COMPANY PROFILE</span>
+        </button>
+        <!-- 3. LOG IN -->
+        <button onclick="openModal('loginChoiceModal')" class="text-slate-200 hover:text-white hover:bg-darcorp-brown700 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center space-x-1.5 transition">
+          <i class="fa-solid fa-right-to-bracket text-emerald-400"></i>
+          <span>LOG IN</span>
+        </button>
+      </nav>
+
+      <!-- Action Buttons (Bar Tombol Cokelat) -->
+      <div class="flex items-center space-x-2 sm:space-x-3">
+        <button onclick="openModal('downloadModal')" class="bg-darcorp-brown700 hover:bg-darcorp-brown600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold text-xs sm:text-sm flex items-center space-x-2 border border-darcorp-brown600 shadow transition">
+          <i class="fa-solid fa-download text-darcorp-cream"></i>
+          <span data-i18n="nav_download_apk">Unduh APK</span>
+        </button>
+        <button onclick="openModal('f1Modal')" class="bg-darcorp-brown600 hover:bg-darcorp-brown500 text-white px-3 sm:px-4 py-2 rounded-lg font-bold text-xs sm:text-sm hidden lg:flex items-center space-x-1.5 shadow transition">
+          <i class="fa-solid fa-file-invoice text-darcorp-cream"></i>
+          <span data-i18n="nav_form_f1">Formulir F1</span>
+        </button>
+        <button onclick="openModal('loginChoiceModal')" class="md:hidden bg-darcorp-brown700 hover:bg-darcorp-brown600 text-darcorp-cream px-3 py-2 rounded-lg font-bold text-xs flex items-center space-x-1 border border-darcorp-brown600 shadow">
+          <i class="fa-solid fa-user"></i>
+          <span>LOG IN</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16">
+    <div class="text-center max-w-4xl mx-auto">
+      <!-- Badge -->
+      <div class="inline-flex items-center space-x-2 bg-darcorp-brown700 text-darcorp-cream px-4 py-1.5 rounded-full text-xs font-semibold shadow mb-4 border border-darcorp-brown600">
+        <i class="fa-solid fa-shield-halved text-amber-400"></i>
+        <span data-i18n="hero_badge">D.A.R LEGAL CORPORATE GOVERNANCE • DUA PEMEGANG KENDALI</span>
+      </div>
+
+      <!-- Main Title -->
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-darcorp-brown900 tracking-tight leading-tight mb-3">
+        DARcorporate
+      </h1>
+
+      <!-- Mandated Exact Legal Description Card Beneath App Title -->
+      <div class="mt-2 mb-8 p-5 sm:p-6 rounded-2xl bg-white shadow-xl border-2 border-amber-300/80 text-left max-w-3xl mx-auto relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-24 h-24 bg-amber-500/10 rounded-bl-full pointer-events-none"></div>
+        <div class="flex items-center space-x-2.5 text-darcorp-brown800 font-extrabold text-xs sm:text-sm mb-3">
+          <div class="w-7 h-7 rounded-lg bg-darcorp-brown800 text-darcorp-cream flex items-center justify-center text-xs">
+            <i class="fa-solid fa-scale-balanced"></i>
+          </div>
+          <span>LAYANAN HUKUM, ADVOKASI & PERLINDUNGAN BISNIS TERPADU</span>
+        </div>
+        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed font-normal text-justify">
+          Aplikasi layanan hukum dengan ekosistem multi- Badan Usaha & Perorangan terpadu. Terdapat Fitur Fitur terbaik untuk Perusahaan anda, baik internal (absensi karyawan, laporan kerja harian dll) Maupun eksternal (Pengamanan Perjanjian Kerjasama, Penawaran harga) dengan form digital yang dapat di isi langsung oleh calon klien anda, amankan bisnis anda dari perbuatan penipuan atau dari pihak pihak yang memungkinkan dapat merugikan anda, Layanan kami memberikan payung hukum pada bisnis anda, dan bersedia memberikan tindakan pemulihan kerugian, dengam memberikan tekanan hukum kepada pihak pihak yang merugikan anda, baik secara perdata, maupun pidana. Kami melayani kepastian legalitas usaha anda, daftar merek, paten dan lain sebagainya. Konsultasikan rencana atau masalah anda GRATIS, baik untuk badan usaha maupun perorangan, kami akan memberikan analisa mendalam, dan Pendapat Hukum terbaik, dengan mempertimbangkan resiko hukum melekat, Kepatuhan, dan Produk hukum yang sehat.
+        </p>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex flex-wrap gap-2 text-[11px] font-semibold text-darcorp-brown700">
+          <span class="bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-full"><i class="fa-solid fa-check text-emerald-600 mr-1"></i>Payung Hukum Korporat</span>
+          <span class="bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-full"><i class="fa-solid fa-gavel text-amber-600 mr-1"></i>Pemulihan Kerugian Perdata & Pidana</span>
+          <span class="bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-full"><i class="fa-solid fa-registered text-blue-600 mr-1"></i>Pendaftaran Merek & Paten</span>
+          <span class="bg-emerald-50 border border-emerald-200 text-emerald-800 px-2.5 py-1 rounded-full"><i class="fa-solid fa-comments mr-1"></i>Konsultasi Legalitas GRATIS</span>
+        </div>
+      </div>
+
+      <!-- Prominent Download App Card (Android, iOS, Direct Link & Social Share) -->
+      <div class="glass-card rounded-2xl shadow-xl p-6 sm:p-8 border border-darcorp-light200 max-w-2xl mx-auto mb-12 text-left">
+        <div class="flex items-center justify-center space-x-3 mb-2 text-center">
+          <div class="w-10 h-10 bg-darcorp-brown800 rounded-xl flex items-center justify-center text-white">
+            <i class="fa-solid fa-mobile-screen-button text-darcorp-cream text-lg"></i>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-bold text-darcorp-brown900 text-center" data-i18n="download_card_title">
+            Unduh Aplikasi Mobile DARcorporate
+          </h2>
+        </div>
+        <p class="text-xs sm:text-sm text-slate-600 mb-6 text-center" data-i18n="download_card_sub">
+          Dapat diunduh langsung untuk perangkat Android (.APK) dan iPhone/iPad (.IPA), dilengkapi link unduhan langsung & fitur bagikan ke semua media sosial.
+        </p>
+
+        <!-- Direct Download Action Buttons (Android & iOS) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+          <!-- Android APK Direct Download -->
+          <a href="./darcorporate-release.apk" download="DARcorporate-v2.4.0.apk" onclick="showToast('Memulai pengunduhan file DARcorporate-v2.4.0.apk (27 MB)...')" class="bg-darcorp-brown700 hover:bg-darcorp-brown800 text-white py-3.5 px-4 rounded-xl font-bold text-sm flex items-center justify-between shadow-md hover:shadow-lg transition group">
+            <div class="flex items-center space-x-3">
+              <i class="fa-brands fa-android text-2xl text-emerald-400 group-hover:scale-110 transition"></i>
+              <div>
+                <div class="text-[10px] text-darcorp-cream font-medium">Download File Langsung</div>
+                <div class="text-sm font-extrabold">Android (.APK)</div>
+              </div>
+            </div>
+            <i class="fa-solid fa-download text-darcorp-cream text-sm"></i>
+          </a>
+          
+          <!-- iOS IPA Direct Download -->
+          <a href="./darcorporate-ios.ipa" download="DARcorporate-v2.4.0.ipa" onclick="showToast('Memulai pengunduhan paket DARcorporate-v2.4.0.ipa...')" class="bg-darcorp-brown800 hover:bg-darcorp-brown900 text-white py-3.5 px-4 rounded-xl font-bold text-sm flex items-center justify-between shadow-md hover:shadow-lg transition group">
+            <div class="flex items-center space-x-3">
+              <i class="fa-brands fa-apple text-2xl text-slate-200 group-hover:scale-110 transition"></i>
+              <div>
+                <div class="text-[10px] text-slate-300 font-medium">Download File Langsung</div>
+                <div class="text-sm font-extrabold">Apple iOS (.IPA)</div>
+              </div>
+            </div>
+            <i class="fa-solid fa-download text-darcorp-cream text-sm"></i>
+          </a>
+        </div>
+
+        <!-- iOS Alternative Profile / Web Clip Link -->
+        <div class="mb-5 p-2.5 bg-slate-50 rounded-xl border border-slate-200 flex flex-wrap items-center justify-between gap-2 text-xs">
+          <span class="text-slate-700 flex items-center space-x-1.5">
+            <i class="fa-brands fa-apple text-slate-700"></i>
+            <span>Pengguna iPhone/iPad juga dapat memasang:</span>
+          </span>
+          <div class="flex space-x-2">
+            <a href="./darcorporate.mobileconfig" download="DARcorporate.mobileconfig" class="text-xs font-bold text-darcorp-brown700 hover:underline">Profil iOS (.mobileconfig) &rarr;</a>
+            <span class="text-slate-300">|</span>
+            <button onclick="openModal('downloadModal')" class="text-xs font-bold text-darcorp-brown700 hover:underline">Petunjuk Safari &rarr;</button>
+          </div>
+        </div>
+
+        <!-- Direct Download Links Section with One-Click Copy -->
+        <div class="mb-5 p-4 bg-slate-50/80 rounded-xl border border-slate-200">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold text-slate-800 flex items-center space-x-1.5">
+              <i class="fa-solid fa-link text-darcorp-brown700"></i>
+              <span>Link Download Langsung (Direct Link):</span>
+            </span>
+            <span class="text-[10px] text-slate-500 font-semibold">Dapat dibagikan</span>
+          </div>
+
+          <!-- Link APK -->
+          <div class="mb-2">
+            <div class="text-[10px] font-bold text-slate-600 mb-0.5">Link Download Android (.APK):</div>
+            <div class="flex items-center space-x-2">
+              <input type="text" readonly id="apkDirectLinkInput" value="https://sites.google.com/view/darcorp-official/darcorporate-release.apk" class="bg-white border border-slate-300 text-[11px] font-mono rounded-lg px-2.5 py-1.5 w-full text-slate-700 select-all">
+              <button onclick="copyLinkById('apkDirectLinkInput', 'Link APK')" class="bg-darcorp-brown700 hover:bg-darcorp-brown800 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center space-x-1 shadow transition flex-shrink-0">
+                <i class="fa-regular fa-copy"></i>
+                <span>Salin</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Link iOS -->
+          <div>
+            <div class="text-[10px] font-bold text-slate-600 mb-0.5">Link Download iOS (.IPA):</div>
+            <div class="flex items-center space-x-2">
+              <input type="text" readonly id="iosDirectLinkInput" value="https://sites.google.com/view/darcorp-official/darcorporate-ios.ipa" class="bg-white border border-slate-300 text-[11px] font-mono rounded-lg px-2.5 py-1.5 w-full text-slate-700 select-all">
+              <button onclick="copyLinkById('iosDirectLinkInput', 'Link iOS')" class="bg-darcorp-brown800 hover:bg-darcorp-brown900 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center space-x-1 shadow transition flex-shrink-0">
+                <i class="fa-regular fa-copy"></i>
+                <span>Salin</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Social Media Sharing Section -->
+        <div class="p-4 bg-emerald-50/70 rounded-xl border border-emerald-200">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold text-emerald-950 flex items-center space-x-1.5">
+              <i class="fa-solid fa-share-nodes text-emerald-700"></i>
+              <span>Bagikan File & Link ke Semua Media Sosial:</span>
+            </span>
+            <span class="text-[10px] text-emerald-800 font-bold bg-emerald-200/60 px-2 py-0.5 rounded">Multi-Platform</span>
+          </div>
+          <p class="text-[11px] text-emerald-900/80 mb-3">
+            Sebarkan tautan resmi unduhan aplikasi DARcorporate kepada direksi, tim, dan rekan bisnis:
+          </p>
+
+          <!-- Social Share Buttons Row -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3">
+            <!-- WhatsApp -->
+            <button onclick="shareToSocial('whatsapp')" class="bg-[#25D366] hover:opacity-90 text-white py-2 px-3 rounded-lg font-bold text-xs flex items-center justify-center space-x-1.5 shadow transition">
+              <i class="fa-brands fa-whatsapp text-sm"></i>
+              <span>WhatsApp</span>
+            </button>
+            
+            <!-- Telegram -->
+            <button onclick="shareToSocial('telegram')" class="bg-[#0088cc] hover:opacity-90 text-white py-2 px-3 rounded-lg font-bold text-xs flex items-center justify-center space-x-1.5 shadow transition">
+              <i class="fa-brands fa-telegram text-sm"></i>
+              <span>Telegram</span>
+            </button>
+
+            <!-- Facebook -->
+            <button onclick="shareToSocial('facebook')" class="bg-[#1877F2] hover:opacity-90 text-white py-2 px-3 rounded-lg font-bold text-xs flex items-center justify-center space-x-1.5 shadow transition">
+              <i class="fa-brands fa-facebook text-sm"></i>
+              <span>Facebook</span>
+            </button>
+
+            <!-- Twitter / X -->
+            <button onclick="shareToSocial('twitter')" class="bg-[#000000] hover:opacity-90 text-white py-2 px-3 rounded-lg font-bold text-xs flex items-center justify-center space-x-1.5 shadow transition">
+              <i class="fa-brands fa-x-twitter text-sm"></i>
+              <span>X / Twitter</span>
+            </button>
+          </div>
+
+          <!-- Secondary Row: LinkedIn, Email, Native Share, Salin Semua -->
+          <div class="flex flex-wrap gap-2">
+            <!-- Native Device Share Sheet (Instagram, TikTok, Threads, dll) -->
+            <button onclick="nativeShareApp()" class="flex-1 bg-darcorp-brown800 hover:bg-darcorp-brown900 text-white py-2 px-3 rounded-lg font-bold text-xs flex items-center justify-center space-x-1.5 shadow transition">
+              <i class="fa-solid fa-share text-amber-300"></i>
+              <span>Bagikan ke Semua Media Sosial (Instagram, TikTok, dll)</span>
+            </button>
+            
+            <!-- Copy All Links Button -->
+            <button onclick="copyAllDownloadText()" class="bg-white hover:bg-slate-100 text-slate-800 border border-slate-300 py-2 px-3 rounded-lg font-bold text-xs flex items-center justify-center space-x-1.5 shadow-sm transition">
+              <i class="fa-solid fa-clipboard-check text-emerald-600"></i>
+              <span>Salin Semua Info Unduhan</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Release Info -->
+        <div class="mt-4 pt-3 border-t border-slate-200 flex flex-wrap justify-between items-center text-[11px] text-slate-500 gap-2">
+          <span><i class="fa-solid fa-code-commit text-darcorp-brown600"></i> Versi: <strong>v2.4.0 LTS</strong></span>
+          <span><i class="fa-solid fa-shield text-emerald-600"></i> ISO 27001 & GDPR</span>
+          <span class="text-darcorp-brown700 font-semibold cursor-pointer hover:underline" onclick="openModal('downloadModal')">Panduan Lengkap Instalasi &rarr;</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6 Governance Pillars (Kartu Putih) -->
+    <div class="mt-4">
+      <div class="text-center mb-8">
+        <h2 class="text-2xl font-bold text-darcorp-brown900" data-i18n="pillars_title">Pilar Tata Kelola & Fitur Utama DARcorporate</h2>
+        <p class="text-xs sm:text-sm text-slate-600 mt-1" data-i18n="pillars_subtitle">Sistem yang dirancang sesuai kepatuhan hukum korporat dan operasional multi-perusahaan</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Pillar 1 -->
+        <div class="glass-card p-6 rounded-xl border border-darcorp-light200 shadow-sm hover:shadow-md transition">
+          <div class="w-12 h-12 bg-darcorp-brown800 text-darcorp-cream rounded-xl flex items-center justify-center text-xl mb-4">
+            <i class="fa-solid fa-sitemap"></i>
+          </div>
+          <h3 class="font-bold text-darcorp-brown900 text-base mb-2" data-i18n="p1_title">Multi-Perusahaan (PT, CV, Yayasan)</h3>
+          <p class="text-xs text-slate-600 leading-relaxed" data-i18n="p1_desc">
+            Pendaftaran entitas legal lengkap dengan alamat akta, NIB, NPWP, dan bidang usaha. Maksimal 5 pejabat tinggi dengan kemampuan rangkap jabatan.
+          </p>
+        </div>
+
+        <!-- Pillar 2 -->
+        <div class="glass-card p-6 rounded-xl border border-darcorp-light200 shadow-sm hover:shadow-md transition">
+          <div class="w-12 h-12 bg-darcorp-brown800 text-darcorp-cream rounded-xl flex items-center justify-center text-xl mb-4">
+            <i class="fa-solid fa-gavel"></i>
+          </div>
+          <h3 class="font-bold text-darcorp-brown900 text-base mb-2" data-i18n="p2_title">Dua Pemegang Kendali & Hak Hapus</h3>
+          <p class="text-xs text-slate-600 leading-relaxed" data-i18n="p2_desc">
+            Dikuasai oleh Konsultan Hukum (Super Master dengan hak tunggal menghapus seluruh data & akun perusahaan) dan Direktur Utama (Operational Master pengelola operasional harian).
+          </p>
+        </div>
+
+        <!-- Pillar 3 -->
+        <div class="glass-card p-6 rounded-xl border border-darcorp-light200 shadow-sm hover:shadow-md transition">
+          <div class="w-12 h-12 bg-darcorp-brown800 text-darcorp-cream rounded-xl flex items-center justify-center text-xl mb-4">
+            <i class="fa-solid fa-location-crosshairs"></i>
+          </div>
+          <h3 class="font-bold text-darcorp-brown900 text-base mb-2" data-i18n="p3_title">Presensi Pintar GPS, Wajah & QR</h3>
+          <p class="text-xs text-slate-600 leading-relaxed" data-i18n="p3_desc">
+            Karyawan melakukan presensi masuk/pulang dengan foto selfie verifikasi wajah, penguncian GPS, dan pemindaian cepat QR Code kantor. Laporan kerja harian wajib sebelum pulang.
+          </p>
+        </div>
+
+        <!-- Pillar 4 -->
+        <div class="glass-card p-6 rounded-xl border border-darcorp-light200 shadow-sm hover:shadow-md transition">
+          <div class="w-12 h-12 bg-darcorp-brown800 text-darcorp-cream rounded-xl flex items-center justify-center text-xl mb-4">
+            <i class="fa-solid fa-file-invoice-dollar"></i>
+          </div>
+          <h3 class="font-bold text-darcorp-brown900 text-base mb-2" data-i18n="p4_title">Payroll Tetap & Borongan</h3>
+          <p class="text-xs text-slate-600 leading-relaxed" data-i18n="p4_desc">
+            Manajemen dua status karyawan: Karyawan Tetap dengan skema gaji bulanan, dan Karyawan Tidak Tetap / Borongan dengan pembayaran upah mingguan berbasis kuota target.
+          </p>
+        </div>
+
+        <!-- Pillar 5 -->
+        <div class="glass-card p-6 rounded-xl border border-darcorp-light200 shadow-sm hover:shadow-md transition">
+          <div class="w-12 h-12 bg-darcorp-brown800 text-darcorp-cream rounded-xl flex items-center justify-center text-xl mb-4">
+            <i class="fa-solid fa-comments"></i>
+          </div>
+          <h3 class="font-bold text-darcorp-brown900 text-base mb-2" data-i18n="p5_title">Obrolan Tim 3-Tier Terisolasi</h3>
+          <p class="text-xs text-slate-600 leading-relaxed" data-i18n="p5_desc">
+            Tier 1 khusus Pemegang Kendali & Pejabat Tinggi; Tier 2 bersama Karyawan Tetap; Tier 3 bersama Karyawan Borongan. Karyawan tetap dan borongan tidak dapat saling melihat obrolan.
+          </p>
+        </div>
+
+        <!-- Pillar 6 -->
+        <div class="glass-card p-6 rounded-xl border border-darcorp-light200 shadow-sm hover:shadow-md transition">
+          <div class="w-12 h-12 bg-darcorp-brown800 text-darcorp-cream rounded-xl flex items-center justify-center text-xl mb-4">
+            <i class="fa-solid fa-handshake"></i>
+          </div>
+          <h3 class="font-bold text-darcorp-brown900 text-base mb-2" data-i18n="p6_title">Portal Calon Buyer & Supplier (F1 & F2)</h3>
+          <p class="text-xs text-slate-600 leading-relaxed" data-i18n="p6_desc">
+            Masuk dengan Google. Pengisian Formulir F1 penawaran spesifikasi barang (foto sampel, tonase, harga/kg). Penandatanganan digital Formulir F2 MoA dengan verifikasi KTP resmi.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ SECTION: KEPATUHAN HUKUM, PAYROLL & ONBOARDING MITRA (Bilingual ID & EN) -->
+    <section class="mt-16 bg-white/90 rounded-2xl p-6 sm:p-8 shadow-xl border border-darcorp-light200">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 pb-4 border-b border-slate-100">
+        <div>
+          <div class="inline-flex items-center space-x-1.5 text-xs font-bold text-darcorp-brown700 bg-amber-50 px-3 py-1 rounded-full border border-amber-200 mb-2">
+            <i class="fa-solid fa-circle-question text-amber-600"></i>
+            <span data-i18n="faq_badge">FAQ RESMI DARcorporate</span>
+          </div>
+          <h2 class="text-2xl font-bold text-darcorp-brown900" data-i18n="faq_title">Pertanyaan yang Sering Diajukan</h2>
+          <p class="text-xs sm:text-sm text-slate-600" data-i18n="faq_subtitle">Kepatuhan Hukum, Pemrosesan Payroll, & Onboarding Portal Mitra</p>
+        </div>
+        <button onclick="toggleLanguage()" class="bg-darcorp-brown800 hover:bg-darcorp-brown700 text-darcorp-cream px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-2 border border-darcorp-brown700 transition">
+          <i class="fa-solid fa-language"></i>
+          <span data-i18n="faq_lang_switch">Ganti Bahasa (ID / EN)</span>
+        </button>
+      </div>
+
+      <!-- FAQ Accordion List -->
+      <div class="space-y-3" id="faqAccordion">
+        <!-- FAQ 1: Legal Compliance & Loss Recovery -->
+        <div class="border border-slate-200 rounded-xl overflow-hidden bg-slate-50/50 transition">
+          <button onclick="toggleFaq(1)" class="w-full text-left p-4 flex justify-between items-center font-bold text-sm text-darcorp-brown900 hover:bg-amber-50/50">
+            <span class="flex items-center space-x-2">
+              <i class="fa-solid fa-shield-halved text-amber-600"></i>
+              <span id="faq_q1">Bagaimana DARcorporate memberikan payung hukum dan tindakan pemulihan kerugian pada bisnis kami?</span>
+            </span>
+            <i id="faq_icon1" class="fa-solid fa-chevron-down text-slate-400 text-xs transition-transform duration-200"></i>
+          </button>
+          <div id="faq_ans1" class="p-4 pt-0 text-xs text-slate-600 leading-relaxed border-t border-slate-100 bg-white">
+            DARcorporate memadukan sistem tata kelola digital dengan kuasa hukum korporat aktif. Seluruh transaksi kerja sama, penawaran harga, dan perjanjian kerja dilindungi klausul arbitrase mengikat serta tanda tangan digital bersertifikat. Apabila terjadi wanprestasi atau penipuan dari pihak ketiga, tim advokat kami bersedia mengambil tindakan penegakan hukum cepat berupa somasi resmi, gugatan ganti rugi perdata, hingga pelaporan pidana demi pemulihan aset (asset recovery) perusahaan Anda. Kami juga mendampingi pengurusan legalitas usaha, NIB, pendaftaran merek dagang, dan hak paten secara menyeluruh.
+          </div>
+        </div>
+
+        <!-- FAQ 2: Payroll & Smart Attendance -->
+        <div class="border border-slate-200 rounded-xl overflow-hidden bg-slate-50/50 transition">
+          <button onclick="toggleFaq(2)" class="w-full text-left p-4 flex justify-between items-center font-bold text-sm text-darcorp-brown900 hover:bg-amber-50/50">
+            <span class="flex items-center space-x-2">
+              <i class="fa-solid fa-money-check-dollar text-emerald-600"></i>
+              <span id="faq_q2">Bagaimana sistem presensi pintar (Wajah, GPS, QR) terhubung dengan pemrosesan payroll karyawan?</span>
+            </span>
+            <i id="faq_icon2" class="fa-solid fa-chevron-down text-slate-400 text-xs transition-transform duration-200"></i>
+          </button>
+          <div id="faq_ans2" class="p-4 pt-0 text-xs text-slate-600 leading-relaxed border-t border-slate-100 bg-white">
+            Presensi pintar DARcorporate mengunci koordinat GPS perangkat karyawan (presisi hingga 3 meter), memvalidasi keaslian biometrik wajah dengan algoritma anti-spoofing, serta mendukung pemindaian cepat QR Code kantor pada gerbang/resepsionis. Data jam masuk dan laporan kerja harian wajib terakumulasi secara otomatis ke dalam modul Payroll. Sistem memisahkan kalkulasi gaji bulanan untuk Karyawan Tetap dan upah mingguan berdasarkan kuota/satuan borongan untuk Karyawan Lepas, meminimalkan selisih hitung dan sengketa ketenagakerjaan.
+          </div>
+        </div>
+
+        <!-- FAQ 3: Partner Portal Onboarding (Form F1 & F2) -->
+        <div class="border border-slate-200 rounded-xl overflow-hidden bg-slate-50/50 transition">
+          <button onclick="toggleFaq(3)" class="w-full text-left p-4 flex justify-between items-center font-bold text-sm text-darcorp-brown900 hover:bg-amber-50/50">
+            <span class="flex items-center space-x-2">
+              <i class="fa-solid fa-file-contract text-blue-600"></i>
+              <span id="faq_q3">Bagaimana alur onboarding calon mitra buyer & supplier melalui Formulir F1 dan F2?</span>
+            </span>
+            <i id="faq_icon3" class="fa-solid fa-chevron-down text-slate-400 text-xs transition-transform duration-200"></i>
+          </button>
+          <div id="faq_ans3" class="p-4 pt-0 text-xs text-slate-600 leading-relaxed border-t border-slate-100 bg-white">
+            Calon mitra cukup masuk menggunakan Akun Google terverifikasi di portal web atau aplikasi mobile. Mitra penyuplai atau pembeli mengisi Formulir F1 (spesifikasi komoditas, foto sampel, tonase pengiriman, penawaran harga). Notifikasi langsung diteruskan ke inbox Direktur Utama dan Konsultan Hukum. Setelah penawaran disepakati, mitra menandatangani Formulir F2 (MoA Legalitas) disertai verifikasi KTP resmi dan tanda tangan digital layar sentuh yang sah di mata hukum perdata Indonesia (UU ITE).
+          </div>
+        </div>
+
+        <!-- FAQ 4: Dual-Master & Supreme Legal Delete -->
+        <div class="border border-slate-200 rounded-xl overflow-hidden bg-slate-50/50 transition">
+          <button onclick="toggleFaq(4)" class="w-full text-left p-4 flex justify-between items-center font-bold text-sm text-darcorp-brown900 hover:bg-amber-50/50">
+            <span class="flex items-center space-x-2">
+              <i class="fa-solid fa-key text-red-600"></i>
+              <span id="faq_q4">Apa keistimewaan arsitektur Dua Pemegang Kendali dan Konsol Hak Hapus Konsultan Hukum?</span>
+            </span>
+            <i id="faq_icon4" class="fa-solid fa-chevron-down text-slate-400 text-xs transition-transform duration-200"></i>
+          </button>
+          <div id="faq_ans4" class="p-4 pt-0 text-xs text-slate-600 leading-relaxed border-t border-slate-100 bg-white">
+            Sistem DARcorporate mengadopsi prinsip Dual-Master Governance. Direktur Utama mengendalikan manajemen operasional harian, sedangkan Pejabat Legal / Konsultan Hukum memegang Otoritas Mutlak Tertinggi. Hak untuk menghapus data perusahaan, memberhentikan member secara permanen, atau membatalkan status korporat hanya dapat dieksekusi melalui Konsol Kuasa Hukum untuk mencegah penyalahgunaan internal atau tekanan eksternal sepihak.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ADMIN DASHBOARD: 3-TIER CHAT OVERSIGHT & STATS -->
+    <section class="mt-16 bg-white/95 rounded-2xl p-6 sm:p-8 shadow-xl border border-darcorp-light200">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 pb-4 border-b border-slate-200">
+        <div>
+          <div class="inline-flex items-center space-x-2 text-xs font-bold text-amber-800 bg-amber-100 px-3 py-1 rounded-full border border-amber-300 mb-2">
+            <i class="fa-solid fa-crown text-amber-700"></i>
+            <span>ADMINISTRATOR & LEGAL OVERSIGHT DASHBOARD</span>
+          </div>
+          <h2 class="text-2xl font-bold text-darcorp-brown900">Pusat Kendali Pengawasan Obrolan 3-Tier & Kinerja</h2>
+          <p class="text-xs sm:text-sm text-slate-600">Konsultan Hukum & Direktur Utama mengawasi komunikasi seluruh divisi dan memantau matriks operasional secara terpusat.</p>
+        </div>
+        <div class="flex items-center space-x-2">
+          <span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span class="text-xs font-bold text-emerald-800">Sistem Aktif (Zero Data Leak)</span>
+        </div>
+      </div>
+
+      <!-- 3-Tier Chat Groups Visualization -->
+      <div class="mb-10">
+        <h3 class="text-sm font-bold text-darcorp-brown900 uppercase tracking-wider mb-4 flex items-center space-x-2">
+          <i class="fa-solid fa-layer-group text-darcorp-brown700"></i>
+          <span>Visualisasi 3-Tier Kanal Komunikasi Terisolasi</span>
+        </h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <!-- Tier 1: Executive & Legal -->
+          <div class="border-2 border-amber-300 rounded-xl p-5 bg-gradient-to-b from-amber-50/70 to-white shadow-sm relative">
+            <div class="flex justify-between items-start mb-3">
+              <span class="bg-amber-600 text-white text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider">TIER 1 • EKSEKUTIF</span>
+              <i class="fa-solid fa-lock text-amber-600"></i>
+            </div>
+            <h4 class="font-bold text-slate-900 text-sm mb-1">Dewan Direksi & Legal</h4>
+            <p class="text-[11px] text-slate-600 mb-3">Hanya Konsultan Hukum, Direktur Utama, dan Pejabat Tinggi Utama (Komisaris & Manajer Keuangan).</p>
+            <div class="bg-white p-3 rounded-lg border border-amber-200 text-xs space-y-2">
+              <div class="flex items-center justify-between text-[11px]">
+                <strong class="text-slate-800">Adv. Hendra Kusuma</strong>
+                <span class="text-[10px] text-amber-700 font-semibold">08:15 WIB</span>
+              </div>
+              <p class="text-[11px] text-slate-600 italic">"Rancangan kontrak kemitraan PT Agro Mandiri telah diaudit legalitasnya..."</p>
+            </div>
+            <div class="mt-3 text-[10px] text-amber-900 font-semibold bg-amber-100/70 px-2 py-1 rounded">
+              Akses: Isolasi Penuh (Karyawan tidak dapat mengintip)
+            </div>
+          </div>
+
+          <!-- Tier 2: Permanent Staff -->
+          <div class="border border-blue-200 rounded-xl p-5 bg-gradient-to-b from-blue-50/70 to-white shadow-sm">
+            <div class="flex justify-between items-start mb-3">
+              <span class="bg-blue-600 text-white text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider">TIER 2 • KARYAWAN TETAP</span>
+              <i class="fa-solid fa-users text-blue-600"></i>
+            </div>
+            <h4 class="font-bold text-slate-900 text-sm mb-1">Operasional Kantor Pusat</h4>
+            <p class="text-[11px] text-slate-600 mb-3">Direksi bersama Staf Keuangan, Akuntansi, Administrasi, dan HR Kantor SCBD.</p>
+            <div class="bg-white p-3 rounded-lg border border-blue-200 text-xs space-y-2">
+              <div class="flex items-center justify-between text-[11px]">
+                <strong class="text-slate-800">Dimas Pratama (Finance)</strong>
+                <span class="text-[10px] text-blue-700 font-semibold">08:45 WIB</span>
+              </div>
+              <p class="text-[11px] text-slate-600 italic">"Rekapitulasi payroll dan absensi GPS karyawan tetap siap dicairkan..."</p>
+            </div>
+            <div class="mt-3 text-[10px] text-blue-900 font-semibold bg-blue-100/70 px-2 py-1 rounded">
+              Akses: Dibatasi dari staf borongan gudang
+            </div>
+          </div>
+
+          <!-- Tier 3: Piece-Rate / Field Staff -->
+          <div class="border border-emerald-200 rounded-xl p-5 bg-gradient-to-b from-emerald-50/70 to-white shadow-sm">
+            <div class="flex justify-between items-start mb-3">
+              <span class="bg-emerald-600 text-white text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider">TIER 3 • BORONGAN</span>
+              <i class="fa-solid fa-truck-ramp-box text-emerald-600"></i>
+            </div>
+            <h4 class="font-bold text-slate-900 text-sm mb-1">Gudang & Logistik Lapangan</h4>
+            <p class="text-[11px] text-slate-600 mb-3">Kepala Gudang & Manajer Lapangan bersama Staf Borongan dan Mandor Muatan.</p>
+            <div class="bg-white p-3 rounded-lg border border-emerald-200 text-xs space-y-2">
+              <div class="flex items-center justify-between text-[11px]">
+                <strong class="text-slate-800">Joko Santoso (Mandor)</strong>
+                <span class="text-[10px] text-emerald-700 font-semibold">07:40 WIB</span>
+              </div>
+              <p class="text-[11px] text-slate-600 italic">"Target muat 50 Ton komoditas truk kontainer sedang berjalan lancar..."</p>
+            </div>
+            <div class="mt-3 text-[10px] text-emerald-900 font-semibold bg-emerald-100/70 px-2 py-1 rounded">
+              Akses: Jalur mandiri tanpa visibilitas data korporat
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DashboardStats Component (Presensi, F1 Submissions, User Growth) -->
+      <div>
+        <h3 class="text-sm font-bold text-darcorp-brown900 uppercase tracking-wider mb-4 flex items-center space-x-2">
+          <i class="fa-solid fa-chart-line text-darcorp-brown700"></i>
+          <span>Metrik Real-Time: Presensi, Formulir F1, & Pertumbuhan Pengguna</span>
+        </h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <!-- Stat 1: Daily Attendance Trends -->
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-xs font-bold text-slate-700">Tren Presensi Harian (GPS & Wajah)</span>
+              <span class="text-xs font-black text-emerald-600">98.4% Tepat Waktu</span>
+            </div>
+            <!-- Bar Chart Simulation -->
+            <div class="h-28 flex items-end justify-between gap-2 pt-3 px-2 border-b border-slate-200">
+              <div class="w-full flex flex-col items-center">
+                <div class="w-full bg-darcorp-brown700 rounded-t h-[65%] hover:opacity-80 transition" title="Sen: 42 Karyawan"></div>
+                <span class="text-[9px] text-slate-500 mt-1">Sen</span>
+              </div>
+              <div class="w-full flex flex-col items-center">
+                <div class="w-full bg-darcorp-brown700 rounded-t h-[80%] hover:opacity-80 transition" title="Sel: 48 Karyawan"></div>
+                <span class="text-[9px] text-slate-500 mt-1">Sel</span>
+              </div>
+              <div class="w-full flex flex-col items-center">
+                <div class="w-full bg-darcorp-brown700 rounded-t h-[75%] hover:opacity-80 transition" title="Rab: 46 Karyawan"></div>
+                <span class="text-[9px] text-slate-500 mt-1">Rab</span>
+              </div>
+              <div class="w-full flex flex-col items-center">
+                <div class="w-full bg-darcorp-brown700 rounded-t h-[92%] hover:opacity-80 transition" title="Kam: 52 Karyawan"></div>
+                <span class="text-[9px] text-slate-500 mt-1">Kam</span>
+              </div>
+              <div class="w-full flex flex-col items-center">
+                <div class="w-full bg-emerald-600 rounded-t h-[98%] hover:opacity-80 transition" title="Jum: 56 Karyawan"></div>
+                <span class="text-[9px] text-slate-500 mt-1">Jum</span>
+              </div>
+            </div>
+            <p class="text-[10px] text-slate-500 mt-2">Seluruh presensi tervalidasi biometrik wajah & koordinat SCBD Lot 18.</p>
+          </div>
+
+          <!-- Stat 2: Pending F1 Form Submissions -->
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-xs font-bold text-slate-700">Formulir Penawaran F1 Masuk</span>
+              <span class="text-xs font-black text-amber-600">8 Menunggu Review</span>
+            </div>
+            <div class="h-28 flex flex-col justify-center space-y-2">
+              <div>
+                <div class="flex justify-between text-[11px] mb-1">
+                  <span>Penyuplai Komoditas</span>
+                  <span class="font-bold">65% (13 Berkas)</span>
+                </div>
+                <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
+                  <div class="bg-amber-600 h-full rounded-full w-[65%]"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between text-[11px] mb-1">
+                  <span>Calon Pembeli (Buyer)</span>
+                  <span class="font-bold">35% (7 Berkas)</span>
+                </div>
+                <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
+                  <div class="bg-blue-600 h-full rounded-full w-[35%]"></div>
+                </div>
+              </div>
+            </div>
+            <p class="text-[10px] text-slate-500 mt-2">Diteruskan real-time ke inbox Direktur Utama & Konsultan Hukum.</p>
+          </div>
+
+          <!-- Stat 3: Active User Growth -->
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-xs font-bold text-slate-700">Pertumbuhan Entitas & Pengguna</span>
+              <span class="text-xs font-black text-blue-600">+34% Bulan Ini</span>
+            </div>
+            <div class="h-28 flex items-center justify-around">
+              <div class="text-center">
+                <div class="text-2xl font-black text-darcorp-brown900">18</div>
+                <div class="text-[10px] text-slate-500 font-semibold">Badan Usaha (PT/CV)</div>
+              </div>
+              <div class="h-12 w-[1px] bg-slate-300"></div>
+              <div class="text-center">
+                <div class="text-2xl font-black text-emerald-700">142</div>
+                <div class="text-[10px] text-slate-500 font-semibold">Total Karyawan Aktif</div>
+              </div>
+              <div class="h-12 w-[1px] bg-slate-300"></div>
+              <div class="text-center">
+                <div class="text-2xl font-black text-amber-700">36</div>
+                <div class="text-[10px] text-slate-500 font-semibold">Mitra Buyer & Supplier</div>
+              </div>
+            </div>
+            <p class="text-[10px] text-slate-500 mt-2">Dukungan isolasi hak akses (RBAC) pada setiap badan usaha terdaftar.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PARTNER PORTAL: DYNAMIC COMPLIANCE STATUS INDICATORS -->
+    <section class="mt-16 bg-white/95 rounded-2xl p-6 sm:p-8 shadow-xl border border-darcorp-light200">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 pb-4 border-b border-slate-200">
+        <div>
+          <div class="inline-flex items-center space-x-2 text-xs font-bold text-blue-800 bg-blue-100 px-3 py-1 rounded-full border border-blue-300 mb-2">
+            <i class="fa-solid fa-users-gear text-blue-700"></i>
+            <span>PORTAL KEMITRAAN & STATUS KEPATUHAN DINAMIS</span>
+          </div>
+          <h2 class="text-2xl font-bold text-darcorp-brown900">Daftar Mitra & Indikator Kepatuhan Legal</h2>
+          <p class="text-xs sm:text-sm text-slate-600">Visualisasi status kepatuhan ('Pending', 'Verified', 'Active', 'Under Review') untuk mempercepat evaluasi dan pengambilan keputusan direksi.</p>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <button onclick="filterPartnerList('all')" class="px-3 py-1 bg-darcorp-brown700 text-white rounded-lg text-xs font-bold shadow">Semua</button>
+          <button onclick="filterPartnerList('active')" class="px-3 py-1 bg-emerald-100 text-emerald-800 border border-emerald-300 rounded-lg text-xs font-bold hover:bg-emerald-200">Active</button>
+          <button onclick="filterPartnerList('verified')" class="px-3 py-1 bg-blue-100 text-blue-800 border border-blue-300 rounded-lg text-xs font-bold hover:bg-blue-200">Verified</button>
+          <button onclick="filterPartnerList('pending')" class="px-3 py-1 bg-amber-100 text-amber-800 border border-amber-300 rounded-lg text-xs font-bold hover:bg-amber-200">Pending</button>
+          <button onclick="filterPartnerList('review')" class="px-3 py-1 bg-purple-100 text-purple-800 border border-purple-300 rounded-lg text-xs font-bold hover:bg-purple-200">Under Review</button>
+        </div>
+      </div>
+
+      <!-- Partner List Table with Dynamic Badges -->
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs">
+          <thead>
+            <tr class="bg-slate-100 text-slate-700 font-bold uppercase text-[10px] tracking-wider border-b border-slate-200">
+              <th class="p-3">ID Berkas / Mitra</th>
+              <th class="p-3">Nama Entitas / Perusahaan</th>
+              <th class="p-3">Peran Kemitraan</th>
+              <th class="p-3">Komoditas / Nilai</th>
+              <th class="p-3">Status Kepatuhan</th>
+              <th class="p-3 text-right">Opsi Otoritas Legal</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100" id="partnerTableBody">
+            <!-- Item 1: Active -->
+            <tr class="partner-row hover:bg-slate-50 transition" data-status="active">
+              <td class="p-3 font-semibold text-slate-900">F1-2026-001</td>
+              <td class="p-3">
+                <div class="font-bold text-slate-900">PT Agro Mandiri Sejahtera</div>
+                <div class="text-[11px] text-slate-500">H. Ridwan Kamil</div>
+              </td>
+              <td class="p-3"><span class="bg-slate-200 text-slate-800 px-2 py-0.5 rounded font-semibold text-[10px]">Penyuplai</span></td>
+              <td class="p-3">Biji Kopi Arabika Gayo (15 Ton) • Rp 115.000/kg</td>
+              <td class="p-3">
+                <span class="inline-flex items-center space-x-1 bg-emerald-100 text-emerald-800 border border-emerald-300 px-2.5 py-1 rounded-full font-bold text-[11px]">
+                  <i class="fa-solid fa-circle-check text-emerald-600"></i>
+                  <span>Active & Compliant</span>
+                </span>
+              </td>
+              <td class="p-3 text-right">
+                <button onclick="showToast('Audit Kepatuhan PT Agro Mandiri: Lengkap 100%')" class="text-darcorp-brown700 hover:underline font-bold text-[11px]">Audit Berkas</button>
+              </td>
+            </tr>
+
+            <!-- Item 2: Verified -->
+            <tr class="partner-row hover:bg-slate-50 transition" data-status="verified">
+              <td class="p-3 font-semibold text-slate-900">F1-2026-002</td>
+              <td class="p-3">
+                <div class="font-bold text-slate-900">CV Sumber Rejeki Abadi</div>
+                <div class="text-[11px] text-slate-500">Budi Hartono</div>
+              </td>
+              <td class="p-3"><span class="bg-blue-100 text-blue-800 px-2 py-0.5 rounded font-semibold text-[10px]">Pembeli (Buyer)</span></td>
+              <td class="p-3">Jagung Pipil Ternak (50 Ton) • Rp 5.200/kg</td>
+              <td class="p-3">
+                <span class="inline-flex items-center space-x-1 bg-blue-100 text-blue-800 border border-blue-300 px-2.5 py-1 rounded-full font-bold text-[11px]">
+                  <i class="fa-solid fa-certificate text-blue-600"></i>
+                  <span>Verified by Legal</span>
+                </span>
+              </td>
+              <td class="p-3 text-right">
+                <button onclick="showToast('Verifikasi NIB CV Sumber Rejeki telah disahkan!')" class="text-blue-700 hover:underline font-bold text-[11px]">Setujui Aktif</button>
+              </td>
+            </tr>
+
+            <!-- Item 3: Pending -->
+            <tr class="partner-row hover:bg-slate-50 transition" data-status="pending">
+              <td class="p-3 font-semibold text-slate-900">F1-2026-003</td>
+              <td class="p-3">
+                <div class="font-bold text-slate-900">Peternakan Unggas Mandiri</div>
+                <div class="text-[11px] text-slate-500">Drs. Hendro Wibowo</div>
+              </td>
+              <td class="p-3"><span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-semibold text-[10px]">Penyuplai</span></td>
+              <td class="p-3">Telur Ayam Ras Grade AA (8 Ton) • Rp 28.500/kg</td>
+              <td class="p-3">
+                <span class="inline-flex items-center space-x-1 bg-amber-100 text-amber-800 border border-amber-300 px-2.5 py-1 rounded-full font-bold text-[11px]">
+                  <i class="fa-solid fa-hourglass-half text-amber-600"></i>
+                  <span>Pending Verification</span>
+                </span>
+              </td>
+              <td class="p-3 text-right">
+                <button onclick="showToast('Meminta upload KTP & NIB tambahan...')" class="text-amber-700 hover:underline font-bold text-[11px]">Verifikasi</button>
+              </td>
+            </tr>
+
+            <!-- Item 4: Under Review -->
+            <tr class="partner-row hover:bg-slate-50 transition" data-status="review">
+              <td class="p-3 font-semibold text-slate-900">F1-2026-004</td>
+              <td class="p-3">
+                <div class="font-bold text-slate-900">PT Nusantara Herbal Biotech</div>
+                <div class="text-[11px] text-slate-500">Dr. Michael Chen</div>
+              </td>
+              <td class="p-3"><span class="bg-purple-100 text-purple-800 px-2 py-0.5 rounded font-semibold text-[10px]">Penyuplai</span></td>
+              <td class="p-3">Ekstrak Jahe Merah BPOM (2.5 Ton) • Rp 450.000/kg</td>
+              <td class="p-3">
+                <span class="inline-flex items-center space-x-1 bg-purple-100 text-purple-800 border border-purple-300 px-2.5 py-1 rounded-full font-bold text-[11px]">
+                  <i class="fa-solid fa-scale-balanced text-purple-600"></i>
+                  <span>Under Legal Review</span>
+                </span>
+              </td>
+              <td class="p-3 text-right">
+                <button onclick="showToast('Uji laboratorium COA sedang diperiksa oleh konsultan hukum')" class="text-purple-700 hover:underline font-bold text-[11px]">Tinjau Klausul</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Quick Action Banner -->
+    <div class="mt-12 bg-darcorp-brown800 rounded-2xl p-6 sm:p-8 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 border border-darcorp-brown700">
+      <div class="flex items-center space-x-4">
+        <div class="w-16 h-16 bg-white rounded-2xl p-2 flex items-center justify-center shadow">
+          <img src="./dar_emblem.png" alt="Emblem" class="w-full h-full object-contain">
+        </div>
+        <div>
+          <h3 class="text-xl font-bold text-darcorp-cream" data-i18n="banner_title">Mulai Kemitraan dengan DARcorporate</h3>
+          <p class="text-xs sm:text-sm text-slate-300" data-i18n="banner_sub">Daftar sebagai Calon Pembeli (Buyer) atau Calon Penyuplai (Supplier) sekarang.</p>
+        </div>
+      </div>
+      <div class="flex flex-wrap gap-3">
+        <button onclick="openModal('f1Modal')" class="bg-darcorp-brown600 hover:bg-darcorp-brown500 text-white px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm shadow transition">
+          <i class="fa-solid fa-pen-to-square mr-1.5"></i> <span data-i18n="btn_fill_f1">Isi Formulir F1</span>
+        </button>
+        <button onclick="openModal('loginChoiceModal')" class="bg-white hover:bg-slate-100 text-slate-900 px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm shadow transition">
+          <i class="fa-solid fa-user-lock text-darcorp-brown800 mr-1.5"></i> <span>Masuk ke Portal</span>
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer (Cokelat Tua) with ISO 27001 & GDPR Certification Toggle -->
+  <footer class="bg-darcorp-brown900 text-slate-400 py-12 border-t border-darcorp-brown800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+        <div>
+          <div class="flex items-center justify-center sm:justify-start space-x-2 text-white font-black text-lg mb-3">
+            <span>DARcorporate</span>
+            <span class="text-darcorp-cream text-xs font-semibold">LEGAL ENTERPRISE</span>
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Dikuasai oleh Konsultan Hukum Perusahaan & Direktur Utama. Sistem tata kelola legalitas terpadu, perlindungan perdata & pidana, manajemen SDM, presensi berbasis lokasi & wajah, dan portal kemitraan terverifikasi.
+          </p>
+        </div>
+        <div>
+          <h4 class="text-white font-bold text-sm mb-3">Kontak & Sekretariat Legal</h4>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            SCBD Tower 18, Level 22, Jakarta Selatan, Indonesia<br>
+            Email: <strong>legal@darcorp.id</strong> | <strong>direksi@darcorp.id</strong><br>
+            Tel: +62 21 5500-DAR (827)<br>
+            Konsultasi Legalitas Usaha: <strong>GRATIS (Badan Usaha & Perorangan)</strong>
+          </p>
+        </div>
+        <div>
+          <h4 class="text-white font-bold text-sm mb-3">Kepatuhan Hukum & Standar Keamanan</h4>
+          <p class="text-xs text-slate-400 leading-relaxed mb-3">
+            Hak Hapus Data Mutlak dipegang oleh Adv. Hendra Kusuma, S.H. Seluruh transmisi dokumen dienkripsi dengan standar AES-256 dan arsip otomatis 30 hari.
+          </p>
+          <!-- Footer Certification Toggle Switch -->
+          <div class="bg-darcorp-brown800/80 p-3 rounded-xl border border-darcorp-brown700">
+            <div class="flex items-center justify-between">
+              <span class="text-xs text-slate-300 font-semibold flex items-center space-x-1.5">
+                <i class="fa-solid fa-shield-halved text-emerald-400"></i>
+                <span id="footerCertToggleLabel">Sertifikasi ISO 27001 & GDPR</span>
+              </span>
+              <!-- Toggle Switch -->
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" id="certToggleInput" onchange="toggleCertDetails()" class="sr-only peer">
+                <div class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600"></div>
+              </label>
+            </div>
+            <p class="text-[10px] text-slate-400 mt-1">Nyalakan untuk melihat rincian akreditasi kepatuhan hukum internasional.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Expandable Certification Details Panel -->
+      <div id="complianceDetailsPanel" class="hidden mb-8 p-5 bg-darcorp-brown800 rounded-2xl border border-darcorp-brown700 text-xs text-slate-300 transition-all">
+        <div class="flex items-center space-x-2 text-darcorp-cream font-bold text-sm mb-3 pb-2 border-b border-darcorp-brown700">
+          <i class="fa-solid fa-certificate text-emerald-400"></i>
+          <span id="certPanelTitle">Rincian Akreditasi Kepatuhan Hukum & Keamanan Siber</span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="certDetailsGrid">
+          <div class="bg-darcorp-brown900/60 p-3 rounded-lg border border-darcorp-brown700">
+            <strong class="text-white block mb-1">ISO/IEC 27001:2022</strong>
+            <p class="text-[11px] text-slate-400">Sistem Manajemen Keamanan Informasi (ISMS) tersertifikasi untuk perlindungan data korporat dan retensi dokumen 30 hari.</p>
+          </div>
+          <div class="bg-darcorp-brown900/60 p-3 rounded-lg border border-darcorp-brown700">
+            <strong class="text-white block mb-1">GDPR & UU PDP No. 27/2022</strong>
+            <p class="text-[11px] text-slate-400">Kepatuhan penuh privasi data pribadi. Enkripsi end-to-end AES-256 dan hak mutlak penghapusan data (Right to Erasure).</p>
+          </div>
+          <div class="bg-darcorp-brown900/60 p-3 rounded-lg border border-darcorp-brown700">
+            <strong class="text-white block mb-1">Yurisdiksi Hukum Indonesia</strong>
+            <p class="text-[11px] text-slate-400">Seluruh klausul perjanjian digital mengacu pada UU ITE dan KUHPerdata, berkekuatan hukum penuh di Pengadilan Negeri.</p>
+          </div>
+          <div class="bg-darcorp-brown900/60 p-3 rounded-lg border border-darcorp-brown700">
+            <strong class="text-white block mb-1">Audit Trail & Immutabilitas</strong>
+            <p class="text-[11px] text-slate-400">Log audit kepatuhan anti-tamper untuk setiap pengesahan kontrak F2, presensi GPS, dan transaksi kas perusahaan.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-t border-darcorp-brown800 pt-6 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500">
+        <div>&copy; 2026 DARcorporate Ecosystem. Hak Cipta Dilindungi Undang-Undang.</div>
+        <div class="mt-2 sm:mt-0 flex space-x-4">
+          <a href="#" onclick="openModal('companyProfileModal')" class="hover:text-slate-300">Profil Perusahaan</a>
+          <a href="#" class="hover:text-slate-300">Syarat & Ketentuan</a>
+          <a href="#" class="hover:text-slate-300">Kebijakan Privasi</a>
+          <a href="#" class="hover:text-slate-300">Vercel Deployment</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- FLOATING 'GDPR/ISO COMPLIANT' BADGE -->
+  <div onclick="toggleCertDetails(); window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});" class="fixed bottom-5 right-5 z-40 bg-darcorp-brown900 text-white px-3.5 py-2 rounded-full shadow-2xl border-2 border-emerald-500/80 cursor-pointer hover:scale-105 transition flex items-center space-x-2 pulse-glow">
+    <div class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></div>
+    <i class="fa-solid fa-shield-halved text-emerald-400 text-sm"></i>
+    <span class="text-[11px] font-extrabold tracking-wide">GDPR / ISO 27001 COMPLIANT</span>
+  </div>
+
+  <!-- MODAL 1: Unduh APK / IPA & Bagikan Link Modal -->
+  <div id="downloadModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-100">
+        <div>
+          <h3 class="font-bold text-darcorp-brown900 text-lg">Pemasangan Aplikasi Mobile</h3>
+          <p class="text-xs text-slate-500">Unduh langsung berkas resmi Android & iOS serta bagikan ke media sosial</p>
+        </div>
+        <button onclick="closeModal('downloadModal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <div class="space-y-4 text-xs">
+        <!-- Direct File Download Buttons -->
+        <div class="grid grid-cols-2 gap-3">
+          <a href="./darcorporate-release.apk" download="DARcorporate-v2.4.0.apk" onclick="showToast('Mengunduh berkas Android APK (27 MB)...')" class="bg-emerald-700 hover:bg-emerald-800 text-white py-3 px-3 rounded-xl font-bold flex items-center justify-center space-x-2 shadow text-center">
+            <i class="fa-brands fa-android text-base"></i>
+            <div>
+              <div class="text-[10px] text-emerald-200">Unduh File</div>
+              <div class="text-xs">Android (.APK)</div>
+            </div>
+          </a>
+          <a href="./darcorporate-ios.ipa" download="DARcorporate-v2.4.0.ipa" onclick="showToast('Mengunduh paket iOS .IPA...')" class="bg-darcorp-brown800 hover:bg-darcorp-brown900 text-white py-3 px-3 rounded-xl font-bold flex items-center justify-center space-x-2 shadow text-center">
+            <i class="fa-brands fa-apple text-base"></i>
+            <div>
+              <div class="text-[10px] text-slate-300">Unduh File</div>
+              <div class="text-xs">Apple iOS (.IPA)</div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Direct Links Box -->
+        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+          <div class="font-bold text-slate-800 flex items-center justify-between">
+            <span>Tautan Unduh Langsung:</span>
+            <span class="text-[10px] text-slate-500 font-normal">Klik tombol salin</span>
+          </div>
+          <div>
+            <div class="text-[10px] text-slate-600 font-semibold mb-0.5">Android APK:</div>
+            <div class="flex space-x-1.5">
+              <input type="text" readonly id="modalApkLink" value="https://sites.google.com/view/darcorp-official/darcorporate-release.apk" class="bg-white border rounded px-2 py-1 text-[11px] font-mono text-slate-700 w-full select-all">
+              <button onclick="copyLinkById('modalApkLink', 'Link APK')" class="bg-darcorp-brown700 text-white px-2.5 py-1 rounded text-xs font-bold">Salin</button>
+            </div>
+          </div>
+          <div>
+            <div class="text-[10px] text-slate-600 font-semibold mb-0.5">Apple iOS IPA:</div>
+            <div class="flex space-x-1.5">
+              <input type="text" readonly id="modalIosLink" value="https://sites.google.com/view/darcorp-official/darcorporate-ios.ipa" class="bg-white border rounded px-2 py-1 text-[11px] font-mono text-slate-700 w-full select-all">
+              <button onclick="copyLinkById('modalIosLink', 'Link iOS')" class="bg-darcorp-brown800 text-white px-2.5 py-1 rounded text-xs font-bold">Salin</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Social Share Integration in Modal -->
+        <div class="p-3 bg-emerald-50 rounded-xl border border-emerald-200">
+          <div class="font-bold text-emerald-950 mb-2 flex items-center space-x-1.5">
+            <i class="fa-solid fa-share-nodes text-emerald-700"></i>
+            <span>Bagikan ke Media Sosial:</span>
+          </div>
+          <div class="grid grid-cols-4 gap-2 mb-2">
+            <button onclick="shareToSocial('whatsapp')" class="bg-[#25D366] text-white py-1.5 rounded-lg font-bold text-[11px] flex items-center justify-center space-x-1">
+              <i class="fa-brands fa-whatsapp"></i> <span>WA</span>
+            </button>
+            <button onclick="shareToSocial('telegram')" class="bg-[#0088cc] text-white py-1.5 rounded-lg font-bold text-[11px] flex items-center justify-center space-x-1">
+              <i class="fa-brands fa-telegram"></i> <span>TG</span>
+            </button>
+            <button onclick="shareToSocial('facebook')" class="bg-[#1877F2] text-white py-1.5 rounded-lg font-bold text-[11px] flex items-center justify-center space-x-1">
+              <i class="fa-brands fa-facebook"></i> <span>FB</span>
+            </button>
+            <button onclick="shareToSocial('twitter')" class="bg-black text-white py-1.5 rounded-lg font-bold text-[11px] flex items-center justify-center space-x-1">
+              <i class="fa-brands fa-x-twitter"></i> <span>X</span>
+            </button>
+          </div>
+          <button onclick="nativeShareApp()" class="w-full bg-darcorp-brown800 hover:bg-darcorp-brown900 text-white py-2 rounded-lg font-bold text-xs flex items-center justify-center space-x-1.5">
+            <i class="fa-solid fa-share text-amber-300"></i>
+            <span>Bagikan ke Instagram / TikTok / Semua Aplikasi</span>
+          </button>
+        </div>
+
+        <!-- Android & iOS Install Guide -->
+        <div class="p-3 bg-amber-50 rounded-xl border border-amber-200 text-amber-900 leading-relaxed text-[11px]">
+          <strong><i class="fa-solid fa-circle-info mr-1"></i>Panduan Pemasangan:</strong>
+          <ul class="list-disc list-inside mt-1 space-y-0.5 text-slate-700">
+            <li><strong>Android:</strong> Buka berkas .apk &rarr; aktifkan 'Izinkan dari sumber ini' &rarr; tekan 'Instal'.</li>
+            <li><strong>iOS (iPhone/iPad):</strong> Unduh berkas .ipa atau buka portal di Safari, tekan Share &rarr; 'Add to Home Screen'.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: COMPANY PROFILE (Advokasi, Layanan Hukum, Pemulihan Kerugian) -->
+  <div id="companyProfileModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl border border-slate-200 max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-100">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 bg-darcorp-brown800 rounded-xl flex items-center justify-center text-white">
+            <i class="fa-solid fa-building-shield text-darcorp-cream"></i>
+          </div>
+          <div>
+            <h3 class="font-black text-darcorp-brown900 text-lg">PROFIL PERUSAHAAN (COMPANY PROFILE)</h3>
+            <p class="text-xs text-slate-500">DARcorporate Legal & Multi-Enterprise Governance</p>
+          </div>
+        </div>
+        <button onclick="closeModal('companyProfileModal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <div class="space-y-4 text-xs text-slate-700 leading-relaxed">
+        <div class="p-4 bg-amber-50 rounded-xl border border-amber-200">
+          <strong class="text-amber-900 font-bold block mb-1">Visi & Payung Hukum Korporat:</strong>
+          <p>DARcorporate hadir memberikan kepastian dan keamanan hukum menyeluruh bagi pelaku usaha mikro, menengah, hingga konglomerasi bisnis multinasional, serta perorangan.</p>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-sm text-darcorp-brown900 mb-2 flex items-center space-x-2">
+            <i class="fa-solid fa-gavel text-amber-600"></i>
+            <span>Layanan Advokasi & Tindakan Pemulihan Kerugian (Asset Recovery)</span>
+          </h4>
+          <p>Kami memberikan payung hukum pada bisnis anda dan bersedia memberikan tindakan pemulihan kerugian dengan memberikan tekanan hukum kepada pihak-pihak yang merugikan anda, baik secara perdata maupun pidana:</p>
+          <ul class="list-disc list-inside mt-2 space-y-1 text-slate-600">
+            <li><strong>Penegakan Perdata:</strong> Somasi resmi, gugatan wanprestasi, sita jaminan, dan eksekusi putusan pengadilan.</li>
+            <li><strong>Penindakan Pidana:</strong> Laporan kepolisian atas tindak pidana penipuan, penggelapan dalam jabatan, dan kejahatan korporasi.</li>
+            <li><strong>Pengamanan Kontrak Kerjasama:</strong> Uji tuntas (due diligence) calon klien dan formulir digital F1 & F2 mengikat.</li>
+            <li><strong>Kekayaan Intelektual:</strong> Pendaftaran merek dagang, hak paten, hak cipta, dan rahasia dagang.</li>
+            <li><strong>Konsultasi Hukum GRATIS:</strong> Analisis mendalam resiko hukum melekat, kepatuhan, dan produk hukum yang sehat.</li>
+          </ul>
+        </div>
+
+        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex justify-between items-center">
+          <div>
+            <div class="font-bold text-slate-800">Sekretariat Advokat: SCBD Tower Lot 18, Level 22, Jakarta</div>
+            <div class="text-[11px] text-slate-500">Email: legal@darcorp.id • Hotline: +62 21 5500-DAR</div>
+          </div>
+          <button onclick="closeModal('companyProfileModal'); openModal('loginChoiceModal');" class="bg-darcorp-brown700 text-white px-4 py-2 rounded-lg font-bold">
+            Masuk Portal
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 3: LOGIN CHOICE (BADAN USAHA / KARYAWAN vs PERORANGAN) -->
+  <div id="loginChoiceModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200">
+      <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-100">
+        <div>
+          <h3 class="font-black text-darcorp-brown900 text-lg">PILIHAN MASUK SISTEM</h3>
+          <p class="text-xs text-slate-500">Silakan pilih kategori akun Anda:</p>
+        </div>
+        <button onclick="closeModal('loginChoiceModal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <div class="space-y-4">
+        <!-- Pilihan 1: LOG IN SEBAGAI BADAN USAHA / KARYAWAN -->
+        <button onclick="handleLoginSelect('corporate')" class="w-full text-left p-4 rounded-xl border-2 border-amber-300 bg-amber-50/50 hover:bg-amber-100/60 hover:border-amber-400 transition flex items-start space-x-3.5 group shadow-sm">
+          <div class="w-10 h-10 rounded-xl bg-darcorp-brown800 text-darcorp-cream flex items-center justify-center flex-shrink-0 text-lg group-hover:scale-105 transition">
+            <i class="fa-solid fa-building"></i>
+          </div>
+          <div>
+            <div class="font-extrabold text-darcorp-brown900 text-sm">LOG IN SEBAGAI BADAN USAHA / KARYAWAN</div>
+            <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+              Untuk Direktur Utama, Pejabat Legal, Karyawan Tetap, Staf Borongan, dan Mitra PT / CV / Yayasan.
+            </p>
+            <span class="inline-block mt-2 text-[10px] font-bold text-amber-800 bg-amber-200/60 px-2 py-0.5 rounded">
+              Akses: Presensi, Payroll, Vault & Chat 3-Tier &rarr;
+            </span>
+          </div>
+        </button>
+
+        <!-- Pilihan 2: LOG IN SEBAGAI PERORANGAN (2 PILIHAN: GOOGLE & FACEBOOK) -->
+        <div class="p-4 rounded-xl border-2 border-blue-200 bg-blue-50/50 shadow-sm text-left">
+          <div class="flex items-center space-x-3 mb-2">
+            <div class="w-9 h-9 rounded-xl bg-blue-700 text-white flex items-center justify-center flex-shrink-0 text-base">
+              <i class="fa-solid fa-user-shield"></i>
+            </div>
+            <div>
+              <div class="font-extrabold text-blue-950 text-sm">LOG IN SEBAGAI PERORANGAN</div>
+              <p class="text-[11px] text-slate-600">Pilih penyedia autentikasi akun Anda:</p>
+            </div>
+          </div>
+
+          <div class="space-y-2 mt-3">
+            <!-- 1. Log In dengan Akun Google -->
+            <button onclick="handleIndividualLogin('google')" class="w-full bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 py-2.5 px-3 rounded-xl font-bold text-xs flex items-center justify-center space-x-2 shadow-sm transition">
+              <svg class="w-4 h-4" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/><path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.17 0 9.97 0 12s.45 3.83 1.25 5.42l4.03-3.15z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/></svg>
+              <span>1. Log In dengan Akun Google</span>
+            </button>
+
+            <!-- 2. Log In dengan Facebook -->
+            <button onclick="handleIndividualLogin('facebook')" class="w-full bg-[#1877F2] hover:bg-blue-700 text-white py-2.5 px-3 rounded-xl font-bold text-xs flex items-center justify-center space-x-2 shadow transition">
+              <i class="fa-brands fa-facebook-f text-sm"></i>
+              <span>2. Log In dengan Facebook</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-5 pt-3 border-t border-slate-100 text-center">
+        <p class="text-[11px] text-slate-500">Dilindungi Autentikasi Google Terverifikasi & Token Keamanan ISO 27001</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 4: Formulir F1 Modal -->
+  <div id="f1Modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-100">
+        <div>
+          <h3 class="font-bold text-darcorp-brown900 text-lg">Formulir F1: Pengajuan Penawaran Mitra</h3>
+          <p class="text-xs text-slate-500">Diteruskan ke inbox Direktur Utama & Konsultan Hukum</p>
+        </div>
+        <button onclick="closeModal('f1Modal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <form onsubmit="handleSubmitF1(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="block font-semibold mb-1">Status Kemitraan:</label>
+          <select class="w-full border rounded-lg p-2.5">
+            <option>Calon Penyuplai (Supplier Komoditas / Barang)</option>
+            <option>Calon Pembeli (Buyer Grosir / Retail)</option>
+          </select>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold mb-1">Nama Perusahaan / Pribadi:</label>
+            <input type="text" required placeholder="PT / CV / Bapak..." class="w-full border rounded-lg p-2.5">
+          </div>
+          <div>
+            <label class="block font-semibold mb-1">Nomor WhatsApp / Telp:</label>
+            <input type="text" required placeholder="+62 812..." class="w-full border rounded-lg p-2.5">
+          </div>
+        </div>
+        <div>
+          <label class="block font-semibold mb-1">Nama Barang / Deskripsi Komoditas:</label>
+          <input type="text" required placeholder="Contoh: Biji Kopi Gayo, Jagung, Besi Tua..." class="w-full border rounded-lg p-2.5">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold mb-1">Estimasi Tonase / Berat:</label>
+            <input type="text" placeholder="Contoh: 25 Ton" class="w-full border rounded-lg p-2.5">
+          </div>
+          <div>
+            <label class="block font-semibold mb-1">Penawaran Harga (Rp):</label>
+            <input type="number" placeholder="Rp per kg" class="w-full border rounded-lg p-2.5">
+          </div>
+        </div>
+        <button type="submit" class="w-full bg-darcorp-brown700 hover:bg-darcorp-brown800 text-white py-3 rounded-xl font-bold text-sm shadow transition mt-2">
+          Kirim Formulir F1 ke Otoritas Legal
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toastNotification" class="fixed bottom-6 right-6 bg-darcorp-brown900 text-white px-5 py-3 rounded-xl shadow-2xl text-xs font-semibold hidden z-50 flex items-center space-x-2 border border-darcorp-brown700">
+    <i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
+    <span id="toastMessage">Operasi berhasil!</span>
+  </div>
+
+  <script>
+    // Bilingual Text Data
+    const i18nData = {
+      id: {
+        login_nav_title: 'LOG IN',
+        nav_tagline: 'Ekosistem Tata Kelola Multi-Badan Usaha & Perorangan',
+        nav_download_apk: 'Unduh APK',
+        nav_form_f1: 'Formulir F1',
+        hero_badge: 'D.A.R LEGAL CORPORATE GOVERNANCE • DUA PEMEGANG KENDALI',
+        download_card_title: 'Pasang Aplikasi Mobile DARcorporate',
+        download_card_sub: 'Dapat diunduh dan dipasang langsung pada perangkat Android (.APK) dan iPhone/iPad (.IPA).',
+        pillars_title: 'Pilar Tata Kelola & Fitur Utama DARcorporate',
+        pillars_subtitle: 'Sistem yang dirancang sesuai kepatuhan hukum korporat dan operasional multi-perusahaan',
+        p1_title: 'Multi-Perusahaan (PT, CV, Yayasan)',
+        p1_desc: 'Pendaftaran entitas legal lengkap dengan alamat akta, NIB, NPWP, dan bidang usaha. Maksimal 5 pejabat tinggi dengan kemampuan rangkap jabatan.',
+        p2_title: 'Dua Pemegang Kendali & Hak Hapus',
+        p2_desc: 'Dikuasai oleh Konsultan Hukum (Super Master dengan hak tunggal menghapus seluruh data & akun perusahaan) dan Direktur Utama (Operational Master pengelola operasional harian).',
+        p3_title: 'Presensi Pintar GPS, Wajah & QR',
+        p3_desc: 'Karyawan melakukan presensi masuk/pulang dengan foto selfie verifikasi wajah, penguncian GPS, dan pemindaian cepat QR Code kantor. Laporan kerja harian wajib sebelum pulang.',
+        p4_title: 'Payroll Tetap & Borongan',
+        p4_desc: 'Manajemen dua status karyawan: Karyawan Tetap dengan skema gaji bulanan, dan Karyawan Tidak Tetap / Borongan dengan pembayaran upah mingguan berbasis kuota target.',
+        p5_title: 'Obrolan Tim 3-Tier Terisolasi',
+        p5_desc: 'Tier 1 khusus Pemegang Kendali & Pejabat Tinggi; Tier 2 bersama Karyawan Tetap; Tier 3 bersama Karyawan Borongan. Karyawan tetap dan borongan tidak dapat saling melihat obrolan.',
+        p6_title: 'Portal Calon Buyer & Supplier (F1 & F2)',
+        p6_desc: 'Masuk dengan Google. Pengisian Formulir F1 penawaran spesifikasi barang (foto sampel, tonase, harga/kg). Penandatanganan digital Formulir F2 MoA dengan verifikasi KTP resmi.',
+        faq_badge: 'FAQ RESMI DARcorporate',
+        faq_title: 'Pertanyaan yang Sering Diajukan',
+        faq_subtitle: 'Kepatuhan Hukum, Pemrosesan Payroll, & Onboarding Portal Mitra',
+        faq_lang_switch: 'Ganti Bahasa (ID / EN)',
+        banner_title: 'Mulai Kemitraan dengan DARcorporate',
+        banner_sub: 'Daftar sebagai Calon Pembeli (Buyer) atau Calon Penyuplai (Supplier) sekarang.',
+        btn_fill_f1: 'Isi Formulir F1'
+      },
+      en: {
+        login_nav_title: 'LOG IN',
+        nav_tagline: 'Multi-Enterprise & Individual Legal Governance Ecosystem',
+        nav_download_apk: 'Download APK',
+        nav_form_f1: 'Form F1',
+        hero_badge: 'D.A.R LEGAL CORPORATE GOVERNANCE • DUAL CONTROLLER',
+        download_card_title: 'Install DARcorporate Mobile App',
+        download_card_sub: 'Download and install directly on Android devices (.APK) and iPhone/iPad (.IPA).',
+        pillars_title: 'DARcorporate Corporate Governance Pillars',
+        pillars_subtitle: 'Engineered in accordance with strict corporate compliance and multi-enterprise operations',
+        p1_title: 'Multi-Company (PT, CV, Foundation)',
+        p1_desc: 'Complete legal entity registration with deed address, tax ID, and business sector. Up to 5 high officials with multi-position capability.',
+        p2_title: 'Dual Controller & Legal Delete Authority',
+        p2_desc: 'Governed by Corporate Legal Counsel (Super Master with exclusive hard-delete authority over companies and data) and CEO (Operational Master).',
+        p3_title: 'Smart Attendance GPS, Face & QR',
+        p3_desc: 'Staff clock-in/out mandates real-time face photo capture, device GPS lock, and rapid office QR scanning. Mandatory daily work report before clocking out.',
+        p4_title: 'Permanent & Piece-Rate Payroll',
+        p4_desc: 'Manages two employee classes: Permanent staff with monthly compensation, and Piece-rate staff with weekly wage calculations.',
+        p5_title: 'Isolated 3-Tier Team Chat',
+        p5_desc: 'Tier 1 for Controllers & Officers; Tier 2 with Permanent Staff; Tier 3 with Piece-rate Staff. Strict privacy between worker groups.',
+        p6_title: 'Prospective Partner Portal (F1 & F2)',
+        p6_desc: 'Google Sign-In. Submission of Form F1 price quotations with sample photos and tonnage. Digital signature execution for Form F2 MoA.',
+        faq_badge: 'DARcorporate OFFICIAL FAQ',
+        faq_title: 'Frequently Asked Questions',
+        faq_subtitle: 'Legal Compliance, Payroll Processing, & Partner Onboarding',
+        faq_lang_switch: 'Switch Language (EN / ID)',
+        banner_title: 'Start a Strategic Partnership with DARcorporate',
+        banner_sub: 'Register as a Prospective Buyer or Supplier partner now.',
+        btn_fill_f1: 'Submit Form F1'
+      }
+    };
+
+    const faqTranslations = {
+      id: [
+        {
+          q: "Bagaimana DARcorporate memberikan payung hukum dan tindakan pemulihan kerugian pada bisnis kami?",
+          a: "DARcorporate memadukan sistem tata kelola digital dengan kuasa hukum korporat aktif. Seluruh transaksi kerja sama, penawaran harga, dan perjanjian kerja dilindungi klausul arbitrase mengikat serta tanda tangan digital bersertifikat. Apabila terjadi wanprestasi atau penipuan dari pihak ketiga, tim advokat kami bersedia mengambil tindakan penegakan hukum cepat berupa somasi resmi, gugatan ganti rugi perdata, hingga pelaporan pidana demi pemulihan aset (asset recovery) perusahaan Anda. Kami juga mendampingi pengurusan legalitas usaha, NIB, pendaftaran merek dagang, dan hak paten secara menyeluruh."
+        },
+        {
+          q: "Bagaimana sistem presensi pintar (Wajah, GPS, QR) terhubung dengan pemrosesan payroll karyawan?",
+          a: "Presensi pintar DARcorporate mengunci koordinat GPS perangkat karyawan (presisi hingga 3 meter), memvalidasi keaslian biometrik wajah dengan algoritma anti-spoofing, serta mendukung pemindaian cepat QR Code kantor pada gerbang/resepsionis. Data jam masuk dan laporan kerja harian wajib terakumulasi secara otomatis ke dalam modul Payroll. Sistem memisahkan kalkulasi gaji bulanan untuk Karyawan Tetap dan upah mingguan berdasarkan kuota/satuan borongan untuk Karyawan Lepas, meminimalkan selisih hitung dan sengketa ketenagakerjaan."
+        },
+        {
+          q: "Bagaimana alur onboarding calon mitra buyer & supplier melalui Formulir F1 dan F2?",
+          a: "Calon mitra cukup masuk menggunakan Akun Google terverifikasi di portal web atau aplikasi mobile. Mitra penyuplai atau pembeli mengisi Formulir F1 (spesifikasi komoditas, foto sampel, tonase pengiriman, penawaran harga). Notifikasi langsung diteruskan ke inbox Direktur Utama dan Konsultan Hukum. Setelah penawaran disepakati, mitra menandatangani Formulir F2 (MoA Legalitas) disertai verifikasi KTP resmi dan tanda tangan digital layar sentuh yang sah di mata hukum perdata Indonesia (UU ITE)."
+        },
+        {
+          q: "Apa keistimewaan arsitektur Dua Pemegang Kendali dan Konsol Hak Hapus Konsultan Hukum?",
+          a: "Sistem DARcorporate mengadopsi prinsip Dual-Master Governance. Direktur Utama mengendalikan manajemen operasional harian, sedangkan Pejabat Legal / Konsultan Hukum memegang Otoritas Mutlak Tertinggi. Hak untuk menghapus data perusahaan, memberhentikan member secara permanen, atau membatalkan status korporat hanya dapat dieksekusi melalui Konsol Kuasa Hukum untuk mencegah penyalahgunaan internal atau tekanan eksternal sepihak."
+        }
+      ],
+      en: [
+        {
+          q: "How does DARcorporate provide legal protection and loss recovery actions for our business?",
+          a: "DARcorporate fuses digital enterprise governance with active corporate legal advocacy. All business agreements, price quotations, and employment contracts are fortified with binding arbitration clauses and certified digital signatures. In events of third-party breach or fraud, our legal defense team executes swift enforcement including formal legal notices, civil damage litigation, and criminal prosecution for asset recovery. We also handle business entity licensing, NIB, trademark registration, and patent filings."
+        },
+        {
+          q: "How does the smart attendance system (Face, GPS, QR) integrate with employee payroll?",
+          a: "DARcorporate's smart attendance locks employee device GPS coordinates (within 3 meters precision), validates biometric facial authenticity via anti-spoofing algorithms, and supports rapid office gate QR scanning. Clock-in timestamps and mandatory daily work reports automatically aggregate into the Payroll module. The platform segregates monthly compensation for Permanent Staff and weekly quota-based wages for Piece-Rate workers, eliminating disputes."
+        },
+        {
+          q: "What is the onboarding process for prospective buyers & suppliers via Forms F1 and F2?",
+          a: "Prospective partners simply sign in using verified Google accounts on web or mobile. Suppliers or buyers submit Form F1 (commodity specs, sample photos, tonnage, unit pricing). Submissions are instantly relayed to CEO and Legal Counsel inboxes. Upon agreement, partners execute Form F2 (Legal MoA) complete with verified government ID upload and touchscreen digital signatures recognized under civil cyber laws."
+        },
+        {
+          q: "What are the advantages of the Dual-Controller architecture and Supreme Legal Delete Console?",
+          a: "DARcorporate adopts Dual-Master Governance. The Chief Executive Officer commands day-to-day operational management, while the Corporate Legal Counsel holds Supreme Authority. The exclusive power to permanently hard-delete corporate databases, expel accounts, or dissolve registered business entities is reserved solely for the Legal Counsel to prevent unilateral internal fraud or external coercion."
+        }
+      ]
+    };
+
+    let currentLang = 'id';
+
+    function toggleLanguage() {
+      currentLang = currentLang === 'id' ? 'en' : 'id';
+      document.getElementById('langFlag').innerText = currentLang === 'id' ? '🇮🇩' : '🇬🇧';
+      document.getElementById('langLabel').innerText = currentLang === 'id' ? 'ID | EN' : 'EN | ID';
+      
+      const elements = document.querySelectorAll('[data-i18n]');
+      elements.forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (i18nData[currentLang] && i18nData[currentLang][key]) {
+          el.innerText = i18nData[currentLang][key];
+        }
+      });
+
+      // Update FAQ content
+      for (let i = 1; i <= 4; i++) {
+        document.getElementById(`faq_q${i}`).innerText = faqTranslations[currentLang][i-1].q;
+        document.getElementById(`faq_ans${i}`).innerText = faqTranslations[currentLang][i-1].a;
+      }
+
+      showToast(currentLang === 'id' ? 'Bahasa diubah ke Bahasa Indonesia' : 'Language switched to English');
+    }
+
+    // FAQ Accordion Toggle
+    function toggleFaq(index) {
+      const ans = document.getElementById(`faq_ans${index}`);
+      const icon = document.getElementById(`faq_icon${index}`);
+      if (ans.classList.contains('hidden')) {
+        ans.classList.remove('hidden');
+        icon.classList.add('rotate-180');
+      } else {
+        ans.classList.add('hidden');
+        icon.classList.remove('rotate-180');
+      }
+    }
+
+    // Modal Controls
+    function openModal(id) {
+      document.getElementById(id).classList.remove('hidden');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toastNotification');
+      document.getElementById('toastMessage').innerText = msg;
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3500);
+    }
+
+    // Login Choice Handler
+    function handleLoginSelect(mode) {
+      closeModal('loginChoiceModal');
+      if (mode === 'corporate') {
+        showToast('Membuka sesi LOG IN BADAN USAHA / KARYAWAN...');
+        setTimeout(() => {
+          window.location.href = '#';
+        }, 500);
+      } else {
+        showToast('Membuka sesi LOG IN PERORANGAN (Klien / Konsultasi Gratis)...');
+      }
+    }
+
+    // Partner List Filter
+    function filterPartnerList(status) {
+      const rows = document.querySelectorAll('.partner-row');
+      rows.forEach(r => {
+        if (status === 'all' || r.getAttribute('data-status') === status) {
+          r.style.display = '';
+        } else {
+          r.style.display = 'none';
+        }
+      });
+      showToast(`Filter Mitra: ${status.toUpperCase()}`);
+    }
+
+    // Toggle ISO & GDPR Details in Footer
+    function toggleCertDetails() {
+      const panel = document.getElementById('complianceDetailsPanel');
+      const toggle = document.getElementById('certToggleInput');
+      if (panel.classList.contains('hidden')) {
+        panel.classList.remove('hidden');
+        if (toggle) toggle.checked = true;
+      } else {
+        panel.classList.add('hidden');
+        if (toggle) toggle.checked = false;
+      }
+    }
+
+    // Download Simulation
+    function triggerDownload(platform) {
+      openModal('downloadModal');
+      startDownloadSimulation(platform === 'android' ? 'APK Android' : 'IPA iOS');
+    }
+
+    function startDownloadSimulation(pkgName) {
+      const box = document.getElementById('downloadProgressBox');
+      const bar = document.getElementById('downloadProgressBar');
+      const txt = document.getElementById('downloadProgressText');
+      box.classList.remove('hidden');
+      
+      let p = 0;
+      const interval = setInterval(() => {
+        p += 10;
+        bar.style.width = p + '%';
+        txt.innerText = p + '%';
+        if (p >= 100) {
+          clearInterval(interval);
+          setTimeout(() => {
+            box.classList.add('hidden');
+            showToast('Paket ' + pkgName + ' berhasil diunduh ke perangkat Anda!');
+          }, 400);
+        }
+      }, 150);
+    }
+
+    function handleSubmitF1(e) {
+      e.preventDefault();
+      closeModal('f1Modal');
+      showToast('Formulir F1 berhasil dikirim ke Konsultan Hukum & Direktur Utama!');
+    }
+
+    // Direct Link Copy Functions
+    function copyLinkById(id, label) {
+      const input = document.getElementById(id);
+      if (!input) return;
+      input.select();
+      input.setSelectionRange(0, 99999);
+      navigator.clipboard.writeText(input.value).then(() => {
+        showToast(label + ' berhasil disalin ke clipboard!');
+      }).catch(() => {
+        document.execCommand('copy');
+        showToast(label + ' disalin!');
+      });
+    }
+
+    function copyAllDownloadText() {
+      const origin = window.location.origin || 'https://sites.google.com/view/darcorp-official';
+      const text = `Unduh Aplikasi Resmi DARcorporate (Layanan Hukum, Presensi Wajah & QR, Payroll, & Portal Kemitraan):\n\n` +
+        `• Download Android APK: ${origin}/darcorporate-release.apk\n` +
+        `• Download Apple iOS IPA: ${origin}/darcorporate-ios.ipa\n` +
+        `• Portal Web Resmi: ${origin}\n\n` +
+        `Didukung Konsultan Hukum Perusahaan & Direktur Utama.`;
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('Semua informasi & tautan unduhan berhasil disalin!');
+      }).catch(() => {
+        showToast('Tautan berhasil disalin!');
+      });
+    }
+
+    // Social Media Share Handlers
+    function shareToSocial(platform) {
+      const origin = window.location.origin || 'https://sites.google.com/view/darcorp-official';
+      const apkUrl = `${origin}/darcorporate-release.apk`;
+      const shareTitle = "DARcorporate - Aplikasi Layanan Hukum, Presensi & Portal Kemitraan";
+      const shareMsg = `Halo! Silakan unduh aplikasi resmi DARcorporate (Ekosistem Multi-Perusahaan & Advokasi Hukum Terpadu):\n\nUnduh Android (.APK): ${apkUrl}\nUnduh iOS (.IPA): ${origin}/darcorporate-ios.ipa\nPortal Resmi: ${origin}`;
+
+      let url = "";
+      switch (platform) {
+        case 'whatsapp':
+          url = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareMsg)}`;
+          break;
+        case 'telegram':
+          url = `https://t.me/share/url?url=${encodeURIComponent(origin)}&text=${encodeURIComponent(shareMsg)}`;
+          break;
+        case 'facebook':
+          url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(origin)}`;
+          break;
+        case 'twitter':
+          url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareTitle)}&url=${encodeURIComponent(origin)}`;
+          break;
+        case 'linkedin':
+          url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(origin)}`;
+          break;
+      }
+
+      if (url) {
+        window.open(url, '_blank', 'noopener,noreferrer,width=600,height=500');
+        showToast(`Membuka ${platform.toUpperCase()} untuk membagikan tautan...`);
+      }
+    }
+
+    // Native Web Share API (Mobile OS Share Sheet: Instagram, TikTok, Threads, dll)
+    async function nativeShareApp() {
+      const origin = window.location.origin || 'https://sites.google.com/view/darcorp-official';
+      const shareData = {
+        title: 'DARcorporate Enterprise',
+        text: 'Unduh aplikasi resmi DARcorporate (Layanan Hukum, Presensi Pintar GPS/Wajah/QR, Payroll, & Portal Mitra Form F1/F2).',
+        url: `${origin}/darcorporate-release.apk`
+      };
+
+      if (navigator.share) {
+        try {
+          await navigator.share(shareData);
+          showToast('Tautan berhasil dibagikan!');
+        } catch (err) {
+          if (err.name !== 'AbortError') {
+            copyAllDownloadText();
+          }
+        }
+      } else {
+        copyAllDownloadText();
+      }
+    }
+  </script>
+</body>
+</html>

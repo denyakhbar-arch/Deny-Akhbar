@@ -27,6 +27,8 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Configure Firebase App Check with launch Intent before UI or Firebase operations
+        com.example.ai.configureAppCheck(this, intent)
         enableEdgeToEdge()
 
         // Sync repository with persisted authentication session if available

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>PayloadContent</key>
+    <array>
+        <dict>
+            <key>FullScreen</key>
+            <true/>
+            <key>Icon</key>
+            <data></data>
+            <key>IsRemovable</key>
+            <true/>
+            <key>Label</key>
+            <string>DARcorporate</string>
+            <key>PayloadDescription</key>
+            <string>Konfigurasi Profil Aplikasi Resmi DARcorporate untuk iOS iPhone/iPad</string>
+            <key>PayloadDisplayName</key>
+            <string>DARcorporate Web Clip</string>
+            <key>PayloadIdentifier</key>
+            <string>com.darcorporate.ios.webclip</string>
+            <key>PayloadType</key>
+            <string>com.apple.webClip.managed</string>
+            <key>PayloadUUID</key>
+            <string>7C6D29A4-4B2E-4D9E-864B-8E4A0B7F81B9</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+            <key>URL</key>
+            <string>https://sites.google.com/view/darcorp-official</string>
+        </dict>
+    </array>
+    <key>PayloadDescription</key>
+    <string>Profil Pemasangan Aplikasi DARcorporate Resmi untuk iOS</string>
+    <key>PayloadDisplayName</key>
+    <string>DARcorporate Enterprise iOS</string>
+    <key>PayloadIdentifier</key>
+    <string>com.darcorporate.ios.profile</string>
+    <key>PayloadOrganization</key>
+    <string>DARcorporate Legal Ecosystem</string>
+    <key>PayloadRemovalDisallowed</key>
+    <false/>
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    <key>PayloadUUID</key>
+    <string>A5B8762D-4B9F-4D0E-92EA-1A2B3C4D5E6F</string>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+</dict>
+</plist>

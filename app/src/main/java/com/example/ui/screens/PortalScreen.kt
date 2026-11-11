@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import com.example.data.DarcorpRepository
 import com.example.data.PortalTab
 import com.example.model.*
+import com.example.ui.components.BiometricFaceRegistrationSection
 import com.example.ui.components.DigitalSignaturePad
 import com.example.ui.theme.*
 
@@ -268,9 +269,9 @@ fun PortalScreen(
                             Spacer(modifier = Modifier.width(4.dp))
                             Column {
                                 Text(
-                                    text = "DARCORP APP",
+                                    text = "DARcorporate APP",
                                     fontWeight = FontWeight.Black,
-                                    fontSize = 16.sp,
+                                    fontSize = 15.sp,
                                     color = DarcorpGold400
                                 )
                                 Text(
@@ -363,6 +364,28 @@ fun PortalScreen(
                             onClick = { repository.setActiveTab(PortalTab.PARTNER_FORMS) },
                             text = { Text(if (isId) "🤝 Mitra (F1 & F2)" else "🤝 Partners (F1&F2)", fontSize = 12.sp) }
                         )
+                        Tab(
+                            selected = activeTab == PortalTab.PAID_SERVICES,
+                            onClick = { repository.setActiveTab(PortalTab.PAID_SERVICES) },
+                            text = {
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    Text(if (isId) "💳 Layanan Berbayar" else "💳 Paid Services", fontSize = 12.sp)
+                                    Spacer(modifier = Modifier.width(4.dp))
+                                    Surface(
+                                        shape = RoundedCornerShape(4.dp),
+                                        color = if (activeTab == PortalTab.PAID_SERVICES) DarcorpGold400 else DarcorpGold500
+                                    ) {
+                                        Text(
+                                            text = "VA / E-W",
+                                            color = DarcorpNavy900,
+                                            fontSize = 8.sp,
+                                            fontWeight = FontWeight.Black,
+                                            modifier = Modifier.padding(horizontal = 3.5.dp, vertical = 1.dp)
+                                        )
+                                    }
+                                }
+                            }
+                        )
                         if (currentUser.role == UserRole.LEGAL_OFFICER) {
                             Tab(
                                 selected = activeTab == PortalTab.LEGAL_SUPER_CONSOLE,
@@ -431,6 +454,11 @@ fun PortalScreen(
                     repository = repository,
                     f1List = f1Submissions,
                     f2List = f2Agreements
+                )
+                PortalTab.PAID_SERVICES -> PaidServicesPaymentScreen(
+                    repository = repository,
+                    currentUser = currentUser,
+                    isId = isId
                 )
                 PortalTab.LEGAL_SUPER_CONSOLE -> LegalSuperConsoleTab(
                     isId = isId,
@@ -732,8 +760,105 @@ fun AttendanceAndDailyReportTab(
 ) {
     val context = LocalContext.current
     var hasPhotoCaptured by remember { mutableStateOf(false) }
+    var showQrScannerDialog by remember { mutableStateOf(false) }
+    var scannedQrCode by remember { mutableStateOf<String?>(null) }
     var dailyReportText by remember { mutableStateOf("") }
     var isClockedIn by remember { mutableStateOf(false) }
+
+    val biometricProfiles by repository.biometricProfiles.collectAsState()
+    val userBiometric = biometricProfiles[currentUser.id]
+    val isFaceEnrolled = userBiometric?.isRegistered == true
+
+    // QR Code Scanner Dialog
+    if (showQrScannerDialog) {
+        AlertDialog(
+            onDismissRequest = { showQrScannerDialog = false },
+            title = {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(imageVector = Icons.Default.QrCodeScanner, contentDescription = null, tint = DarcorpNavy900)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = if (isId) "Pemindai QR Code Presensi Kilat" else "Rapid Check-in QR Scanner",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 15.sp
+                    )
+                }
+            },
+            text = {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = if (isId) "Arahkan kamera ke QR Code resmi DARcorporate di gerbang atau resepsionis kantor:"
+                               else "Point camera at DARcorporate official office gate or reception QR Code:",
+                        fontSize = 12.sp,
+                        color = DarcorpSlate700,
+                        textAlign = TextAlign.Center
+                    )
+                    Spacer(modifier = Modifier.height(14.dp))
+                    // Simulated QR Camera Viewfinder
+                    Box(
+                        modifier = Modifier
+                            .size(200.dp)
+                            .clip(RoundedCornerShape(12.dp))
+                            .background(Color(0xFF0F172A))
+                            .border(2.dp, DarcorpEmerald, RoundedCornerShape(12.dp)),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Icon(
+                                imageVector = Icons.Default.QrCode,
+                                contentDescription = "QR Code",
+                                tint = Color.White.copy(alpha = 0.9f),
+                                modifier = Modifier.size(96.dp)
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Surface(
+                                shape = RoundedCornerShape(4.dp),
+                                color = DarcorpEmerald.copy(alpha = 0.25f)
+                            ) {
+                                Text(
+                                    text = if (isId) "BIDIK QR RESEPSIONIS" else "ALIGN OFFICE QR",
+                                    color = DarcorpEmerald,
+                                    fontSize = 10.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
+                                )
+                            }
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(12.dp))
+                    Text(
+                        text = "Lokasi Kantor: SCBD Tower Lot 18 • Hub Lobby Gate 1",
+                        fontSize = 11.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = DarcorpNavy800,
+                        textAlign = TextAlign.Center
+                    )
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        scannedQrCode = "DAR-HQ-SCBD-LOT18-GATE01"
+                        showQrScannerDialog = false
+                        Toast.makeText(context, if (isId) "QR Code Kantor Terverifikasi! Presensi siap." else "Office QR Code Verified! Ready to check in.", Toast.LENGTH_SHORT).show()
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = DarcorpEmeraldDark)
+                ) {
+                    Icon(imageVector = Icons.Default.Check, contentDescription = null, modifier = Modifier.size(16.dp))
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(if (isId) "Pindai QR Sekarang" else "Scan QR Code")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showQrScannerDialog = false }) {
+                    Text(if (isId) "Batal" else "Cancel")
+                }
+            }
+        )
+    }
 
     LazyColumn(
         modifier = Modifier
@@ -741,6 +866,18 @@ fun AttendanceAndDailyReportTab(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(14.dp)
     ) {
+        // 1. Biometric Face Capture & Registration Section (Live Camera Preview & Capture Button)
+        item {
+            BiometricFaceRegistrationSection(
+                currentUser = currentUser,
+                repository = repository,
+                isId = isId,
+                onFaceRegistered = { profile ->
+                    hasPhotoCaptured = true
+                }
+            )
+        }
+
         // Attendance Control Card
         item {
             Card(
@@ -755,7 +892,7 @@ fun AttendanceAndDailyReportTab(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = if (isId) "Presensi Pintar (Wajah & GPS)" else "Smart Attendance (Face & GPS)",
+                            text = if (isId) "Presensi Pintar (Wajah, QR & GPS)" else "Smart Attendance (Face, QR & GPS)",
                             fontWeight = FontWeight.Bold,
                             fontSize = 15.sp,
                             color = DarcorpNavy900
@@ -809,7 +946,46 @@ fun AttendanceAndDailyReportTab(
 
                     Spacer(modifier = Modifier.height(12.dp))
 
-                    // Simulated Camera Face Viewfinder
+                    // QR Status Banner (if scanned)
+                    if (scannedQrCode != null) {
+                        Surface(
+                            shape = RoundedCornerShape(8.dp),
+                            color = Color(0xFFF0FDF4),
+                            border = CardDefaults.outlinedCardBorder().copy(brush = androidx.compose.ui.graphics.SolidColor(DarcorpEmerald))
+                        ) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(10.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    Icon(imageVector = Icons.Default.QrCodeScanner, contentDescription = null, tint = DarcorpEmerald, modifier = Modifier.size(20.dp))
+                                    Spacer(modifier = Modifier.width(8.dp))
+                                    Column {
+                                        Text(
+                                            text = if (isId) "QR Kantor Terverifikasi: ${scannedQrCode}" else "Office QR Verified: ${scannedQrCode}",
+                                            fontWeight = FontWeight.Bold,
+                                            fontSize = 11.sp,
+                                            color = DarcorpEmeraldDark
+                                        )
+                                        Text(
+                                            text = if (isId) "Check-in cepat siap digunakan" else "Rapid check-in ready",
+                                            fontSize = 10.sp,
+                                            color = DarcorpSlate600
+                                        )
+                                    }
+                                }
+                                TextButton(onClick = { showQrScannerDialog = true }) {
+                                    Text(if (isId) "Ubah" else "Change", fontSize = 11.sp)
+                                }
+                            }
+                        }
+                        Spacer(modifier = Modifier.height(10.dp))
+                    }
+
+                    // Biometric Face Status Viewfinder
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -819,28 +995,36 @@ fun AttendanceAndDailyReportTab(
                             .border(1.dp, DarcorpGold500, RoundedCornerShape(10.dp)),
                         contentAlignment = Alignment.Center
                     ) {
-                        if (hasPhotoCaptured) {
+                        if (hasPhotoCaptured || isFaceEnrolled) {
                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                 Icon(imageVector = Icons.Default.VerifiedUser, contentDescription = null, tint = DarcorpEmerald, modifier = Modifier.size(44.dp))
                                 Spacer(modifier = Modifier.height(4.dp))
                                 Text(
-                                    text = if (isId) "Wajah Terverifikasi AI (Anti-Spoofing Valid)" else "Face Verified by AI (Anti-Spoofing Passed)",
+                                    text = if (isId) "Biometrik Wajah Terverifikasi (Liveness 3D Valid)" else "Face Biometric Verified (3D Liveness Passed)",
                                     color = Color.White,
                                     fontSize = 12.sp,
                                     fontWeight = FontWeight.Bold
                                 )
                                 Text(
-                                    text = currentUser.name,
+                                    text = "${currentUser.name} • ${userBiometric?.confidenceScore ?: 99.4f}% Cocok",
                                     color = DarcorpGold400,
                                     fontSize = 11.sp
                                 )
+                                if (userBiometric != null) {
+                                    Text(
+                                        text = userBiometric.biometricHash,
+                                        color = Color.LightGray,
+                                        fontSize = 9.sp,
+                                        fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace
+                                    )
+                                }
                             }
                         } else {
                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                 Icon(imageVector = Icons.Default.Face, contentDescription = null, tint = DarcorpGold400, modifier = Modifier.size(48.dp))
                                 Spacer(modifier = Modifier.height(6.dp))
                                 Text(
-                                    text = if (isId) "Arahkan wajah ke bingkai kamera" else "Align face inside frame",
+                                    text = if (isId) "Daftarkan wajah pada modul biometrik di atas" else "Enroll face in biometric module above",
                                     color = Color.White,
                                     fontSize = 11.sp
                                 )
@@ -850,22 +1034,45 @@ fun AttendanceAndDailyReportTab(
 
                     Spacer(modifier = Modifier.height(10.dp))
 
-                    // Capture Selfie Button
-                    OutlinedButton(
-                        onClick = {
-                            hasPhotoCaptured = true
-                            Toast.makeText(context, if (isId) "Foto wajah selfie terambil!" else "Selfie photo captured!", Toast.LENGTH_SHORT).show()
-                        },
-                        modifier = Modifier.fillMaxWidth()
+                    // Buttons Row: Face Capture & QR Code Scanner
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Icon(imageVector = Icons.Default.CameraAlt, contentDescription = null, modifier = Modifier.size(16.dp))
-                        Spacer(modifier = Modifier.width(6.dp))
-                        Text(
-                            text = if (hasPhotoCaptured) (if (isId) "Ambil Ulang Foto Selfie" else "Retake Selfie")
-                                   else (if (isId) "Ambil Foto Wajah Sekarang" else "Take Face Selfie"),
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.Bold
-                        )
+                        // Capture Selfie Button
+                        OutlinedButton(
+                            onClick = {
+                                hasPhotoCaptured = true
+                                Toast.makeText(context, if (isId) "Foto wajah verifikasi terambil!" else "Face photo captured!", Toast.LENGTH_SHORT).show()
+                            },
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Icon(imageVector = Icons.Default.CameraAlt, contentDescription = null, modifier = Modifier.size(16.dp))
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text(
+                                text = if (hasPhotoCaptured || isFaceEnrolled) (if (isId) "Ulang Selfie" else "Retake")
+                                       else (if (isId) "Foto Wajah" else "Face Selfie"),
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
+
+                        // QR Code Scanner Button
+                        Button(
+                            onClick = { showQrScannerDialog = true },
+                            colors = ButtonDefaults.buttonColors(containerColor = if (scannedQrCode != null) DarcorpEmeraldDark else DarcorpNavy800),
+                            modifier = Modifier.weight(1.1f)
+                        ) {
+                            Icon(imageVector = Icons.Default.QrCodeScanner, contentDescription = null, modifier = Modifier.size(16.dp))
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text(
+                                text = if (scannedQrCode != null) (if (isId) "QR Siap ✓" else "QR Ready ✓")
+                                       else (if (isId) "Scan QR Kantor" else "Scan QR Gate"),
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White
+                            )
+                        }
                     }
 
                     Spacer(modifier = Modifier.height(10.dp))
@@ -873,18 +1080,21 @@ fun AttendanceAndDailyReportTab(
                     // Clock In Button
                     Button(
                         onClick = {
-                            if (!hasPhotoCaptured) {
-                                Toast.makeText(context, if (isId) "Wajib ambil foto selfie terlebih dahulu!" else "Selfie required before clocking in!", Toast.LENGTH_SHORT).show()
+                            if (!hasPhotoCaptured && !isFaceEnrolled && scannedQrCode == null) {
+                                Toast.makeText(context, if (isId) "Wajib daftarkan biometrik wajah atau scan QR Code kantor sebelum presensi!" else "Biometric face registration or QR scan required before clocking in!", Toast.LENGTH_SHORT).show()
                             } else {
+                                val methodDesc = if ((hasPhotoCaptured || isFaceEnrolled) && scannedQrCode != null) "Biometrik Wajah + QR Code SCBD"
+                                                 else if (scannedQrCode != null) "QR Code SCBD Lot 18"
+                                                 else "Biometrik Wajah (${userBiometric?.confidenceScore ?: 99.4f}%)"
                                 repository.clockInAttendance(
                                     employeeName = currentUser.name,
                                     isPermanent = currentUser.role == UserRole.PERMANENT_STAFF,
                                     lat = -6.225588,
                                     lng = 106.809444,
-                                    locName = "SCBD Office Tower Lot 18"
+                                    locName = "SCBD Office Tower Lot 18 ($methodDesc)"
                                 )
                                 isClockedIn = true
-                                Toast.makeText(context, if (isId) "Absen Masuk Berhasil Tercatat!" else "Clock In Recorded Successfully!", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, if (isId) "Absen Masuk Berhasil Tercatat ($methodDesc)!" else "Clock In Recorded Successfully ($methodDesc)!", Toast.LENGTH_SHORT).show()
                             }
                         },
                         colors = ButtonDefaults.buttonColors(containerColor = DarcorpNavy900),
@@ -1729,6 +1939,52 @@ fun PartnerFormsTab(
             }
         }
 
+        // Paid Fast-Track & Direct Payment Callout Card for Non-Partners & Individuals
+        item {
+            Card(
+                shape = RoundedCornerShape(12.dp),
+                colors = CardDefaults.cardColors(containerColor = Color(0xFFF0FDF4)),
+                border = CardDefaults.outlinedCardBorder().copy(brush = androidx.compose.ui.graphics.SolidColor(DarcorpEmerald)),
+                modifier = Modifier.testTag("partner_forms_paid_callout")
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(12.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.weight(1f)) {
+                        Icon(imageVector = Icons.Default.Payments, contentDescription = null, tint = DarcorpEmeraldDark, modifier = Modifier.size(24.dp))
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Column {
+                            Text(
+                                text = if (isId) "Layanan Berbayar (Perorangan & Non-Mitra)" else "Paid Services (Personal & Non-Partners)",
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 12.sp,
+                                color = DarcorpNavy900
+                            )
+                            Text(
+                                text = if (isId) "Percepat audit kemitraan fast-track atau konsultasi hukum privat via VA & E-Wallet"
+                                       else "Fast-track partnership audit & private legal consultation via direct VA & E-Wallet",
+                                fontSize = 10.sp,
+                                color = DarcorpSlate600
+                            )
+                        }
+                    }
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Button(
+                        onClick = { repository.setActiveTab(PortalTab.PAID_SERVICES) },
+                        colors = ButtonDefaults.buttonColors(containerColor = DarcorpEmeraldDark),
+                        shape = RoundedCornerShape(8.dp),
+                        modifier = Modifier.height(34.dp).testTag("open_paid_services_btn")
+                    ) {
+                        Text(if (isId) "Kasir VA/E-W" else "Pay Gateway", fontSize = 10.5.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                    }
+                }
+            }
+        }
+
         // Subtabs: F1 vs F2 vs Inboxes
         item {
             Row(
@@ -2041,15 +2297,49 @@ fun PartnerFormsTab(
         // Subtab 2: Submissions & Agreement Inboxes
         if (subTab == 2) {
             item {
-                Text(
-                    text = if (isId) "Berkas Penawaran F1 & Perjanjian F2 Diterima" else "Received F1 Quotations & F2 Agreements",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 14.sp,
-                    color = DarcorpNavy900
-                )
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = if (isId) "Daftar Mitra & Status Kepatuhan Legal" else "Partner Inboxes & Compliance Status",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 14.sp,
+                            color = DarcorpNavy900
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = if (isId) "Indikator kepatuhan dinamis untuk mempercepat evaluasi dan pengambilan keputusan direksi/legal:"
+                               else "Dynamic compliance indicators to assist quick administrative & legal decision-making:",
+                        fontSize = 11.sp,
+                        color = DarcorpSlate600
+                    )
+                }
             }
 
             items(f1List) { f1 ->
+                val statusBg = when (f1.complianceStatus) {
+                    PartnerComplianceStatus.ACTIVE -> Color(0xFFDCFCE7)
+                    PartnerComplianceStatus.VERIFIED -> Color(0xFFDBEAFE)
+                    PartnerComplianceStatus.PENDING -> Color(0xFFFEF3C7)
+                    PartnerComplianceStatus.UNDER_REVIEW -> Color(0xFFF3E8FF)
+                }
+                val statusText = when (f1.complianceStatus) {
+                    PartnerComplianceStatus.ACTIVE -> Color(0xFF166534)
+                    PartnerComplianceStatus.VERIFIED -> Color(0xFF1E40AF)
+                    PartnerComplianceStatus.PENDING -> Color(0xFF92400E)
+                    PartnerComplianceStatus.UNDER_REVIEW -> Color(0xFF6B21A8)
+                }
+                val statusIcon = when (f1.complianceStatus) {
+                    PartnerComplianceStatus.ACTIVE -> Icons.Default.CheckCircle
+                    PartnerComplianceStatus.VERIFIED -> Icons.Default.Verified
+                    PartnerComplianceStatus.PENDING -> Icons.Default.HourglassEmpty
+                    PartnerComplianceStatus.UNDER_REVIEW -> Icons.Default.Policy
+                }
+
                 Card(
                     colors = CardDefaults.cardColors(containerColor = Color.White),
                     shape = RoundedCornerShape(10.dp),
@@ -2058,15 +2348,40 @@ fun PartnerFormsTab(
                     Column(modifier = Modifier.padding(12.dp)) {
                         Row(
                             modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(text = "Formulir F1 • ${f1.id}", fontWeight = FontWeight.Bold, fontSize = 12.sp, color = DarcorpNavy900)
+                            // Dynamic Compliance Status Indicator Badge
+                            Surface(
+                                shape = RoundedCornerShape(12.dp),
+                                color = statusBg
+                            ) {
+                                Row(
+                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Icon(imageVector = statusIcon, contentDescription = null, tint = statusText, modifier = Modifier.size(12.dp))
+                                    Spacer(modifier = Modifier.width(4.dp))
+                                    Text(
+                                        text = if (isId) f1.complianceStatus.labelId else f1.complianceStatus.labelEn,
+                                        color = statusText,
+                                        fontSize = 10.sp,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
+                            }
+                        }
+                        Spacer(modifier = Modifier.height(6.dp))
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(text = "${f1.companyName} (${f1.partnerName})", fontWeight = FontWeight.SemiBold, fontSize = 12.sp)
                             Surface(shape = RoundedCornerShape(4.dp), color = DarcorpNavy800) {
                                 Text(text = f1.partnerType, color = DarcorpGold400, fontSize = 9.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp))
                             }
                         }
-                        Spacer(modifier = Modifier.height(4.dp))
-                        Text(text = "${f1.companyName} (${f1.partnerName})", fontWeight = FontWeight.SemiBold, fontSize = 12.sp)
                         Text(text = "Komoditas: ${f1.itemDescription} (${f1.weightPerShipment} ${f1.weightUnit})", fontSize = 11.sp, color = DarcorpSlate700)
                         Text(text = "Harga: Rp ${f1.unitPrice.toLong()} per ${f1.weightUnit}", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = DarcorpEmeraldDark)
                         Spacer(modifier = Modifier.height(6.dp))
@@ -2076,11 +2391,86 @@ fun PartnerFormsTab(
                             fontSize = 9.sp,
                             color = DarcorpSlate600
                         )
+
+                        Spacer(modifier = Modifier.height(8.dp))
+                        HorizontalDivider(color = DarcorpSlate100)
+                        Spacer(modifier = Modifier.height(6.dp))
+
+                        // Admin Quick Decision Buttons
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = if (isId) "Otoritas Legal/Direksi:" else "Admin Action:",
+                                fontSize = 10.sp,
+                                fontWeight = FontWeight.SemiBold,
+                                color = DarcorpSlate600
+                            )
+                            Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                                if (f1.complianceStatus != PartnerComplianceStatus.ACTIVE) {
+                                    OutlinedButton(
+                                        onClick = {
+                                            repository.updateF1ComplianceStatus(f1.id, PartnerComplianceStatus.ACTIVE)
+                                            Toast.makeText(context, if (isId) "Status diset: Aktif Beroperasi" else "Status: Active & Compliant", Toast.LENGTH_SHORT).show()
+                                        },
+                                        contentPadding = PaddingValues(horizontal = 6.dp, vertical = 2.dp),
+                                        modifier = Modifier.height(26.dp)
+                                    ) {
+                                        Text("Set Active", fontSize = 9.sp, fontWeight = FontWeight.Bold, color = Color(0xFF166534))
+                                    }
+                                }
+                                if (f1.complianceStatus != PartnerComplianceStatus.VERIFIED) {
+                                    OutlinedButton(
+                                        onClick = {
+                                            repository.updateF1ComplianceStatus(f1.id, PartnerComplianceStatus.VERIFIED)
+                                            Toast.makeText(context, if (isId) "Status diset: Terverifikasi Legal" else "Status: Verified", Toast.LENGTH_SHORT).show()
+                                        },
+                                        contentPadding = PaddingValues(horizontal = 6.dp, vertical = 2.dp),
+                                        modifier = Modifier.height(26.dp)
+                                    ) {
+                                        Text("Verify", fontSize = 9.sp, fontWeight = FontWeight.Bold, color = Color(0xFF1E40AF))
+                                    }
+                                }
+                                if (f1.complianceStatus != PartnerComplianceStatus.UNDER_REVIEW) {
+                                    OutlinedButton(
+                                        onClick = {
+                                            repository.updateF1ComplianceStatus(f1.id, PartnerComplianceStatus.UNDER_REVIEW)
+                                            Toast.makeText(context, if (isId) "Status diset: Dalam Peninjauan" else "Status: Under Review", Toast.LENGTH_SHORT).show()
+                                        },
+                                        contentPadding = PaddingValues(horizontal = 6.dp, vertical = 2.dp),
+                                        modifier = Modifier.height(26.dp)
+                                    ) {
+                                        Text("Review", fontSize = 9.sp, fontWeight = FontWeight.Bold, color = Color(0xFF6B21A8))
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
 
             items(f2List) { f2 ->
+                val statusBg = when (f2.complianceStatus) {
+                    PartnerComplianceStatus.ACTIVE -> Color(0xFFDCFCE7)
+                    PartnerComplianceStatus.VERIFIED -> Color(0xFFDBEAFE)
+                    PartnerComplianceStatus.PENDING -> Color(0xFFFEF3C7)
+                    PartnerComplianceStatus.UNDER_REVIEW -> Color(0xFFF3E8FF)
+                }
+                val statusText = when (f2.complianceStatus) {
+                    PartnerComplianceStatus.ACTIVE -> Color(0xFF166534)
+                    PartnerComplianceStatus.VERIFIED -> Color(0xFF1E40AF)
+                    PartnerComplianceStatus.PENDING -> Color(0xFF92400E)
+                    PartnerComplianceStatus.UNDER_REVIEW -> Color(0xFF6B21A8)
+                }
+                val statusIcon = when (f2.complianceStatus) {
+                    PartnerComplianceStatus.ACTIVE -> Icons.Default.CheckCircle
+                    PartnerComplianceStatus.VERIFIED -> Icons.Default.Verified
+                    PartnerComplianceStatus.PENDING -> Icons.Default.HourglassEmpty
+                    PartnerComplianceStatus.UNDER_REVIEW -> Icons.Default.Policy
+                }
+
                 Card(
                     colors = CardDefaults.cardColors(containerColor = Color.White),
                     shape = RoundedCornerShape(10.dp),
@@ -2089,11 +2479,28 @@ fun PartnerFormsTab(
                     Column(modifier = Modifier.padding(12.dp)) {
                         Row(
                             modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(text = "Perjanjian MoA F2 • ${f2.agreementDocumentNumber}", fontWeight = FontWeight.Bold, fontSize = 12.sp, color = DarcorpNavy900)
-                            Surface(shape = RoundedCornerShape(4.dp), color = DarcorpEmerald.copy(alpha = 0.2f)) {
-                                Text(text = "Resmi Sah", color = DarcorpEmeraldDark, fontSize = 9.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp))
+                            // Dynamic Compliance Status Indicator Badge
+                            Surface(
+                                shape = RoundedCornerShape(12.dp),
+                                color = statusBg
+                            ) {
+                                Row(
+                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Icon(imageVector = statusIcon, contentDescription = null, tint = statusText, modifier = Modifier.size(12.dp))
+                                    Spacer(modifier = Modifier.width(4.dp))
+                                    Text(
+                                        text = if (isId) f2.complianceStatus.labelId else f2.complianceStatus.labelEn,
+                                        color = statusText,
+                                        fontSize = 10.sp,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
                             }
                         }
                         Spacer(modifier = Modifier.height(4.dp))

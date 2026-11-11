@@ -29,6 +29,9 @@ fun GoogleSitesHeader(
     onDownloadClick: () -> Unit,
     onLaunchPortalClick: () -> Unit,
     onGoogleLoginClick: () -> Unit = {},
+    onHomeClick: () -> Unit = {},
+    onCompanyProfileClick: () -> Unit = {},
+    onLoginClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     Surface(
@@ -152,9 +155,9 @@ fun GoogleSitesHeader(
                     Column {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Text(
-                                text = "DARCORP",
+                                text = "DARcorporate",
                                 fontWeight = FontWeight.ExtraBold,
-                                fontSize = 20.sp,
+                                fontSize = 18.sp,
                                 color = Color.White,
                                 letterSpacing = 1.sp
                             )
@@ -232,6 +235,92 @@ fun GoogleSitesHeader(
                             text = if (language == AppLanguage.INDONESIAN) "Buka App" else "Open App",
                             fontWeight = FontWeight.Bold,
                             fontSize = 12.sp
+                        )
+                    }
+                }
+            }
+
+            // Primary Navigation Menu Bar (HOME, COMPANY PROFILE, LOG IN)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(DarcorpBrown800)
+                    .padding(horizontal = 12.dp, vertical = 6.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                // Button 1: HOME
+                Surface(
+                    shape = RoundedCornerShape(8.dp),
+                    color = DarcorpBrown700,
+                    modifier = Modifier
+                        .weight(1f)
+                        .clickable { onHomeClick() }
+                        .testTag("menu_home_btn")
+                ) {
+                    Row(
+                        modifier = Modifier.padding(vertical = 7.dp, horizontal = 6.dp),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(imageVector = Icons.Default.Home, contentDescription = "Home", tint = DarcorpBrownCream, modifier = Modifier.size(14.dp))
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text(
+                            text = "HOME",
+                            color = Color.White,
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                }
+
+                // Button 2: COMPANY PROFILE
+                Surface(
+                    shape = RoundedCornerShape(8.dp),
+                    color = DarcorpBrown700,
+                    modifier = Modifier
+                        .weight(1.35f)
+                        .clickable { onCompanyProfileClick() }
+                        .testTag("menu_company_profile_btn")
+                ) {
+                    Row(
+                        modifier = Modifier.padding(vertical = 7.dp, horizontal = 6.dp),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(imageVector = Icons.Default.Business, contentDescription = "Company Profile", tint = DarcorpBrownCream, modifier = Modifier.size(14.dp))
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text(
+                            text = "COMPANY PROFILE",
+                            color = Color.White,
+                            fontSize = 10.sp,
+                            fontWeight = FontWeight.Bold,
+                            maxLines = 1
+                        )
+                    }
+                }
+
+                // Button 3: LOG IN
+                Surface(
+                    shape = RoundedCornerShape(8.dp),
+                    color = DarcorpGold500,
+                    modifier = Modifier
+                        .weight(1f)
+                        .clickable { onLoginClick() }
+                        .testTag("menu_login_btn")
+                ) {
+                    Row(
+                        modifier = Modifier.padding(vertical = 7.dp, horizontal = 6.dp),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(imageVector = Icons.Default.Login, contentDescription = "Log In", tint = DarcorpBrown900, modifier = Modifier.size(14.dp))
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text(
+                            text = "LOG IN",
+                            color = DarcorpBrown900,
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Black
                         )
                     }
                 }

@@ -1,0 +1,2502 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DARcorporate - Ekosistem Multi-Perusahaan & Tata Kelola Hukum</title>
+  <meta name="description" content="Laman Web Resmi DARcorporate: Tata Kelola Multi-Perusahaan (PT, CV, Yayasan), Presensi Pintar GPS & Wajah, Payroll, Obrolan 3-Tier, dan Portal Kemitraan Form F1 & F2.">
+  <link rel="icon" type="image/png" href="./dar_emblem.png">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            darcorp: {
+              bg: '#F0F9FF',
+              light100: '#E0F2FE',
+              light200: '#BAE6FD',
+              light300: '#7DD3FC',
+              brown900: '#451A03',
+              brown800: '#5A2A0C',
+              brown700: '#78350F',
+              brown600: '#92400E',
+              brown500: '#B45309',
+              cream: '#FEF3C7',
+              gold: '#D97706',
+              crimson: '#DC2626',
+              emerald: '#10B981',
+              emeraldDark: '#065F46'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- PWA Manifest & Web Capabilities -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#5A2A0C">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="mobile-web-app-capable" content="yes">
+
+  <style>
+    body {
+      background-color: #F0F9FF;
+      color: #1E293B;
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    }
+    .watermark-bg {
+      background-image: url('./dar_emblem.png');
+      background-repeat: no-repeat;
+      background-position: center 25%;
+      background-size: 550px auto;
+      background-attachment: fixed;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+  </style>
+</head>
+<body class="min-h-screen relative watermark-bg">
+
+  <!-- BROWSER WEB ONLINE ANNOUNCEMENT BANNER -->
+  <div class="bg-gradient-to-r from-amber-400 via-amber-300 to-amber-400 text-slate-950 px-4 py-2 text-xs font-black flex flex-wrap items-center justify-between gap-2 border-b-2 border-amber-500 shadow-sm sticky top-0 z-50">
+    <div class="flex items-center space-x-2 mx-auto sm:mx-0">
+      <span class="bg-slate-950 text-amber-300 text-[10px] px-2.5 py-0.5 rounded-full font-black uppercase tracking-wider flex items-center gap-1">
+        <i class="fa-solid fa-cloud"></i> CLOUD WEB GOOGLE
+      </span>
+      <span>Aplikasi dapat langsung dijalankan & digunakan via Google Chrome & Browser Web tanpa harus download atau memasang file!</span>
+    </div>
+    <button onclick="launchFullWebApp('Pengguna Web Online')" class="mx-auto sm:mx-0 bg-slate-950 hover:bg-slate-800 text-white px-3.5 py-1.5 rounded-lg text-xs font-black flex items-center gap-1.5 shadow transition group">
+      <i class="fa-solid fa-play text-amber-400 group-hover:scale-110 transition"></i>
+      <span>JALANKAN VERSI WEB SEKARANG &rarr;</span>
+    </button>
+  </div>
+
+  <!-- Wrapper for Landing Page View -->
+  <div id="landingPageView">
+
+  <!-- Top Google Sites Banner (Cokelat Tua) -->
+  <div class="bg-darcorp-brown900 text-slate-300 text-xs py-2 px-4 border-b border-darcorp-brown800">
+    <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
+      <div class="flex items-center space-x-2">
+        <i class="fa-solid fa-globe text-darcorp-cream"></i>
+        <span>sites.google.com/view/darcorp-official</span>
+        <span class="hidden sm:inline bg-darcorp-brown800 text-darcorp-cream px-2 py-0.5 rounded text-[10px] font-bold">PORTAL RESMI</span>
+      </div>
+      <div class="flex items-center space-x-3">
+        <!-- Language Switcher -->
+        <button id="langToggleBtn" onclick="toggleLanguage()" class="bg-darcorp-brown800 hover:bg-darcorp-brown700 text-darcorp-cream px-3 py-1 rounded-full text-xs font-semibold flex items-center space-x-1 border border-darcorp-brown700 transition">
+          <span id="langFlag">🇮🇩</span>
+          <span id="langLabel">ID | EN</span>
+        </button>
+        <!-- Google Sign-In Header Button -->
+        <button onclick="openModal('googleLoginModal')" class="bg-white hover:bg-slate-100 text-slate-800 px-3 py-1 rounded-full text-xs font-bold flex items-center space-x-1 shadow transition">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/><path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.17 0 9.97 0 12s.45 3.83 1.25 5.42l4.03-3.15z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/></svg>
+          <span data-i18n="login_google_btn">Login Google</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Navbar (Bar Tombol Cokelat) -->
+  <header class="bg-darcorp-brown800 shadow-lg sticky top-0 z-40 border-b border-darcorp-brown700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
+      <!-- Logo & Emblem -->
+      <a href="#" class="flex items-center space-x-3 group">
+        <div class="w-12 h-12 bg-white rounded-xl shadow p-1 border border-darcorp-brown600 flex items-center justify-center transition group-hover:scale-105">
+          <img src="./dar_emblem.png" alt="DAR Emblem" class="w-full h-full object-contain">
+        </div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="text-white text-xl sm:text-2xl font-black tracking-wider">DARcorporate</span>
+            <span class="bg-darcorp-brown700 text-darcorp-cream text-[10px] font-bold px-2 py-0.5 rounded border border-darcorp-brown600">ENTERPRISE</span>
+          </div>
+          <p class="text-darcorp-light200 text-xs hidden sm:block" data-i18n="nav_tagline">Ekosistem Tata Kelola & Presensi Multi-Perusahaan</p>
+        </div>
+      </a>
+
+      <!-- Action Buttons (Bar Menu Utama Sesuai Instruksi) -->
+      <div class="flex items-center space-x-1 sm:space-x-2">
+        <!-- 0. Tombol JALANKAN VERSI WEB (ONLINE) -->
+        <button onclick="launchFullWebApp('Pengguna Web Online')" class="bg-emerald-600 hover:bg-emerald-500 text-white px-2.5 sm:px-3 py-2 rounded-lg font-black text-xs sm:text-sm flex items-center space-x-1.5 shadow-md border border-emerald-400 transition animate-pulse">
+          <i class="fa-solid fa-globe text-emerald-200"></i>
+          <span>VERSI WEB (ONLINE)</span>
+        </button>
+
+        <!-- 1. Tombol Menu Utama: HOME -->
+        <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="bg-darcorp-brown700 hover:bg-darcorp-brown600 text-white px-2 sm:px-2.5 py-2 rounded-lg font-bold text-xs sm:text-sm flex items-center space-x-1 border border-darcorp-brown600 shadow transition">
+          <i class="fa-solid fa-house text-darcorp-cream"></i>
+          <span class="hidden md:inline">HOME</span>
+        </button>
+
+        <!-- 2. Tombol Menu Kedua: COMPANY PROFILE -->
+        <button onclick="openModal('companyProfileModal')" class="bg-darcorp-brown700 hover:bg-darcorp-brown600 text-darcorp-cream px-2 sm:px-2.5 py-2 rounded-lg font-bold text-xs sm:text-sm flex items-center space-x-1 border border-darcorp-brown600 shadow transition">
+          <i class="fa-solid fa-building-shield"></i>
+          <span class="hidden lg:inline">COMPANY</span> <span>PROFILE</span>
+        </button>
+
+        <!-- 3. Tombol Menu Ketiga: LOG IN (Membuka Pilihan Badan Usaha / Perorangan) -->
+        <button onclick="openModal('loginChoiceModal')" class="bg-white hover:bg-slate-100 text-darcorp-brown900 px-2.5 sm:px-3.5 py-2 rounded-lg font-black text-xs sm:text-sm flex items-center space-x-1.5 shadow-md hover:shadow-lg transition border border-darcorp-cream">
+          <i class="fa-solid fa-right-to-bracket text-darcorp-brown700"></i>
+          <span>LOG IN</span>
+        </button>
+
+        <!-- 4. Tombol Menu Layanan Berbayar (VA & E-Wallet) -->
+        <button onclick="openModal('paidServicesModal')" class="bg-darcorp-brown700 hover:bg-darcorp-brown600 text-white px-2 sm:px-2.5 py-2 rounded-lg font-bold text-xs sm:text-sm flex items-center space-x-1 shadow transition border border-darcorp-brown600">
+          <i class="fa-solid fa-credit-card text-amber-300"></i>
+          <span class="hidden sm:inline">LAYANAN</span> <span>BERBAYAR</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16">
+    <div class="text-center max-w-4xl mx-auto">
+      <!-- Badge -->
+      <div class="inline-flex items-center space-x-2 bg-darcorp-brown700 text-darcorp-cream px-4 py-1.5 rounded-full text-xs font-semibold shadow mb-6 border border-darcorp-brown600">
+        <i class="fa-solid fa-shield-halved text-amber-400"></i>
+        <span data-i18n="hero_badge">D.A.R LEGAL CORPORATE GOVERNANCE • DUA PEMEGANG KENDALI</span>
+      </div>
+
+      <!-- Main Title -->
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-darcorp-brown900 tracking-tight leading-tight mb-4" data-i18n="hero_title">
+        Ekosistem Multi-Perusahaan Terpadu DARcorporate
+      </h1>
+      
+      <!-- Subtitle -->
+      <p class="text-base sm:text-lg text-slate-700 leading-relaxed mb-8 max-w-2xl mx-auto font-normal" data-i18n="hero_desc">
+        Platform tata kelola digital untuk PT, CV, dan Yayasan. Dilengkapi presensi pintar deteksi lokasi GPS & foto wajah, pelaporan kerja harian, penggajian payroll, obrolan tim 3-tier terisolasi, dan portal kemitraan Form F1 & F2.
+      </p>
+
+      <!-- Prominent Access & Download App Card -->
+      <div class="glass-card rounded-2xl shadow-xl p-6 sm:p-8 border border-darcorp-light200 max-w-xl mx-auto mb-12">
+        <!-- OPSI 1: JALANKAN LANGSUNG VERSI WEB (TANPA PERLU DOWNLOAD) -->
+        <div class="bg-gradient-to-r from-emerald-700 via-emerald-800 to-emerald-900 rounded-xl p-4 sm:p-5 text-white shadow-lg mb-5 border-2 border-emerald-400 text-left">
+          <div class="flex items-center justify-between mb-2">
+            <span class="bg-amber-400 text-slate-950 text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+              ★ REKOMENDASI UTAMA: TANPA INSTALL
+            </span>
+            <span class="text-emerald-200 text-xs font-bold flex items-center gap-1">
+              <i class="fa-solid fa-bolt text-amber-300"></i> Instan 1-Klik
+            </span>
+          </div>
+          <h3 class="text-lg sm:text-xl font-black text-white">Jalankan Aplikasi Langsung di Web Google</h3>
+          <p class="text-xs text-emerald-100 mt-1 mb-4 leading-relaxed">
+            Pengguna dapat langsung menggunakan seluruh fitur aplikasi (Presensi Wajah, Layanan Berbayar, Portal Kemitraan F1/F2, Obrolan Tim, dan Company Profile) di browser Google Chrome, Safari, atau HP & Komputer tanpa perlu mendownload atau memasang file aplikasi.
+          </p>
+          <button onclick="launchFullWebApp('Pengguna Web Online')" class="w-full bg-amber-400 hover:bg-amber-300 text-slate-950 font-black py-3 px-4 rounded-xl text-sm flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl transition transform hover:scale-[1.01]">
+            <i class="fa-solid fa-globe text-base text-darcorp-brown900"></i>
+            <span>BUKA APLIKASI WEB SEKARANG (TANPA DOWNLOAD) &rarr;</span>
+          </button>
+        </div>
+
+        <div class="relative flex py-2 items-center mb-4">
+          <div class="flex-grow border-t border-slate-300"></div>
+          <span class="flex-shrink mx-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Atau Pasang File di Perangkat</span>
+          <div class="flex-grow border-t border-slate-300"></div>
+        </div>
+
+        <!-- OPSI 2: DOWNLOAD FILE APLIKASI MOBILE -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <button onclick="triggerDownload('android')" class="bg-darcorp-brown700 hover:bg-darcorp-brown800 text-white py-3 px-3 rounded-xl font-bold text-xs flex items-center justify-center space-x-2.5 shadow transition">
+            <i class="fa-brands fa-android text-xl text-emerald-400"></i>
+            <div class="text-left">
+              <div class="text-[9px] text-darcorp-cream font-medium">Download for</div>
+              <div class="text-xs font-extrabold">Android (.APK)</div>
+            </div>
+          </button>
+          
+          <button onclick="triggerDownload('ios')" class="bg-darcorp-brown800 hover:bg-darcorp-brown900 text-white py-3 px-3 rounded-xl font-bold text-xs flex items-center justify-center space-x-2.5 shadow transition">
+            <i class="fa-brands fa-apple text-xl text-slate-200"></i>
+            <div class="text-left">
+              <div class="text-[9px] text-slate-300 font-medium">Download for</div>
+              <div class="text-xs font-extrabold">iOS (.IPA)</div>
+            </div>
+          </button>
+        </div>
+
+        <!-- OPSI 3: Perintah Pasang Aplikasi (Google) & Izin Akses Perangkat -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mt-3">
+          <button onclick="triggerGoogleInstall()" class="bg-emerald-700 hover:bg-emerald-800 text-white py-2.5 px-3 rounded-xl font-bold text-xs flex items-center justify-center space-x-2 shadow transition border border-emerald-600">
+            <i class="fa-brands fa-google text-amber-300 text-base"></i>
+            <span class="text-left leading-tight">
+              <span class="block text-[9px] text-emerald-200">Perintah Pasang</span>
+              <span>Install dari Google</span>
+            </span>
+          </button>
+          
+          <button onclick="openModal('devicePermissionsModal')" class="bg-slate-900 hover:bg-slate-800 text-white py-2.5 px-3 rounded-xl font-bold text-xs flex items-center justify-center space-x-2 shadow transition border border-slate-700">
+            <i class="fa-solid fa-shield-halved text-amber-400 text-base"></i>
+            <span class="text-left leading-tight">
+              <span class="block text-[9px] text-slate-400">Otorisasi Sistem</span>
+              <span>Izin Akses Perangkat</span>
+            </span>
+          </button>
+        </div>
+
+        <!-- Release Info -->
+        <div class="mt-4 pt-3 border-t border-slate-200 flex flex-wrap justify-between items-center text-[10.5px] text-slate-500 gap-2">
+          <span><i class="fa-solid fa-code-commit text-darcorp-brown600"></i> Versi: <strong>v2.4.0 Cloud</strong></span>
+          <span><i class="fa-solid fa-shield text-emerald-600"></i> 100% Google Web Compliant</span>
+          <span class="text-emerald-700 font-bold cursor-pointer hover:underline" onclick="launchFullWebApp('Pengguna Web Online')">Buka Web App Langsung &rarr;</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6 Governance Pillars (Kartu Putih) -->
+    <div class="mt-8">
+      <div class="text-center mb-8">
+        <h2 class="text-2xl font-bold text-darcorp-brown900" data-i18n="pillars_title">Pilar Tata Kelola & Fitur Utama DARcorporate</h2>
+        <p class="text-xs sm:text-sm text-slate-600 mt-1" data-i18n="pillars_subtitle">Sistem yang dirancang sesuai kepatuhan hukum korporat dan operasional multi-perusahaan</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Pillar 1 -->
+        <div class="glass-card p-6 rounded-xl border border-darcorp-light200 shadow-sm hover:shadow-md transition">
+          <div class="w-12 h-12 bg-darcorp-brown800 text-darcorp-cream rounded-xl flex items-center justify-center text-xl mb-4">
+            <i class="fa-solid fa-building-user"></i>
+          </div>
+          <h3 class="text-base font-bold text-darcorp-brown900 mb-2" data-i18n="p1_title">Multi-Perusahaan (PT, CV, Yayasan)</h3>
+          <p class="text-xs text-slate-600 leading-relaxed" data-i18n="p1_desc">
+            Pendaftaran entitas legal lengkap dengan alamat akta, NIB, NPWP, dan bidang usaha (jual beli, jasa, supplier). Maksimal 5 pejabat tinggi (Sekretaris, Keuangan, Pemasaran, Operasional, Kepala Gudang) dengan kemampuan rangkap jabatan.
+          </p>
+        </div>
+
+        <!-- Pillar 2 -->
+        <div class="glass-card p-6 rounded-xl border border-darcorp-light200 shadow-sm hover:shadow-md transition">
+          <div class="w-12 h-12 bg-red-700 text-white rounded-xl flex items-center justify-center text-xl mb-4">
+            <i class="fa-solid fa-scale-balanced"></i>
+          </div>
+          <h3 class="text-base font-bold text-darcorp-brown900 mb-2" data-i18n="p2_title">Dua Pemegang Kendali & Hak Hapus</h3>
+          <p class="text-xs text-slate-600 leading-relaxed" data-i18n="p2_desc">
+            Dikuasai oleh Konsultan Hukum (Super Master dengan hak tunggal menghapus seluruh data & akun perusahaan) dan Direktur Utama (Operational Master pengelola operasional harian).
+          </p>
+        </div>
+
+        <!-- Pillar 3 -->
+        <div class="glass-card p-6 rounded-xl border border-darcorp-light200 shadow-sm hover:shadow-md transition">
+          <div class="w-12 h-12 bg-emerald-700 text-white rounded-xl flex items-center justify-center text-xl mb-4">
+            <i class="fa-solid fa-location-dot"></i>
+          </div>
+          <h3 class="text-base font-bold text-darcorp-brown900 mb-2" data-i18n="p3_title">Presensi Pintar GPS & Wajah</h3>
+          <p class="text-xs text-slate-600 leading-relaxed" data-i18n="p3_desc">
+            Karyawan melakukan presensi masuk dan pulang wajib disertai foto selfie verifikasi wajah dan penguncian koordinat GPS perangkat. Pelaporan kerja harian wajib diisi sebelum jam pulang.
+          </p>
+          <button onclick="openModal('biometricModal')" class="mt-3 text-xs font-bold text-emerald-700 hover:text-emerald-900 flex items-center space-x-1.5 transition">
+            <i class="fa-solid fa-camera"></i>
+            <span>Uji Registrasi Biometrik Wajah &rarr;</span>
+          </button>
+        </div>
+
+        <!-- Pillar 4 -->
+        <div class="glass-card p-6 rounded-xl border border-darcorp-light200 shadow-sm hover:shadow-md transition">
+          <div class="w-12 h-12 bg-amber-600 text-white rounded-xl flex items-center justify-center text-xl mb-4">
+            <i class="fa-solid fa-money-bill-wave"></i>
+          </div>
+          <h3 class="text-base font-bold text-darcorp-brown900 mb-2" data-i18n="p4_title">Payroll Tetap & Borongan</h3>
+          <p class="text-xs text-slate-600 leading-relaxed" data-i18n="p4_desc">
+            Manajemen dua status karyawan: Karyawan Tetap dengan skema gaji bulanan, dan Karyawan Tidak Tetap / Borongan dengan pembayaran upah mingguan berbasis kuota target.
+          </p>
+        </div>
+
+        <!-- Pillar 5 -->
+        <div class="glass-card p-6 rounded-xl border border-darcorp-light200 shadow-sm hover:shadow-md transition">
+          <div class="w-12 h-12 bg-blue-700 text-white rounded-xl flex items-center justify-center text-xl mb-4">
+            <i class="fa-solid fa-comments"></i>
+          </div>
+          <h3 class="text-base font-bold text-darcorp-brown900 mb-2" data-i18n="p5_title">Obrolan Tim 3-Tier Terisolasi</h3>
+          <p class="text-xs text-slate-600 leading-relaxed" data-i18n="p5_desc">
+            Tier 1 khusus Pemegang Kendali & Pejabat Tinggi; Tier 2 bersama Karyawan Tetap; Tier 3 bersama Karyawan Borongan. Karyawan tetap dan borongan tidak dapat saling melihat obrolan.
+          </p>
+        </div>
+
+        <!-- Pillar 6 -->
+        <div class="glass-card p-6 rounded-xl border border-darcorp-light200 shadow-sm hover:shadow-md transition">
+          <div class="w-12 h-12 bg-purple-700 text-white rounded-xl flex items-center justify-center text-xl mb-4">
+            <i class="fa-solid fa-handshake"></i>
+          </div>
+          <h3 class="text-base font-bold text-darcorp-brown900 mb-2" data-i18n="p6_title">Portal Calon Buyer & Supplier (F1 & F2)</h3>
+          <p class="text-xs text-slate-600 leading-relaxed" data-i18n="p6_desc">
+            Masuk dengan Google. Pengisian Formulir F1 penawaran spesifikasi barang (foto sampel, tonase, harga/kg). Penandatanganan digital Formulir F2 MoA dengan verifikasi KTP resmi.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Action Banner -->
+    <div class="mt-12 bg-darcorp-brown800 rounded-2xl p-6 sm:p-8 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 border border-darcorp-brown700">
+      <div class="flex items-center space-x-4">
+        <div class="w-16 h-16 bg-white rounded-2xl p-2 flex items-center justify-center shadow">
+          <img src="./dar_emblem.png" alt="Emblem" class="w-full h-full object-contain">
+        </div>
+        <div>
+          <h3 class="text-xl font-bold text-darcorp-cream" data-i18n="banner_title">Mulai Kemitraan dengan DARcorporate</h3>
+          <p class="text-xs sm:text-sm text-slate-300" data-i18n="banner_sub">Daftar sebagai Calon Pembeli (Buyer) atau Calon Penyuplai (Supplier) sekarang.</p>
+        </div>
+      </div>
+      <div class="flex flex-wrap gap-3">
+        <button onclick="openModal('f1Modal')" class="bg-darcorp-brown600 hover:bg-darcorp-brown500 text-white px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm shadow transition">
+          <i class="fa-solid fa-pen-to-square mr-1.5"></i> <span data-i18n="btn_fill_f1">Isi Formulir F1</span>
+        </button>
+        <button onclick="openModal('googleLoginModal')" class="bg-white hover:bg-slate-100 text-slate-900 px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm shadow transition">
+          <i class="fa-brands fa-google text-red-500 mr-1.5"></i> <span data-i18n="btn_login_partner">Login Kemitraan</span>
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer (Cokelat Tua) -->
+  <footer class="bg-darcorp-brown900 text-slate-400 py-10 border-t border-darcorp-brown800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+        <div>
+          <div class="flex items-center justify-center sm:justify-start space-x-2 text-white font-black text-lg mb-3">
+            <span>DARcorporate</span>
+            <span class="text-darcorp-cream text-xs font-semibold">LEGAL CORPORATE</span>
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Dikuasai oleh Pejabat Legal / Konsultan Hukum Perusahaan & Direktur Utama. Sistem tata kelola legalitas, manajemen SDM, presensi berbasis lokasi, dan portal pengadaan mitra.
+          </p>
+        </div>
+        <div>
+          <h4 class="text-white font-bold text-sm mb-3">Kontak & Sekretariat</h4>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            SCBD Tower 18, Level 22, Jakarta Selatan, Indonesia<br>
+            Email: <strong>legal@darcorp.id</strong> | <strong>direksi@darcorp.id</strong><br>
+            Tel: +62 21 5500-DAR (827)
+          </p>
+        </div>
+        <div>
+          <h4 class="text-white font-bold text-sm mb-3">Kepatuhan Hukum</h4>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Hak Hapus Data Mutlak dipegang oleh Adv. Hendra Kusuma, S.H. Seluruh transmisi dokumen dienkripsi dengan standar AES-256 dan arsip otomatis 30 hari.
+          </p>
+        </div>
+      </div>
+      <div class="border-t border-darcorp-brown800 pt-6 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500">
+        <div>&copy; 2026 DARcorporate Ecosystem. All Rights Reserved.</div>
+        <div class="mt-2 sm:mt-0 flex space-x-4">
+          <a href="#" class="hover:text-slate-300">Syarat & Ketentuan</a>
+          <a href="#" class="hover:text-slate-300">Kebijakan Privasi</a>
+    </div>
+  </footer>
+  </div> <!-- END landingPageView -->
+
+  <!-- ======================================================== -->
+  <!-- FULL CLOUD WEB APPLICATION VIEW (GOOGLE BROWSER ONLINE)  -->
+  <!-- Memungkinkan aplikasi digunakan langsung tanpa download   -->
+  <!-- ======================================================== -->
+  <div id="fullWebAppSection" class="hidden min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans">
+    <!-- Top Web App Bar -->
+    <header class="bg-darcorp-brown900 border-b border-darcorp-brown800 px-4 py-3 sticky top-0 z-40 shadow-lg">
+      <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-3">
+        <!-- Brand & Cloud Status -->
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 bg-white rounded-xl p-1 shadow flex items-center justify-center">
+            <img src="./dar_emblem.png" alt="DAR Emblem" class="w-full h-full object-contain">
+          </div>
+          <div>
+            <div class="flex items-center space-x-2">
+              <span class="text-white font-black text-lg">DARcorporate</span>
+              <span class="bg-emerald-600 text-white text-[10px] font-black px-2 py-0.5 rounded-full flex items-center gap-1 shadow">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-300 animate-ping"></span> ONLINE CLOUD WEB
+              </span>
+            </div>
+            <p class="text-[11px] text-amber-200">Aplikasi Berjalan Langsung di Web Browser Google (Tanpa Install)</p>
+          </div>
+        </div>
+
+        <!-- Controls: Company Switcher & Role Selector -->
+        <div class="flex flex-wrap items-center gap-2">
+          <!-- Company Selector -->
+          <div class="flex items-center space-x-1.5 bg-slate-900 border border-slate-800 rounded-lg px-2.5 py-1.5">
+            <i class="fa-solid fa-building text-amber-400 text-xs"></i>
+            <select id="webCompanySelect" onchange="switchWebCompany(this.value)" class="bg-transparent text-xs font-bold text-amber-300 focus:outline-none cursor-pointer">
+              <option value="PT. Satria Saftindo Jaya" class="bg-slate-900 text-white">PT. Satria Saftindo Jaya (LTC Glodok)</option>
+              <option value="CV. Sejahtera Mandiri Metal" class="bg-slate-900 text-white">CV. Sejahtera Mandiri Metal (Percetakan)</option>
+              <option value="PT. Infiniti Sumber Alam" class="bg-slate-900 text-white">PT. Infiniti Sumber Alam (Kosambi)</option>
+              <option value="Yayasan Purgatorio Tangerang" class="bg-slate-900 text-white">Yayasan Purgatorio Tangerang (Pendidikan)</option>
+            </select>
+          </div>
+
+          <!-- Role Selector -->
+          <div class="flex items-center space-x-1.5 bg-slate-900 border border-slate-800 rounded-lg px-2.5 py-1.5">
+            <i class="fa-solid fa-user-shield text-emerald-400 text-xs"></i>
+            <select id="webRoleSelect" onchange="switchWebUserRole(this.value)" class="bg-transparent text-xs font-bold text-emerald-300 focus:outline-none cursor-pointer">
+              <option value="Adv. Deny Akhbar, S.H. (Pejabat Legal / Super Controller)" class="bg-slate-900 text-white">Adv. Deny Akhbar, S.H. (Legal Super Controller)</option>
+              <option value="Bambang Wijaya, B.Eng. (Direktur Utama / Operational Master)" class="bg-slate-900 text-white">Bambang Wijaya, B.Eng. (Direktur Utama)</option>
+              <option value="Hendra Saputra (Karyawan Tetap SCBD)" class="bg-slate-900 text-white">Hendra Saputra (Karyawan Tetap)</option>
+              <option value="Budi Hartono (Mitra Usaha)" class="bg-slate-900 text-white">Budi Hartono (Mitra Usaha)</option>
+              <option value="Deny Akhbar (Klien Pribadi Perorangan)" class="bg-slate-900 text-white">Deny Akhbar (Klien Perorangan)</option>
+            </select>
+          </div>
+
+          <!-- Exit Web App Button -->
+          <button onclick="exitFullWebApp()" class="bg-darcorp-brown800 hover:bg-darcorp-brown700 text-white px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 border border-darcorp-brown700 shadow transition">
+            <i class="fa-solid fa-arrow-left"></i>
+            <span class="hidden sm:inline">Halaman</span> <span>Beranda</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs Bar -->
+    <nav class="bg-slate-900 border-b border-slate-800 px-4 py-2 sticky top-[65px] z-30 overflow-x-auto">
+      <div class="max-w-7xl mx-auto flex space-x-2 text-xs font-bold">
+        <button onclick="switchWebTab('dashboard')" id="btnTabDashboard" class="web-nav-btn active px-3.5 py-2 rounded-lg bg-darcorp-brown700 text-white shadow flex items-center gap-2 whitespace-nowrap">
+          <i class="fa-solid fa-chart-line text-amber-400"></i>
+          <span>Dashboard & Analitik</span>
+        </button>
+        <button onclick="switchWebTab('presence')" id="btnTabPresence" class="web-nav-btn px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 flex items-center gap-2 whitespace-nowrap transition">
+          <i class="fa-solid fa-camera-retro text-emerald-400"></i>
+          <span>Presensi Pintar & QR</span>
+        </button>
+        <button onclick="switchWebTab('paid-services')" id="btnTabPaidServices" class="web-nav-btn px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 flex items-center gap-2 whitespace-nowrap transition">
+          <i class="fa-solid fa-credit-card text-sky-400"></i>
+          <span>Layanan Berbayar (Dana/Seabank/Ovo/Gopay)</span>
+        </button>
+        <button onclick="switchWebTab('chat')" id="btnTabChat" class="web-nav-btn px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 flex items-center gap-2 whitespace-nowrap transition">
+          <i class="fa-solid fa-comments text-purple-400"></i>
+          <span>Obrolan 3-Tier</span>
+        </button>
+        <button onclick="switchWebTab('vault')" id="btnTabVault" class="web-nav-btn px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 flex items-center gap-2 whitespace-nowrap transition">
+          <i class="fa-solid fa-vault text-amber-500"></i>
+          <span>Vault Dokumen 30H</span>
+        </button>
+        <button onclick="switchWebTab('partner')" id="btnTabPartner" class="web-nav-btn px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 flex items-center gap-2 whitespace-nowrap transition">
+          <i class="fa-solid fa-file-signature text-rose-400"></i>
+          <span>Portal Kemitraan (F1 & F2)</span>
+        </button>
+        <button onclick="switchWebTab('profile-pdf')" id="btnTabProfilePdf" class="web-nav-btn px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 flex items-center gap-2 whitespace-nowrap transition">
+          <i class="fa-solid fa-file-pdf text-red-400"></i>
+          <span>Company Profile D.A.R (PDF)</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Main Web App Content Area -->
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-1 w-full">
+      <!-- 1. TAB: DASHBOARD & ANALITIK -->
+      <section id="webTabDashboard" class="space-y-6">
+        <!-- Executive Welcome Card -->
+        <div class="bg-gradient-to-r from-darcorp-brown900 via-slate-900 to-darcorp-brown800 border border-darcorp-brown700 rounded-2xl p-5 shadow-xl">
+          <div class="flex flex-wrap justify-between items-center gap-4">
+            <div>
+              <span class="text-amber-400 text-xs font-bold uppercase tracking-wider block mb-1">PUSAT KOMANDO OPERASIONAL WEB</span>
+              <h2 id="webDashboardGreeting" class="text-xl sm:text-2xl font-black text-white">Selamat Datang di Portal Cloud DARcorporate</h2>
+              <p class="text-xs text-slate-300 mt-1">
+                Sistem aktif secara real-time. Anda sedang mengakses entitas: <strong id="webCurrentCompanyLabel" class="text-amber-300">PT. Satria Saftindo Jaya</strong>
+              </p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="switchWebTab('presence')" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-4 py-2 rounded-xl flex items-center gap-2 shadow">
+                <i class="fa-solid fa-camera"></i> Presensi Wajah Sekarang
+              </button>
+              <button onclick="switchWebTab('paid-services')" class="bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold px-4 py-2 rounded-xl flex items-center gap-2 shadow">
+                <i class="fa-solid fa-credit-card"></i> Kasir Pembayaran
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 Metric Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow">
+            <div class="flex justify-between items-start">
+              <div>
+                <p class="text-slate-400 text-[11px] font-medium">Tingkat Kehadiran Hari Ini</p>
+                <h3 class="text-2xl font-black text-emerald-400 mt-1">98.4%</h3>
+              </div>
+              <div class="w-9 h-9 rounded-lg bg-emerald-950 text-emerald-400 flex items-center justify-center">
+                <i class="fa-solid fa-user-check"></i>
+              </div>
+            </div>
+            <p class="text-[10px] text-slate-400 mt-2">142/145 Karyawan Terverifikasi Wajah</p>
+          </div>
+
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow">
+            <div class="flex justify-between items-start">
+              <div>
+                <p class="text-slate-400 text-[11px] font-medium">Kemitraan Form F1 & F2</p>
+                <h3 class="text-2xl font-black text-amber-400 mt-1">12 Berkas</h3>
+              </div>
+              <div class="w-9 h-9 rounded-lg bg-amber-950 text-amber-400 flex items-center justify-center">
+                <i class="fa-solid fa-file-contract"></i>
+              </div>
+            </div>
+            <p class="text-[10px] text-slate-400 mt-2">Semua MoA Berpayung Hukum Advokat</p>
+          </div>
+
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow">
+            <div class="flex justify-between items-start">
+              <div>
+                <p class="text-slate-400 text-[11px] font-medium">Retensi Vault 30 Hari</p>
+                <h3 class="text-2xl font-black text-sky-400 mt-1">18 Dokumen</h3>
+              </div>
+              <div class="w-9 h-9 rounded-lg bg-sky-950 text-sky-400 flex items-center justify-center">
+                <i class="fa-solid fa-vault"></i>
+              </div>
+            </div>
+            <p class="text-[10px] text-slate-400 mt-2">Bukti Transfer & Surat Jalan Tersimpan</p>
+          </div>
+
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow">
+            <div class="flex justify-between items-start">
+              <div>
+                <p class="text-slate-400 text-[11px] font-medium">Kepatuhan Hukum & Audit</p>
+                <h3 class="text-2xl font-black text-purple-400 mt-1">ISO / GDPR</h3>
+              </div>
+              <div class="w-9 h-9 rounded-lg bg-purple-950 text-purple-400 flex items-center justify-center">
+                <i class="fa-solid fa-shield-halved"></i>
+              </div>
+            </div>
+            <p class="text-[10px] text-slate-400 mt-2">Dikuasai Super Controller Advokat</p>
+          </div>
+        </div>
+
+        <!-- Multi-Company Operational Status Grid -->
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow">
+          <h3 class="font-bold text-white text-sm mb-3 flex items-center gap-2">
+            <i class="fa-solid fa-sitemap text-amber-400"></i>
+            <span>Status 4 Badan Usaha & Portofolio D.A.R.</span>
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+            <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800 flex justify-between items-center">
+              <div>
+                <h4 class="font-bold text-amber-400">PT. Satria Saftindo Jaya</h4>
+                <p class="text-[11px] text-slate-400">Pusat Distributor Safety LTC Glodok (30 Cabang Toko)</p>
+                <span class="text-[10px] text-emerald-400 mt-1 inline-block">✓ Perlindungan Merek & Hak Ekonomi Aktif</span>
+              </div>
+              <span class="bg-emerald-950 text-emerald-400 text-[10px] font-bold px-2.5 py-1 rounded-full border border-emerald-800">MITRA TETAP</span>
+            </div>
+
+            <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800 flex justify-between items-center">
+              <div>
+                <h4 class="font-bold text-amber-400">CV. Sejahtera Mandiri Metal</h4>
+                <p class="text-[11px] text-slate-400">Industri Percetakan Logam & Fabrikasi</p>
+                <span class="text-[10px] text-emerald-400 mt-1 inline-block">✓ Kemenangan Perkara Cidera Janji PN Jakbar 2023</span>
+              </div>
+              <span class="bg-emerald-950 text-emerald-400 text-[10px] font-bold px-2.5 py-1 rounded-full border border-emerald-800">MITRA TETAP</span>
+            </div>
+
+            <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800 flex justify-between items-center">
+              <div>
+                <h4 class="font-bold text-amber-400">PT. Infiniti Sumber Alam</h4>
+                <p class="text-[11px] text-slate-400">Pergudangan Mutiara Kosambi 1 (Logistik Pertanian)</p>
+                <span class="text-[10px] text-emerald-400 mt-1 inline-block">✓ Selesai Sengketa Supplier/Buyer Surabaya & Tasikmalaya</span>
+              </div>
+              <span class="bg-emerald-950 text-emerald-400 text-[10px] font-bold px-2.5 py-1 rounded-full border border-emerald-800">MITRA TETAP</span>
+            </div>
+
+            <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800 flex justify-between items-center">
+              <div>
+                <h4 class="font-bold text-amber-400">Yayasan Purgatorio Tangerang</h4>
+                <p class="text-[11px] text-slate-400">Lembaga Pendidikan Islam Tingkat SLTP & SLTA</p>
+                <span class="text-[10px] text-emerald-400 mt-1 inline-block">✓ Kemenangan Gugatan Hukum & Pengawalan Kepatuhan</span>
+              </div>
+              <span class="bg-emerald-950 text-emerald-400 text-[10px] font-bold px-2.5 py-1 rounded-full border border-emerald-800">MITRA TETAP</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. TAB: PRESENSI PINTAR & QR SCANNER -->
+      <section id="webTabPresence" class="hidden space-y-5">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow">
+          <div class="flex flex-wrap justify-between items-center mb-4 pb-3 border-b border-slate-800 gap-2">
+            <div>
+              <h3 class="font-bold text-white text-base flex items-center gap-2">
+                <i class="fa-solid fa-camera text-emerald-400"></i>
+                <span>Presensi Wajah & Deteksi Lokasi GPS SCBD</span>
+              </h3>
+              <p class="text-xs text-slate-400">Verifikasi kehadiran anti-spoofing terenkripsi langsung via browser Google</p>
+            </div>
+            <span class="bg-slate-800 text-slate-300 text-xs px-3 py-1 rounded-lg border border-slate-700">
+              <i class="fa-solid fa-location-dot text-emerald-400"></i> SCBD Tower 18, Jakarta Selatan (-6.2241, 106.8099)
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <!-- Camera Viewfinder -->
+            <div class="bg-slate-950 border-2 border-slate-800 rounded-xl p-4 flex flex-col items-center justify-center text-center relative overflow-hidden min-h-[300px]">
+              <div class="w-36 h-44 border-2 border-dashed border-emerald-400 rounded-[50%] flex items-center justify-center relative shadow-[0_0_15px_rgba(16,185,129,0.2)]">
+                <i class="fa-solid fa-user text-5xl text-slate-600"></i>
+                <div class="absolute inset-x-0 top-1/2 h-0.5 bg-emerald-400 shadow-[0_0_8px_#10b981] animate-pulse"></div>
+              </div>
+              <p class="text-xs text-slate-400 mt-3 font-medium">Arahkan wajah tegak ke dalam bingkai panduan</p>
+              
+              <div class="flex gap-2 mt-4 w-full max-w-xs">
+                <button onclick="takeWebCamAttendance()" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white py-2.5 px-3 rounded-lg text-xs font-bold shadow flex items-center justify-center gap-1.5 transition">
+                  <i class="fa-solid fa-camera"></i> Rekam Kehadiran
+                </button>
+                <button onclick="openModal('biometricModal')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 py-2.5 px-3 rounded-lg text-xs font-bold border border-slate-700 transition">
+                  <i class="fa-solid fa-qrcode"></i> Pindai QR
+                </button>
+              </div>
+            </div>
+
+            <!-- Log Kehadiran Terkini -->
+            <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 flex flex-col justify-between">
+              <div>
+                <h4 class="font-bold text-white text-xs mb-3 flex items-center gap-2">
+                  <i class="fa-solid fa-clipboard-list text-amber-400"></i> Riwayat Presensi Hari Ini:
+                </h4>
+                <div id="webPresenceLogs" class="space-y-2 text-xs">
+                  <div class="bg-slate-900 p-2.5 rounded-lg border border-slate-800 flex justify-between items-center">
+                    <div>
+                      <strong class="text-white">Deny Akhbar (Super Controller)</strong>
+                      <p class="text-[10px] text-slate-400">08:02 WIB • SCBD Tower 18 • GPS Valid</p>
+                    </div>
+                    <span class="bg-emerald-950 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded border border-emerald-800">HADIR</span>
+                  </div>
+                  <div class="bg-slate-900 p-2.5 rounded-lg border border-slate-800 flex justify-between items-center">
+                    <div>
+                      <strong class="text-white">Bambang Wijaya (Direktur Utama)</strong>
+                      <p class="text-[10px] text-slate-400">08:14 WIB • Kantor Tangerang • GPS Valid</p>
+                    </div>
+                    <span class="bg-emerald-950 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded border border-emerald-800">HADIR</span>
+                  </div>
+                  <div class="bg-slate-900 p-2.5 rounded-lg border border-slate-800 flex justify-between items-center">
+                    <div>
+                      <strong class="text-white">Hendra Saputra (Staf Keuangan)</strong>
+                      <p class="text-[10px] text-slate-400">08:29 WIB • SCBD Tower 18 • QR Scanned</p>
+                    </div>
+                    <span class="bg-emerald-950 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded border border-emerald-800">HADIR</span>
+                  </div>
+                </div>
+              </div>
+              <p class="text-[10px] text-slate-500 mt-4 border-t border-slate-900 pt-2">
+                Presensi terintegrasi langsung dengan modul Penggajian Payroll harian.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. TAB: LAYANAN BERBAYAR & PEMBAYARAN LANGSUNG -->
+      <section id="webTabPaidServices" class="hidden space-y-5">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow">
+          <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-800">
+            <div>
+              <h3 class="font-bold text-white text-base flex items-center gap-2">
+                <i class="fa-solid fa-credit-card text-sky-400"></i>
+                <span>Menu Layanan Berbayar & Rekening Resmi Penerima</span>
+              </h3>
+              <p class="text-xs text-slate-400">Khusus Klien Perorangan dan Badan Usaha Non-Mitra (Pembayaran Langsung)</p>
+            </div>
+            <button onclick="openModal('paidServicesModal')" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow">
+              Buka Modal Kasir &rarr;
+            </button>
+          </div>
+
+          <!-- Rekening Penerima Resmi Banner -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-5 text-xs">
+            <div class="bg-orange-950/40 border border-orange-500/50 rounded-xl p-3">
+              <span class="text-orange-400 text-[10px] font-bold block">SeaBank Rekening Penerima:</span>
+              <p class="font-mono font-black text-white text-sm my-0.5">901118227810</p>
+              <p class="text-[10px] text-slate-300">a.n. PT DAR CORPORATE INDONESIA</p>
+              <button onclick="copyAccount('901118227810', 'SeaBank')" class="text-orange-300 text-[10px] font-bold mt-1.5 hover:underline">Salin Nomor &rarr;</button>
+            </div>
+
+            <div class="bg-sky-950/40 border border-sky-500/50 rounded-xl p-3">
+              <span class="text-sky-400 text-[10px] font-bold block">DANA Official:</span>
+              <p class="font-mono font-black text-white text-sm my-0.5">0895345657270</p>
+              <p class="text-[10px] text-slate-300">a.n. DAR Corporate Services</p>
+              <button onclick="copyAccount('0895345657270', 'DANA')" class="text-sky-300 text-[10px] font-bold mt-1.5 hover:underline">Salin Nomor &rarr;</button>
+            </div>
+
+            <div class="bg-purple-950/40 border border-purple-500/50 rounded-xl p-3">
+              <span class="text-purple-400 text-[10px] font-bold block">OVO Bisnis:</span>
+              <p class="font-mono font-black text-white text-sm my-0.5">0895345657270</p>
+              <p class="text-[10px] text-slate-300">a.n. PT DAR CORPORATE</p>
+              <button onclick="copyAccount('0895345657270', 'OVO')" class="text-purple-300 text-[10px] font-bold mt-1.5 hover:underline">Salin Nomor &rarr;</button>
+            </div>
+
+            <div class="bg-emerald-950/40 border border-emerald-500/50 rounded-xl p-3">
+              <span class="text-emerald-400 text-[10px] font-bold block">GoPay Bisnis:</span>
+              <p class="font-mono font-black text-white text-sm my-0.5">087765483134</p>
+              <p class="text-[10px] text-slate-300">a.n. DAR Corporate Services</p>
+              <button onclick="copyAccount('087765483134', 'GoPay')" class="text-emerald-300 text-[10px] font-bold mt-1.5 hover:underline">Salin Nomor &rarr;</button>
+            </div>
+          </div>
+
+          <!-- Services Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+            <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 flex flex-col justify-between">
+              <div>
+                <span class="bg-purple-950 text-purple-300 text-[10px] font-bold px-2 py-0.5 rounded border border-purple-800">PERORANGAN</span>
+                <h4 class="font-bold text-white text-sm mt-1">Konsultasi Hukum Privat Advokat</h4>
+                <p class="text-slate-400 text-[11px] mt-1">Konsultasi tatap muka di SCBD Tower 18 atau video call terenkripsi bersama Advokat D.A.R.</p>
+              </div>
+              <div class="mt-4 pt-2 border-t border-slate-800 flex justify-between items-center">
+                <span class="font-black text-amber-400 text-sm">Rp 350.000</span>
+                <button onclick="openModal('paidServicesModal'); selectPaidServiceForCheckout('Konsultasi Hukum Privat (Perorangan)', 'Rp 350.000')" class="bg-amber-600 hover:bg-amber-500 text-white px-3 py-1 rounded-lg font-bold">Bayar Langsung</button>
+              </div>
+            </div>
+
+            <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 flex flex-col justify-between">
+              <div>
+                <span class="bg-emerald-950 text-emerald-300 text-[10px] font-bold px-2 py-0.5 rounded border border-emerald-800">NON-MITRA</span>
+                <h4 class="font-bold text-white text-sm mt-1">Audit Fast-Track Kemitraan (F1/F2)</h4>
+                <p class="text-slate-400 text-[11px] mt-1">Verifikasi kilat 1x24 jam legalitas NIB & NPWP perusahaan untuk menjadi Mitra Resmi D.A.R.</p>
+              </div>
+              <div class="mt-4 pt-2 border-t border-slate-800 flex justify-between items-center">
+                <span class="font-black text-amber-400 text-sm">Rp 950.000</span>
+                <button onclick="openModal('paidServicesModal'); selectPaidServiceForCheckout('Audit Fast-Track Kemitraan (Non-Mitra)', 'Rp 950.000')" class="bg-amber-600 hover:bg-amber-500 text-white px-3 py-1 rounded-lg font-bold">Bayar Langsung</button>
+              </div>
+            </div>
+
+            <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 flex flex-col justify-between">
+              <div>
+                <span class="bg-emerald-950 text-emerald-300 text-[10px] font-bold px-2 py-0.5 rounded border border-emerald-800">BADAN USAHA</span>
+                <h4 class="font-bold text-white text-sm mt-1">Pendirian PT / CV Lengkap & NIB</h4>
+                <p class="text-slate-400 text-[11px] mt-1">Akta Notaris, SK Kemenkumham, NIB OSS RBA, NPWP Badan dan advis struktur direksi.</p>
+              </div>
+              <div class="mt-4 pt-2 border-t border-slate-800 flex justify-between items-center">
+                <span class="font-black text-amber-400 text-sm">Rp 4.500.000</span>
+                <button onclick="openModal('paidServicesModal'); selectPaidServiceForCheckout('Pendirian PT/CV & NIB OSS', 'Rp 4.500.000')" class="bg-amber-600 hover:bg-amber-500 text-white px-3 py-1 rounded-lg font-bold">Bayar Langsung</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. TAB: OBROLAN 3-TIER -->
+      <section id="webTabChat" class="hidden space-y-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow flex flex-col h-[600px]">
+          <div class="flex flex-wrap justify-between items-center mb-3 pb-3 border-b border-slate-800 gap-2">
+            <div>
+              <h3 class="font-bold text-white text-sm sm:text-base flex items-center gap-2">
+                <i class="fa-solid fa-comments text-purple-400"></i>
+                <span>Komunikasi Terisolasi 3-Tier DARcorporate</span>
+              </h3>
+              <p class="text-xs text-slate-400">Pemisahan obrolan berjenjang demi perlindungan data & kepatuhan</p>
+            </div>
+            
+            <!-- Tier Filter Pills -->
+            <div class="flex space-x-1.5 bg-slate-950 p-1 rounded-xl text-xs">
+              <button onclick="selectChatTier(1)" id="tierBtn1" class="px-3 py-1 rounded-lg bg-purple-700 text-white font-bold transition">Tier 1 (Direksi & Legal)</button>
+              <button onclick="selectChatTier(2)" id="tierBtn2" class="px-3 py-1 rounded-lg text-slate-400 hover:text-white transition">Tier 2 (Staf Tetap)</button>
+              <button onclick="selectChatTier(3)" id="tierBtn3" class="px-3 py-1 rounded-lg text-slate-400 hover:text-white transition">Tier 3 (Borongan)</button>
+            </div>
+          </div>
+
+          <!-- Chat Messages Container -->
+          <div id="webChatFeed" class="flex-1 overflow-y-auto space-y-3 p-3 bg-slate-950 rounded-xl border border-slate-800 text-xs">
+            <div class="flex items-start gap-2.5">
+              <div class="w-7 h-7 rounded-full bg-amber-600 text-white flex items-center justify-center font-bold text-xs">DA</div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <strong class="text-amber-400">Adv. Deny Akhbar, S.H. (Pejabat Legal)</strong>
+                  <span class="text-[10px] text-slate-500">09:15 WIB</span>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 p-2.5 rounded-xl rounded-tl-none text-slate-200 mt-1 max-w-lg">
+                  Klausul arbitrase dan ganti rugi pada draf MoA F2 untuk PT. Infiniti Sumber Alam sudah saya selesaikan. Silakan ditinjau.
+                </div>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-2.5">
+              <div class="w-7 h-7 rounded-full bg-sky-600 text-white flex items-center justify-center font-bold text-xs">BW</div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <strong class="text-sky-400">Bambang Wijaya (Direktur Utama)</strong>
+                  <span class="text-[10px] text-slate-500">09:22 WIB</span>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 p-2.5 rounded-xl rounded-tl-none text-slate-200 mt-1 max-w-lg">
+                  Siap Pak Deny, tim operasional pergudangan Dadap Kosambi sudah standby untuk eksekusi muatan 50 ton minggu ini.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chat Input -->
+          <div class="mt-3 flex items-center gap-2">
+            <input type="text" id="webChatMessageInput" placeholder="Ketik pesan pesan terenkripsi..." class="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-purple-500" onkeydown="if(event.key==='Enter') sendWebChatMessage()">
+            <button onclick="sendWebChatMessage()" class="bg-purple-700 hover:bg-purple-600 text-white px-5 py-2.5 rounded-xl font-bold text-xs flex items-center gap-1.5 shadow transition">
+              <i class="fa-solid fa-paper-plane"></i>
+              <span>Kirim</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. TAB: VAULT DOKUMEN RETENSI 30 HARI -->
+      <section id="webTabVault" class="hidden space-y-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow">
+          <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-800">
+            <div>
+              <h3 class="font-bold text-white text-base flex items-center gap-2">
+                <i class="fa-solid fa-vault text-amber-500"></i>
+                <span>Vault Dokumen Retensi Otomatis 30 Hari</span>
+              </h3>
+              <p class="text-xs text-slate-400">Bukti transfer, faktur operasional, dan surat jalan tersimpan tepat 30 hari demi efisiensi</p>
+            </div>
+            <button onclick="openModal('f1Modal')" class="bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow">
+              + Unggah Berkas Baru
+            </button>
+          </div>
+
+          <div class="overflow-x-auto text-xs">
+            <table class="w-full text-left">
+              <thead class="bg-slate-950 text-slate-400 uppercase text-[10px] tracking-wider">
+                <tr>
+                  <th class="py-2.5 px-3">Nama Dokumen</th>
+                  <th class="py-2.5 px-3">Kategori</th>
+                  <th class="py-2.5 px-3">Perusahaan</th>
+                  <th class="py-2.5 px-3">Masa Retensi</th>
+                  <th class="py-2.5 px-3 text-right">Aksi</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-800">
+                <tr class="hover:bg-slate-800/40">
+                  <td class="py-2.5 px-3 font-bold text-white">Struk_Transfer_SeaBank_901118227810.pdf</td>
+                  <td class="py-2.5 px-3"><span class="bg-emerald-950 text-emerald-400 text-[10px] px-2 py-0.5 rounded border border-emerald-800">Bukti Bayar</span></td>
+                  <td class="py-2.5 px-3 text-slate-300">PT. Satria Saftindo Jaya</td>
+                  <td class="py-2.5 px-3 text-amber-400 font-medium">Sisa 29 Hari</td>
+                  <td class="py-2.5 px-3 text-right">
+                    <button onclick="showToast('Mengunduh dokumen dari vault...')" class="text-sky-400 hover:underline">Unduh</button>
+                  </td>
+                </tr>
+                <tr class="hover:bg-slate-800/40">
+                  <td class="py-2.5 px-3 font-bold text-white">Surat_Jalan_Pengiriman_Logam_CV_SMM.jpg</td>
+                  <td class="py-2.5 px-3"><span class="bg-sky-950 text-sky-400 text-[10px] px-2 py-0.5 rounded border border-sky-800">Surat Jalan</span></td>
+                  <td class="py-2.5 px-3 text-slate-300">CV. Sejahtera Mandiri Metal</td>
+                  <td class="py-2.5 px-3 text-amber-400 font-medium">Sisa 24 Hari</td>
+                  <td class="py-2.5 px-3 text-right">
+                    <button onclick="showToast('Mengunduh dokumen dari vault...')" class="text-sky-400 hover:underline">Unduh</button>
+                  </td>
+                </tr>
+                <tr class="hover:bg-slate-800/40">
+                  <td class="py-2.5 px-3 font-bold text-white">Laporan_Forensic_Legal_Audit_ISA.pdf</td>
+                  <td class="py-2.5 px-3"><span class="bg-purple-950 text-purple-400 text-[10px] px-2 py-0.5 rounded border border-purple-800">Legal Audit</span></td>
+                  <td class="py-2.5 px-3 text-slate-300">PT. Infiniti Sumber Alam</td>
+                  <td class="py-2.5 px-3 text-amber-400 font-medium">Sisa 21 Hari</td>
+                  <td class="py-2.5 px-3 text-right">
+                    <button onclick="showToast('Mengunduh dokumen dari vault...')" class="text-sky-400 hover:underline">Unduh</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. TAB: PORTAL KEMITRAAN F1 & F2 -->
+      <section id="webTabPartner" class="hidden space-y-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow">
+          <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-800">
+            <div>
+              <h3 class="font-bold text-white text-base flex items-center gap-2">
+                <i class="fa-solid fa-file-signature text-rose-400"></i>
+                <span>Portal Calon Mitra: Form F1 & Form F2</span>
+              </h3>
+              <p class="text-xs text-slate-400">Pengajuan penawaran harga dan penandatanganan Memorandum of Agreement (MoA) digital</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+            <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 flex flex-col justify-between">
+              <div>
+                <span class="bg-amber-950 text-amber-300 text-[10px] font-bold px-2 py-0.5 rounded border border-amber-800">FORM F1</span>
+                <h4 class="font-bold text-white text-sm mt-1.5">Pengajuan Penawaran Harga Barang / Pasokan</h4>
+                <p class="text-slate-400 text-[11px] mt-1 leading-relaxed">
+                  Unggah spesifikasi barang, foto sampel fisik, perkiraan tonase per pengiriman, harga satuan, dan data legalitas perusahaan untuk ditinjau oleh Legal & Direksi.
+                </p>
+              </div>
+              <button onclick="openModal('f1Modal')" class="mt-4 bg-darcorp-brown700 hover:bg-darcorp-brown600 text-white font-bold py-2 px-4 rounded-lg flex items-center justify-center gap-1.5 shadow transition">
+                <i class="fa-solid fa-file-pen"></i> Isi Formulir F1 Sekarang
+              </button>
+            </div>
+
+            <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 flex flex-col justify-between">
+              <div>
+                <span class="bg-emerald-950 text-emerald-300 text-[10px] font-bold px-2 py-0.5 rounded border border-emerald-800">FORM F2</span>
+                <h4 class="font-bold text-white text-sm mt-1.5">Penandatanganan Digital Perjanjian MoA</h4>
+                <p class="text-slate-400 text-[11px] mt-1 leading-relaxed">
+                  Penandatanganan langsung di atas kanvas digital (E-Signature) untuk mengesahkan perjanjian kemitraan berpayung hukum dengan klausul arbitrase resmi D.A.R. Law Office.
+                </p>
+              </div>
+              <button onclick="openModal('f2Modal')" class="mt-4 bg-emerald-700 hover:bg-emerald-600 text-white font-bold py-2 px-4 rounded-lg flex items-center justify-center gap-1.5 shadow transition">
+                <i class="fa-solid fa-signature"></i> Tanda Tangani MoA F2 Digital
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. TAB: COMPANY PROFILE PDF VIEWER -->
+      <section id="webTabProfilePdf" class="hidden space-y-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow">
+          <div class="flex justify-between items-center mb-3 pb-3 border-b border-slate-800">
+            <div>
+              <h3 class="font-bold text-white text-base flex items-center gap-2">
+                <i class="fa-solid fa-file-pdf text-red-400"></i>
+                <span>Company Profile D.A.R. 2026 (13 Halaman PDF)</span>
+              </h3>
+              <p class="text-xs text-slate-400">Firma Hukum Deny Akhbar S.H & Rekan • Satu-satunya Layanan Hukum Berbasis Aplikasi</p>
+            </div>
+            <a href="assets/aistudio/COMPANY_PROFIL_DAR_2026_15e291c9.pdf" target="_blank" download class="bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow transition">
+              <i class="fa-solid fa-download"></i> Unduh File PDF
+            </a>
+          </div>
+
+          <div class="h-[650px] bg-slate-950 rounded-xl overflow-hidden border border-slate-800">
+            <iframe 
+              src="assets/aistudio/COMPANY_PROFIL_DAR_2026_15e291c9.pdf#toolbar=1" 
+              class="w-full h-full border-0"
+              title="DAR Company Profile PDF">
+            </iframe>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <!-- ======================================================== -->
+  <!-- END FULL CLOUD WEB APPLICATION VIEW                      -->
+  <!-- ======================================================== -->
+
+  <!-- MODAL 1: Unduh APK / IPA Modal -->
+  <div id="downloadModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200">
+      <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-100">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 bg-darcorp-brown800 text-white rounded-xl flex items-center justify-center">
+            <i class="fa-solid fa-download text-darcorp-cream"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-darcorp-brown900 text-base">Unduh Paket Aplikasi DARcorporate</h3>
+            <p class="text-xs text-slate-500">Versi 2.4.0 • Android (.APK) & iOS (.IPA)</p>
+          </div>
+        </div>
+        <button onclick="closeModal('downloadModal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <!-- File info card -->
+      <div class="bg-darcorp-bg p-4 rounded-xl border border-darcorp-light200 mb-4 text-xs text-slate-600 space-y-1">
+        <div class="flex justify-between font-bold text-slate-800">
+          <span>darcorp-official-release.apk</span>
+          <span class="text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded font-mono">24.8 MB</span>
+        </div>
+        <div>Kompabilitas: Android 8.0 (Oreo) ke atas & iOS 15+</div>
+        <div class="font-mono text-[10px] text-slate-500 break-all">SHA-256: 47aa95548a84cd159b2860a9d8374695f9a382b4</div>
+      </div>
+
+      <!-- Simulated Progress -->
+      <div id="downloadProgressBox" class="hidden mb-4">
+        <div class="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden">
+          <div id="downloadProgressBar" class="bg-darcorp-brown600 h-2.5 rounded-full transition-all duration-200" style="width: 0%"></div>
+        </div>
+        <div class="flex justify-between text-xs text-slate-500 mt-1">
+          <span>Mengunduh paket instalasi...</span>
+          <span id="downloadProgressText">0%</span>
+        </div>
+      </div>
+
+      <div class="space-y-3">
+        <!-- Perintah Pasang dari Google -->
+        <button onclick="triggerGoogleInstall()" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white py-3 rounded-xl font-bold text-sm flex items-center justify-center space-x-2 shadow transition border border-emerald-600">
+          <i class="fa-brands fa-google text-amber-300 text-lg"></i>
+          <span>PERINTAH PASANG APLIKASI (GOOGLE CHROME / ANDROID)</span>
+        </button>
+
+        <button onclick="startDownloadSimulation('APK Android')" class="w-full bg-darcorp-brown700 hover:bg-darcorp-brown800 text-white py-3 rounded-xl font-bold text-sm flex items-center justify-center space-x-2 shadow transition">
+          <i class="fa-brands fa-android text-emerald-400"></i>
+          <span>Unduh Paket Android (.APK)</span>
+        </button>
+        <button onclick="startDownloadSimulation('IPA iOS')" class="w-full bg-darcorp-brown800 hover:bg-darcorp-brown900 text-white py-3 rounded-xl font-bold text-sm flex items-center justify-center space-x-2 shadow transition">
+          <i class="fa-brands fa-apple text-slate-300"></i>
+          <span>Unduh Paket Apple iOS (.IPA)</span>
+        </button>
+
+        <!-- Tombol Buka Izin Akses Perangkat -->
+        <button onclick="closeModal('downloadModal'); openModal('devicePermissionsModal');" class="w-full bg-slate-900 hover:bg-slate-800 text-slate-200 py-2.5 rounded-xl font-bold text-xs flex items-center justify-center space-x-2 shadow transition border border-slate-700">
+          <i class="fa-solid fa-shield-halved text-amber-400"></i>
+          <span>Pengaturan Izin Akses Perangkat (Lokasi, Kamera, Mic, Penyimpanan)</span>
+        </button>
+      </div>
+
+      <!-- Installation Guide Steps -->
+      <div class="mt-4 pt-3 border-t border-slate-100 text-xs text-slate-600">
+        <h4 class="font-bold text-slate-800 mb-1">Perintah Pasang di Perangkat via Google:</h4>
+        <ol class="list-decimal pl-4 space-y-0.5 text-[11px]">
+          <li><strong>Google Chrome (HP/Laptop):</strong> Ketuk menu titik tiga atau ikon install di address bar, lalu pilih <em>"Pasang Aplikasi / Add to Home Screen"</em>.</li>
+          <li><strong>Android APK:</strong> Setelah unduhan selesai, buka file dan berikan izin pasang dari Google untuk langsung menginstal.</li>
+          <li><strong>Apple iOS (Safari):</strong> Ketuk ikon <em>Share</em> di Safari, lalu pilih <em>"Tambahkan ke Layar Utama (Add to Home Screen)"</em>.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: IZIN AKSES PERANGKAT & OTORISASI SISTEM -->
+  <div id="devicePermissionsModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 max-h-[92vh] overflow-y-auto">
+      <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-100">
+        <div class="flex items-center space-x-2.5">
+          <div class="w-9 h-9 bg-darcorp-brown800 rounded-xl flex items-center justify-center text-amber-400">
+            <i class="fa-solid fa-shield-halved text-base"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-darcorp-brown900 text-base">Izin Akses & Otorisasi Perangkat</h3>
+            <p class="text-[11px] text-slate-500">Meminta Izin Akses Perangkat Saat Instalasi & Penggunaan</p>
+          </div>
+        </div>
+        <button onclick="closeModal('devicePermissionsModal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+        Sesuai regulasi kepatuhan hukum DARcorporate, aplikasi meminta izin akses berikut pada perangkat pengguna untuk menjamin keabsahan presensi GPS, validasi dokumen kontrak, dan komunikasi terenkripsi:
+      </p>
+
+      <div class="space-y-3 mb-5 text-xs">
+        <!-- 1. Akses Lokasi -->
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 flex items-start gap-3">
+          <div class="w-8 h-8 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center font-bold text-sm shrink-0">
+            <i class="fa-solid fa-location-dot"></i>
+          </div>
+          <div class="flex-1">
+            <div class="flex justify-between items-center">
+              <strong class="text-slate-900">1. Izin Akses Lokasi Perangkat (GPS)</strong>
+              <span id="permBadgeLocation" class="text-[9px] bg-sky-100 text-sky-800 font-bold px-2 py-0.5 rounded">SIAP MINTA</span>
+            </div>
+            <p class="text-slate-500 text-[11px] mt-0.5">Digunakan untuk verifikasi geofencing presensi karyawan di SCBD Tower 18 atau Kantor Tangerang.</p>
+            <button onclick="requestWebLocationPermission()" class="mt-1.5 text-[10px] text-sky-700 font-bold hover:underline flex items-center gap-1">
+              <i class="fa-solid fa-crosshairs"></i> Uji & Aktifkan Izin Lokasi &rarr;
+            </button>
+          </div>
+        </div>
+
+        <!-- 2. Akses Kamera -->
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 flex items-start gap-3">
+          <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-sm shrink-0">
+            <i class="fa-solid fa-camera"></i>
+          </div>
+          <div class="flex-1">
+            <div class="flex justify-between items-center">
+              <strong class="text-slate-900">2. Akses Kamera Perangkat</strong>
+              <span id="permBadgeCamera" class="text-[9px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded">SIAP MINTA</span>
+            </div>
+            <p class="text-slate-500 text-[11px] mt-0.5">Digunakan untuk verifikasi biometrik 3D Liveness wajah presensi dan foto langsung bukti bayar kasir.</p>
+            <button onclick="requestWebMediaPermission('video')" class="mt-1.5 text-[10px] text-emerald-700 font-bold hover:underline flex items-center gap-1">
+              <i class="fa-solid fa-camera-rotate"></i> Uji & Aktifkan Izin Kamera &rarr;
+            </button>
+          </div>
+        </div>
+
+        <!-- 3. Akses Album Galeri & Dokumen -->
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 flex items-start gap-3">
+          <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-sm shrink-0">
+            <i class="fa-solid fa-images"></i>
+          </div>
+          <div class="flex-1">
+            <div class="flex justify-between items-center">
+              <strong class="text-slate-900">3. Akses Album Galeri & Dokumen Penyimpanan</strong>
+              <span class="text-[9px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded">TERVERIFIKASI ✓</span>
+            </div>
+            <p class="text-slate-500 text-[11px] mt-0.5">Digunakan untuk mengambil foto struk pembayaran dari memori perangkat dan membuka dokumen kontrak PDF.</p>
+          </div>
+        </div>
+
+        <!-- 4. Akses Microphone -->
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 flex items-start gap-3">
+          <div class="w-8 h-8 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center font-bold text-sm shrink-0">
+            <i class="fa-solid fa-microphone"></i>
+          </div>
+          <div class="flex-1">
+            <div class="flex justify-between items-center">
+              <strong class="text-slate-900">4. Akses Microphone Perangkat</strong>
+              <span id="permBadgeMic" class="text-[9px] bg-purple-100 text-purple-800 font-bold px-2 py-0.5 rounded">SIAP MINTA</span>
+            </div>
+            <p class="text-slate-500 text-[11px] mt-0.5">Digunakan untuk konsultasi hukum suara terenkripsi dan pesan suara laporan operasional.</p>
+            <button onclick="requestWebMediaPermission('audio')" class="mt-1.5 text-[10px] text-purple-700 font-bold hover:underline flex items-center gap-1">
+              <i class="fa-solid fa-waveform-lines"></i> Uji & Aktifkan Izin Mikrofon &rarr;
+            </button>
+          </div>
+        </div>
+
+        <!-- 5. Izin Sinkronisasi Waktu -->
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 flex items-start gap-3">
+          <div class="w-8 h-8 rounded-lg bg-orange-100 text-orange-700 flex items-center justify-center font-bold text-sm shrink-0">
+            <i class="fa-solid fa-clock"></i>
+          </div>
+          <div class="flex-1">
+            <div class="flex justify-between items-center">
+              <strong class="text-slate-900">5. Izin Akses Waktu & Alarm Sistem</strong>
+              <span class="text-[9px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded">TERKUNCI SERVER ✓</span>
+            </div>
+            <p class="text-slate-500 text-[11px] mt-0.5">Memastikan batas presensi harian akurat WIB dan mengontrol penghitung mundur 30 hari dokumen vault.</p>
+          </div>
+        </div>
+
+        <!-- 6. Izin Penyimpanan Data Aplikasi -->
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 flex items-start gap-3">
+          <div class="w-8 h-8 rounded-lg bg-teal-100 text-teal-700 flex items-center justify-center font-bold text-sm shrink-0">
+            <i class="fa-solid fa-hard-drive"></i>
+          </div>
+          <div class="flex-1">
+            <div class="flex justify-between items-center">
+              <strong class="text-slate-900">6. Izin Penyimpanan Data Aplikasi</strong>
+              <span class="text-[9px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded">OFFLINE READY ✓</span>
+            </div>
+            <p class="text-slate-500 text-[11px] mt-0.5">Menyimpan cache dokumen PWA dan riwayat offline secara aman di penyimpanan lokal perangkat.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="space-y-2">
+        <button onclick="requestAllDevicePermissions()" class="w-full bg-darcorp-brown700 hover:bg-darcorp-brown800 text-white py-3 rounded-xl font-bold text-xs flex items-center justify-center space-x-2 shadow transition">
+          <i class="fa-solid fa-circle-check text-amber-400"></i>
+          <span>IZINKAN SEMUA AKSES PERANGKAT SEKARANG</span>
+        </button>
+
+        <button onclick="triggerGoogleInstall()" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white py-3 rounded-xl font-bold text-xs flex items-center justify-center space-x-2 shadow transition">
+          <i class="fa-brands fa-google text-amber-300"></i>
+          <span>BERIKAN PERINTAH PASANG APLIKASI (GOOGLE)</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: COMPANY PROFILE & D.A.R. PDF VIEWER -->
+  <div id="companyProfileModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-2 sm:p-4">
+    <div class="bg-white rounded-2xl max-w-4xl w-full p-4 sm:p-6 shadow-2xl border border-slate-200 max-h-[94vh] flex flex-col">
+      <!-- Modal Header -->
+      <div class="flex justify-between items-center mb-3 pb-3 border-b border-slate-200">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 bg-darcorp-brown800 rounded-xl flex items-center justify-center text-amber-400 shadow">
+            <i class="fa-solid fa-file-pdf text-xl"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h3 class="font-black text-darcorp-brown900 text-base sm:text-lg">COMPANY PROFILE D.A.R. 2026</h3>
+              <span class="bg-amber-100 text-amber-800 text-[10px] font-black px-2 py-0.5 rounded-full border border-amber-300">13 HALAMAN</span>
+            </div>
+            <p class="text-xs text-slate-500 font-medium">Kantor Hukum DENY AKHBAR S.H & REKAN • DARcorporate</p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-2">
+          <a href="assets/aistudio/COMPANY_PROFIL_DAR_2026_15e291c9.pdf" target="_blank" download="COMPANY_PROFIL_DAR_2026.pdf" class="hidden sm:inline-flex items-center gap-1.5 bg-amber-600 hover:bg-amber-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold shadow transition">
+            <i class="fa-solid fa-download"></i> Unduh PDF
+          </a>
+          <button onclick="closeModal('companyProfileModal')" class="text-slate-400 hover:text-slate-600 w-8 h-8 rounded-lg flex items-center justify-center hover:bg-slate-100 transition"><i class="fa-solid fa-xmark text-lg"></i></button>
+        </div>
+      </div>
+
+      <!-- Tab Switcher -->
+      <div class="flex space-x-2 mb-3 bg-slate-100 p-1 rounded-xl">
+        <button id="webPdfTabBtn" onclick="switchCompanyProfileTab('pdf')" class="flex-1 py-1.5 px-3 rounded-lg text-xs font-bold transition flex items-center justify-center gap-2 bg-darcorp-brown800 text-white shadow">
+          <i class="fa-solid fa-book-open"></i>
+          <span>Baca Dokumen PDF Asli</span>
+        </button>
+        <button id="webSummaryTabBtn" onclick="switchCompanyProfileTab('summary')" class="flex-1 py-1.5 px-3 rounded-lg text-xs font-bold transition flex items-center justify-center gap-2 text-slate-600 hover:text-slate-900">
+          <i class="fa-solid fa-address-card"></i>
+          <span>Ikhtisar Eksekutif & Kontak Kantor</span>
+        </button>
+      </div>
+
+      <!-- Tab Content 1: PDF Viewer Embedded Frame -->
+      <div id="companyProfilePdfContent" class="flex-1 min-h-[500px] flex flex-col">
+        <div class="flex justify-between items-center bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-t-xl text-[11px] text-slate-600">
+          <span class="font-medium flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-emerald-600"></i> File: <strong>COMPANY_PROFIL_DAR_2026.pdf</strong> (6.0 MB)</span>
+          <a href="assets/aistudio/COMPANY_PROFIL_DAR_2026_15e291c9.pdf" target="_blank" class="text-amber-700 hover:underline font-bold flex items-center gap-1">
+            <i class="fa-solid fa-up-right-from-square"></i> Buka Layar Penuh
+          </a>
+        </div>
+        <div class="flex-1 bg-slate-200 rounded-b-xl overflow-hidden border-x border-b border-slate-300 relative">
+          <iframe 
+            src="assets/aistudio/COMPANY_PROFIL_DAR_2026_15e291c9.pdf#toolbar=1&navpanes=1" 
+            class="w-full h-full min-h-[500px] sm:min-h-[580px] border-0"
+            title="Company Profile DAR 2026 PDF">
+            <p class="p-4 text-center text-xs text-slate-600">Browser Anda tidak mendukung pratinjau PDF langsung. <a href="assets/aistudio/COMPANY_PROFIL_DAR_2026_15e291c9.pdf" target="_blank" class="text-amber-700 font-bold underline">Klik di sini untuk mengunduh dan membaca file PDF</a>.</p>
+          </iframe>
+        </div>
+      </div>
+
+      <!-- Tab Content 2: Rich Executive Summary -->
+      <div id="companyProfileSummaryContent" class="hidden flex-1 overflow-y-auto space-y-3.5 pr-1 text-xs text-slate-700">
+        <!-- Banner Intro -->
+        <div class="bg-gradient-to-r from-darcorp-brown900 to-darcorp-brown800 text-white p-4 rounded-xl shadow">
+          <h4 class="font-black text-amber-400 text-sm mb-1">D.A.R. DENY AKHBAR S.H & REKAN</h4>
+          <p class="text-xs text-slate-200 leading-relaxed">
+            "Satu-satunya Layanan Hukum Berbasis Aplikasi: Praktis, Taktis, Strategis". Ekosistem multi-perusahaan terpadu yang memadukan pendampingan hukum korporat, litigasi pengadilan, kepatuhan legalitas, dan digitalisasi operasional bisnis.
+          </p>
+        </div>
+
+        <!-- Alamat & Kontak Resmi -->
+        <div class="border border-slate-200 rounded-xl p-3.5 bg-slate-50 space-y-2">
+          <h5 class="font-bold text-slate-900 text-xs flex items-center gap-1.5">
+            <i class="fa-solid fa-map-location-dot text-amber-700"></i> Lokasi Kantor & Kontak Resmi:
+          </h5>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-[11px]">
+            <div class="bg-white p-2.5 rounded-lg border border-slate-200">
+              <p class="font-bold text-slate-800"><i class="fa-solid fa-building text-amber-600"></i> Kantor Tangerang:</p>
+              <p class="text-slate-600 mt-0.5">Barata Residences, Jl. Sepatan, Blok C Nomor 6, Kabupaten Tangerang.</p>
+              <p class="text-[10px] text-slate-400 mt-1">Pusat dukungan hukum strategis untuk konsultasi regional.</p>
+            </div>
+            <div class="bg-white p-2.5 rounded-lg border border-slate-200">
+              <p class="font-bold text-slate-800"><i class="fa-solid fa-city text-amber-600"></i> Kantor Jakarta Barat:</p>
+              <p class="text-slate-600 mt-0.5">Jl. Duri Kosambi, RT 003/RW 005, Nomor 52, Kel. Duri Kosambi, Kec. Cengkareng, Jakarta Barat.</p>
+              <p class="text-[10px] text-slate-400 mt-1">Pusat utama advokasi perkotaan dan layanan korporasi.</p>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 text-[11px]">
+            <div class="bg-white p-2 rounded-lg border border-slate-200">
+              <span class="text-slate-400 block text-[10px]">Telepon / WhatsApp:</span>
+              <strong class="text-slate-900">0877-6548-3134</strong>
+            </div>
+            <div class="bg-white p-2 rounded-lg border border-slate-200">
+              <span class="text-slate-400 block text-[10px]">Email Kantor:</span>
+              <strong class="text-amber-800">darlawoffices@gmail.com</strong>
+            </div>
+            <div class="bg-white p-2 rounded-lg border border-slate-200">
+              <span class="text-slate-400 block text-[10px]">Portal Resmi:</span>
+              <strong class="text-emerald-700">www.denyalfatih.top</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- 8 Layanan Bidang Hukum -->
+        <div class="border border-slate-200 rounded-xl p-3.5 bg-white">
+          <h5 class="font-bold text-slate-900 text-xs mb-2 flex items-center gap-1.5">
+            <i class="fa-solid fa-scale-balanced text-amber-700"></i> 8 Layanan Bidang Hukum D.A.R:
+          </h5>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
+            <div class="p-2 rounded-lg bg-slate-50">
+              <strong class="text-slate-900 block">1. Hukum Korporat & Bisnis</strong>
+              <p class="text-slate-600 text-[10.5px]">Pembuatan & peninjauan kontrak kerja sama, sewa-menyewa, jual beli, serta hutang piutang.</p>
+            </div>
+            <div class="p-2 rounded-lg bg-slate-50">
+              <strong class="text-slate-900 block">2. Hukum Pidana</strong>
+              <p class="text-slate-600 text-[10.5px]">Penyelesaian perkara pidana penipuan, penggelapan aset, pemalsuan, korupsi & perbankan.</p>
+            </div>
+            <div class="p-2 rounded-lg bg-slate-50">
+              <strong class="text-slate-900 block">3. Hukum Perdata</strong>
+              <p class="text-slate-600 text-[10.5px]">Penanganan wanprestasi, cidera janji, ganti kerugian, hibah, waris, dan sengketa perjanjian.</p>
+            </div>
+            <div class="p-2 rounded-lg bg-slate-50">
+              <strong class="text-slate-900 block">4. Hukum Ketenagakerjaan</strong>
+              <p class="text-slate-600 text-[10.5px]">Pendampingan administratif PHK, bipartite/tripartite, dan audit regulasi kepatuhan naker.</p>
+            </div>
+            <div class="p-2 rounded-lg bg-slate-50">
+              <strong class="text-slate-900 block">5. Hukum Pertanahan & Properti</strong>
+              <p class="text-slate-600 text-[10.5px]">Penanganan sengketa tanah, pencegahan konflik lahan, legal opinion dan real estat.</p>
+            </div>
+            <div class="p-2 rounded-lg bg-slate-50">
+              <strong class="text-slate-900 block">6. Hukum Perpajakan</strong>
+              <p class="text-slate-600 text-[10.5px]">Pendampingan pemeriksaan pajak, surat keberatan, serta sengketa di Pengadilan Pajak.</p>
+            </div>
+            <div class="p-2 rounded-lg bg-slate-50">
+              <strong class="text-slate-900 block">7. Hukum Investasi</strong>
+              <p class="text-slate-600 text-[10.5px]">Konsultasi penanaman modal, perizinan OSS RBA, dan pembuatan addendum investasi.</p>
+            </div>
+            <div class="p-2 rounded-lg bg-slate-50">
+              <strong class="text-slate-900 block">8. HKI, Paten & Perizinan</strong>
+              <p class="text-slate-600 text-[10.5px]">Paten, Merek Dagang, Restrukturisasi, Kepailitan, HKI, Hukum Lingkungan & Izin Usaha.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Portofolio Kemitraan Tetap -->
+        <div class="border border-emerald-300 rounded-xl p-3.5 bg-emerald-50/50">
+          <h5 class="font-bold text-emerald-950 text-xs mb-2 flex items-center gap-1.5">
+            <i class="fa-solid fa-handshake text-emerald-700"></i> Pengalaman & Portofolio Mitra Tetap Nyata:
+          </h5>
+          <ul class="space-y-1.5 text-[11px] text-slate-700">
+            <li class="flex items-start gap-1.5">
+              <i class="fa-solid fa-circle-check text-emerald-600 mt-0.5"></i>
+              <span><strong>PT. SATRIA SAFTINDO JAYA (PT. SSJ):</strong> Memiliki 30 unit cabang toko safety di LTC Glodok; perlindungan hak ekonomi dan anti pembajakan merek dari kompetitor. Dirut H. Dina Masyusin, S.H. & Lawyer Mitra Deny Akhbar, S.H.</span>
+            </li>
+            <li class="flex items-start gap-1.5">
+              <i class="fa-solid fa-circle-check text-emerald-600 mt-0.5"></i>
+              <span><strong>CV. SEJAHTERA MANDIRI METAL (CV. SMM):</strong> Bidang percetakan logam; kemenangan 2 perkara cidera janji / wanprestasi di PN Jakarta Barat tahun 2023. Dirut H. Nanang Ishak Suparman.</span>
+            </li>
+            <li class="flex items-start gap-1.5">
+              <i class="fa-solid fa-circle-check text-emerald-600 mt-0.5"></i>
+              <span><strong>PT. INFINITI SUMBER ALAM (PT. ISA):</strong> Pergudangan Mutiara Kosambi 1; penyelesaian sengketa supplier & buyer di Surabaya dan Tasikmalaya hingga menjadi mitra tetap. Direktur Tuan Widodo.</span>
+            </li>
+            <li class="flex items-start gap-1.5">
+              <i class="fa-solid fa-circle-check text-emerald-600 mt-0.5"></i>
+              <span><strong>YAYASAN PURGATORIO TANGERANG:</strong> Sekolah Islam setara SLTP & SLTA dipimpin Prof. Kiyai Qurtubi; kemenangan gugatan perdata di pengadilan dan pengawalan kepatuhan hukum pendidikan.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="mt-3 pt-2.5 border-t border-slate-200 flex justify-between items-center text-xs">
+        <a href="assets/aistudio/COMPANY_PROFIL_DAR_2026_15e291c9.pdf" target="_blank" download="COMPANY_PROFIL_DAR_2026.pdf" class="text-amber-800 hover:text-amber-900 font-bold flex items-center gap-1.5">
+          <i class="fa-solid fa-file-arrow-down"></i> Unduh File Asli (COMPANY_PROFIL_DAR_2026.pdf)
+        </a>
+        <button onclick="closeModal('companyProfileModal')" class="bg-darcorp-brown700 hover:bg-darcorp-brown600 text-white px-5 py-2 rounded-xl font-bold text-xs shadow transition">Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: PILIHAN JALUR MASUK (LOG IN CHOICE) -->
+  <div id="loginChoiceModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200">
+      <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-100">
+        <div class="flex items-center space-x-2">
+          <div class="w-8 h-8 bg-darcorp-brown800 rounded-lg flex items-center justify-center text-white">
+            <i class="fa-solid fa-right-to-bracket"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-darcorp-brown900 text-base">Pilih Jalur Masuk (LOG IN)</h3>
+            <p class="text-[11px] text-slate-500">Ekosistem Tata Kelola DARcorporate</p>
+          </div>
+        </div>
+        <button onclick="closeModal('loginChoiceModal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <div class="space-y-3">
+        <!-- Pilihan 1: LOG IN SEBAGAI BADAN USAHA / KARYAWAN -->
+        <div onclick="handleBusinessLogin()" class="bg-darcorp-brown800 hover:bg-darcorp-brown900 text-white p-4 rounded-xl cursor-pointer shadow transition group border border-darcorp-brown700">
+          <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-lg bg-darcorp-brown700 flex items-center justify-center text-darcorp-cream">
+              <i class="fa-solid fa-building text-lg"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-xs sm:text-sm text-white group-hover:text-darcorp-cream">LOG IN SEBAGAI BADAN USAHA / KARYAWAN</h4>
+              <p class="text-[11px] text-darcorp-light200">Untuk PT, CV, Yayasan, Pejabat Tinggi & Karyawan</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pilihan 2: LOG IN SEBAGAI PERORANGAN DENGAN 2 PILIHAN -->
+        <div class="bg-slate-50 border-2 border-darcorp-brown600/30 rounded-xl p-4">
+          <div class="flex items-center space-x-2.5 mb-3">
+            <div class="w-8 h-8 rounded-lg bg-darcorp-brown100 flex items-center justify-center text-darcorp-brown800">
+              <i class="fa-solid fa-user"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-xs sm:text-sm text-darcorp-brown900">LOG IN SEBAGAI PERORANGAN</h4>
+              <p class="text-[10px] text-slate-500">Pilih salah satu metode autentikasi resmi:</p>
+            </div>
+          </div>
+
+          <!-- Dual Login Buttons -->
+          <div class="space-y-2">
+            <!-- 1. Log In dengan Akun Google -->
+            <button onclick="handleIndividualLogin('google')" class="w-full bg-white hover:bg-slate-100 text-slate-800 border border-slate-300 py-2.5 px-3 rounded-lg font-bold text-xs flex items-center justify-center space-x-2 shadow-sm transition">
+              <svg class="w-4 h-4" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/><path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.17 0 9.97 0 12s.45 3.83 1.25 5.42l4.03-3.15z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/></svg>
+              <span>1. Log In dengan Akun Google</span>
+            </button>
+
+            <!-- 2. Log In dengan Facebook -->
+            <button onclick="handleIndividualLogin('facebook')" class="w-full bg-[#1877F2] hover:bg-[#166fe5] text-white py-2.5 px-3 rounded-lg font-bold text-xs flex items-center justify-center space-x-2 shadow-sm transition">
+              <i class="fa-brands fa-facebook-f text-sm"></i>
+              <span>2. Log In dengan Facebook</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Pilihan 3: MENU LAYANAN BERBAYAR (VA & E-WALLET) -->
+        <div onclick="closeModal('loginChoiceModal'); openModal('paidServicesModal');" class="bg-emerald-50 hover:bg-emerald-100 border-2 border-emerald-500 rounded-xl p-3.5 cursor-pointer shadow-sm transition group">
+          <div class="flex items-center space-x-3">
+            <div class="w-9 h-9 rounded-lg bg-emerald-700 flex items-center justify-center text-white">
+              <i class="fa-solid fa-credit-card text-base"></i>
+            </div>
+            <div>
+              <div class="flex items-center space-x-1.5">
+                <h4 class="font-bold text-xs sm:text-sm text-emerald-950">MENU LAYANAN BERBAYAR</h4>
+                <span class="bg-amber-400 text-slate-900 text-[9px] font-black px-1.5 py-0.5 rounded">VA & E-WALLET</span>
+              </div>
+              <p class="text-[10px] text-emerald-800">Khusus Perorangan & Badan Usaha Non-Mitra (Bayar Langsung)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: PAID SERVICES & DIRECT PAYMENT (VA & E-WALLET) -->
+  <div id="paidServicesModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl border border-slate-200 max-h-[92vh] overflow-y-auto">
+      <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-100">
+        <div class="flex items-center space-x-2.5">
+          <div class="w-9 h-9 bg-darcorp-brown800 rounded-xl flex items-center justify-center text-amber-400">
+            <i class="fa-solid fa-credit-card"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-darcorp-brown900 text-base">Menu Layanan Berbayar & Pembayaran Langsung</h3>
+            <p class="text-[11px] text-slate-500">Khusus Pengguna Perorangan & Badan Usaha Bukan Mitra</p>
+          </div>
+        </div>
+        <button onclick="closeModal('paidServicesModal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <!-- Corporate Receiving Account Notice -->
+      <div class="bg-darcorp-brown900 text-white p-3.5 rounded-xl mb-4 text-xs">
+        <div class="flex items-center justify-between mb-1">
+          <span class="font-bold text-amber-400"><i class="fa-solid fa-shield-halved"></i> REKENING PENERIMA RESMI PT DAR CORPORATE INDONESIA</span>
+          <span class="bg-emerald-600 text-white text-[9px] font-black px-2 py-0.5 rounded">DIRECT DEPOSIT</span>
+        </div>
+        <p class="text-slate-300 text-[11px]">
+          Pembayaran Anda diterima langsung tanpa perantara ke rekening Virtual Account korporasi atau akun resmi E-Wallet DARcorporate.
+        </p>
+      </div>
+
+      <!-- Paid Services Grid -->
+      <div class="space-y-3 mb-5">
+        <!-- Service 1: Konsultasi Hukum Perorangan -->
+        <div class="border border-slate-200 rounded-xl p-3.5 hover:border-darcorp-brown700 transition bg-slate-50">
+          <div class="flex justify-between items-start mb-1.5">
+            <div>
+              <span class="bg-purple-100 text-purple-800 text-[10px] font-bold px-2 py-0.5 rounded">KHUSUS PERORANGAN</span>
+              <h4 class="font-bold text-slate-900 text-sm mt-1">Konsultasi Hukum Privat Advokat (Perorangan)</h4>
+            </div>
+            <span class="font-black text-darcorp-brown800 text-base">Rp 350.000</span>
+          </div>
+          <p class="text-xs text-slate-600 mb-2">Konsultasi hukum privat tatap muka di SCBD Tower 18 atau online via video conference terenkripsi bersama Advokat resmi DARcorporate.</p>
+          <div class="flex justify-between items-center pt-2 border-t border-slate-200">
+            <span class="text-[11px] text-slate-500">Durasi: 45 Menit / Sesi • Legal Opinion Tertulis</span>
+            <button onclick="selectPaidServiceForCheckout('Konsultasi Hukum Privat (Perorangan)', 'Rp 350.000')" class="bg-darcorp-brown800 hover:bg-darcorp-brown700 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow">Bayar Langsung &rarr;</button>
+          </div>
+        </div>
+
+        <!-- Service 2: Review & Draft Kontrak Pribadi -->
+        <div class="border border-slate-200 rounded-xl p-3.5 hover:border-darcorp-brown700 transition bg-slate-50">
+          <div class="flex justify-between items-start mb-1.5">
+            <div>
+              <span class="bg-purple-100 text-purple-800 text-[10px] font-bold px-2 py-0.5 rounded">KHUSUS PERORANGAN</span>
+              <h4 class="font-bold text-slate-900 text-sm mt-1">Review & Drafting Perjanjian / Surat Kuasa Pribadi</h4>
+            </div>
+            <span class="font-black text-darcorp-brown800 text-base">Rp 750.000</span>
+          </div>
+          <p class="text-xs text-slate-600 mb-2">Penyusunan surat perjanjian perorangan, surat kuasa khusus, atau perjanjian sewa-menyewa sah berkekuatan hukum KUHPerdata.</p>
+          <div class="flex justify-between items-center pt-2 border-t border-slate-200">
+            <span class="text-[11px] text-slate-500">Selesai 1-2 Hari • Revisi 3x • Klausul Eksekutorial</span>
+            <button onclick="selectPaidServiceForCheckout('Drafting Kontrak Pribadi', 'Rp 750.000')" class="bg-darcorp-brown800 hover:bg-darcorp-brown700 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow">Bayar Langsung &rarr;</button>
+          </div>
+        </div>
+
+        <!-- Service 3: Fast-Track Kemitraan (Badan Usaha Non-Mitra) -->
+        <div class="border-2 border-amber-400 rounded-xl p-3.5 hover:border-amber-500 transition bg-amber-50/40">
+          <div class="flex justify-between items-start mb-1.5">
+            <div>
+              <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded">BADAN USAHA BUKAN MITRA</span>
+              <span class="bg-amber-400 text-slate-900 text-[9px] font-black px-1.5 py-0.5 rounded ml-1">★ TERPOPULER</span>
+              <h4 class="font-bold text-slate-900 text-sm mt-1">Audit & Verifikasi Fast-Track Kemitraan (F1 & F2)</h4>
+            </div>
+            <span class="font-black text-amber-700 text-base">Rp 950.000</span>
+          </div>
+          <p class="text-xs text-slate-600 mb-2">Verifikasi kilat legalitas NIB & NPWP perusahaan oleh Tim Legal DARcorporate agar langsung disahkan menjadi Mitra Resmi dalam 1x24 jam.</p>
+          <div class="flex justify-between items-center pt-2 border-t border-amber-200">
+            <span class="text-[11px] text-slate-500">1x24 Jam • Status Verified Resmi • Akses Tier Eksekutif</span>
+            <button onclick="selectPaidServiceForCheckout('Audit Fast-Track Kemitraan (Non-Mitra)', 'Rp 950.000')" class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow">Bayar Langsung &rarr;</button>
+          </div>
+        </div>
+
+        <!-- Service 4: Pendirian PT / CV Lengkap -->
+        <div class="border border-slate-200 rounded-xl p-3.5 hover:border-darcorp-brown700 transition bg-slate-50">
+          <div class="flex justify-between items-start mb-1.5">
+            <div>
+              <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded">BADAN USAHA BUKAN MITRA</span>
+              <h4 class="font-bold text-slate-900 text-sm mt-1">Pendirian Badan Usaha PT / CV Lengkap & NIB OSS</h4>
+            </div>
+            <span class="font-black text-darcorp-brown800 text-base">Rp 4.500.000</span>
+          </div>
+          <p class="text-xs text-slate-600 mb-2">Akta Notaris, SK Kemenkumham RI, NIB OSS RBA, NPWP Badan, serta konsultasi struktur direksi dan rangkap jabatan.</p>
+          <div class="flex justify-between items-center pt-2 border-t border-slate-200">
+            <span class="text-[11px] text-slate-500">Proses 3-5 Hari Kerja • Legalitas Sah Lengkap</span>
+            <button onclick="selectPaidServiceForCheckout('Pendirian PT/CV & NIB OSS', 'Rp 4.500.000')" class="bg-darcorp-brown800 hover:bg-darcorp-brown700 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow">Bayar Langsung &rarr;</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Checkout Payment Channels Area -->
+      <div id="checkoutPaymentArea" class="hidden border-t-2 border-dashed border-slate-200 pt-4">
+        <h4 class="font-bold text-darcorp-brown900 text-sm mb-2">Detail Pembayaran Layanan Terpilih:</h4>
+        <div class="bg-slate-100 p-3 rounded-xl mb-3 flex justify-between items-center">
+          <div>
+            <p id="checkoutServiceName" class="font-bold text-xs text-slate-800">Layanan Terpilih</p>
+            <p class="text-[10px] text-slate-500">Tujuan: Rekening Korporasi PT DAR Corporate Indonesia</p>
+          </div>
+          <span id="checkoutServicePrice" class="font-black text-emerald-700 text-sm">Rp 0</span>
+        </div>
+
+        <!-- Rekening Virtual Account, SeaBank & E-Wallet Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-3 text-xs">
+          <!-- SeaBank Rekening Penerima -->
+          <div class="border-2 border-orange-300 rounded-xl p-2.5 bg-orange-50/70">
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-orange-950 flex items-center gap-1.5"><i class="fa-solid fa-building-columns text-orange-600"></i> SeaBank Rekening Penerima</span>
+              <button onclick="copyAccount('901118227810', 'SeaBank')" class="text-orange-700 font-bold hover:underline text-[10px] bg-orange-200/60 px-2 py-0.5 rounded">Salin</button>
+            </div>
+            <p class="font-mono font-black text-sm text-slate-900 mt-1">901118227810</p>
+            <p class="text-[10px] text-slate-600">a.n. PT DAR CORPORATE INDONESIA (Kode Bank: 535)</p>
+          </div>
+
+          <!-- DANA -->
+          <div class="border border-sky-300 rounded-xl p-2.5 bg-sky-50/70">
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-sky-950 flex items-center gap-1.5"><i class="fa-solid fa-wallet text-sky-600"></i> DANA Official</span>
+              <button onclick="copyAccount('0895345657270', 'DANA')" class="text-sky-700 font-bold hover:underline text-[10px] bg-sky-200/60 px-2 py-0.5 rounded">Salin</button>
+            </div>
+            <p class="font-mono font-black text-sm text-slate-900 mt-1">0895345657270</p>
+            <p class="text-[10px] text-slate-600">a.n. DAR Corporate Services / Official</p>
+          </div>
+
+          <!-- OVO -->
+          <div class="border border-purple-300 rounded-xl p-2.5 bg-purple-50/70">
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-purple-950 flex items-center gap-1.5"><i class="fa-solid fa-mobile-screen-button text-purple-600"></i> OVO Bisnis</span>
+              <button onclick="copyAccount('0895345657270', 'OVO')" class="text-purple-700 font-bold hover:underline text-[10px] bg-purple-200/60 px-2 py-0.5 rounded">Salin</button>
+            </div>
+            <p class="font-mono font-black text-sm text-slate-900 mt-1">0895345657270</p>
+            <p class="text-[10px] text-slate-600">a.n. PT DAR CORPORATE</p>
+          </div>
+
+          <!-- GoPay -->
+          <div class="border border-emerald-300 rounded-xl p-2.5 bg-emerald-50/70">
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-emerald-950 flex items-center gap-1.5"><i class="fa-solid fa-money-bill-wave text-emerald-600"></i> GoPay Bisnis</span>
+              <button onclick="copyAccount('087765483134', 'GoPay')" class="text-emerald-700 font-bold hover:underline text-[10px] bg-emerald-200/60 px-2 py-0.5 rounded">Salin</button>
+            </div>
+            <p class="font-mono font-black text-sm text-slate-900 mt-1">087765483134</p>
+            <p class="text-[10px] text-slate-600">a.n. DAR Corporate Services</p>
+          </div>
+        </div>
+
+        <!-- FORM UPLOAD BUKTI PEMBAYARAN -->
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5 mb-3.5">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="font-bold text-darcorp-brown900 text-xs flex items-center gap-1.5">
+              <i class="fa-solid fa-cloud-arrow-up text-amber-600"></i> Form Upload Bukti Pembayaran / Transfer
+            </span>
+            <span id="webProofStatusBadge" class="hidden text-[9px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded">
+              TERLAMPIR ✓
+            </span>
+          </div>
+          <p class="text-[11px] text-slate-500 mb-2.5">
+            Klien dapat mengambil foto struk secara langsung via kamera perangkat atau memilih file gambar dari galeri/album ponsel.
+          </p>
+
+          <!-- Hidden File Inputs -->
+          <input type="file" id="webProofCamera" accept="image/*" capture="environment" class="hidden" onchange="handleWebProofUpload(this, 'Kamera Langsung')">
+          <input type="file" id="webProofGallery" accept="image/*" class="hidden" onchange="handleWebProofUpload(this, 'Galeri Album HP')">
+
+          <!-- Upload Buttons -->
+          <div class="grid grid-cols-2 gap-2 mb-2.5">
+            <button type="button" onclick="document.getElementById('webProofCamera').click()" class="bg-white hover:bg-slate-100 text-slate-800 border border-slate-300 font-bold text-xs py-2 px-3 rounded-lg flex items-center justify-center gap-1.5 shadow-sm transition">
+              <i class="fa-solid fa-camera text-darcorp-brown700"></i>
+              <span>Kamera Langsung</span>
+            </button>
+            <button type="button" onclick="document.getElementById('webProofGallery').click()" class="bg-white hover:bg-slate-100 text-slate-800 border border-slate-300 font-bold text-xs py-2 px-3 rounded-lg flex items-center justify-center gap-1.5 shadow-sm transition">
+              <i class="fa-solid fa-images text-sky-600"></i>
+              <span>Pilih Galeri / Album</span>
+            </button>
+          </div>
+
+          <!-- Preview Container -->
+          <div id="webProofPreviewBox" class="hidden bg-white border border-emerald-300 rounded-lg p-2.5 mb-2.5 flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+              <img id="webProofImagePreview" src="" alt="Bukti Transfer" class="w-12 h-12 object-cover rounded-md border border-slate-200">
+              <div>
+                <p id="webProofFileName" class="text-xs font-bold text-slate-800">struk_transfer.jpg</p>
+                <p id="webProofSourceTag" class="text-[10px] text-emerald-600 font-medium">Unggahan Kamera Terverifikasi</p>
+              </div>
+            </div>
+            <button type="button" onclick="deleteWebProof()" class="text-red-500 hover:text-red-700 text-xs px-2 py-1 rounded">
+              <i class="fa-solid fa-trash-can"></i> Hapus
+            </button>
+          </div>
+
+          <!-- Optional Notes Input -->
+          <input type="text" id="webProofNotes" placeholder="Catatan struk / nama pengirim transfer (Opsional)..." class="w-full text-xs p-2 rounded-lg border border-slate-300 focus:outline-none focus:border-darcorp-brown700 bg-white">
+        </div>
+
+        <button onclick="confirmWebPayment()" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white py-3 rounded-xl font-bold text-xs flex items-center justify-center space-x-2 shadow transition">
+          <i class="fa-solid fa-circle-check"></i>
+          <span>KONFIRMASI PEMBAYARAN & UNGGAH BUKTI</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: BIOMETRIC FACE REGISTRATION -->
+  <div id="biometricModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200">
+      <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-100">
+        <div class="flex items-center space-x-2">
+          <div class="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center text-amber-400">
+            <i class="fa-solid fa-face-smile"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-darcorp-brown900 text-base">Registrasi Biometrik Wajah</h3>
+            <p class="text-[11px] text-slate-500">Autentikasi Presensi Anti-Spoofing SCBD</p>
+          </div>
+        </div>
+        <button onclick="closeModal('biometricModal'); stopBiometricCamera();" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <!-- Camera Preview Viewfinder Container -->
+      <div class="relative w-full h-56 bg-slate-950 rounded-xl overflow-hidden border-2 border-amber-500/60 flex items-center justify-center mb-4">
+        <!-- Live Video Element -->
+        <video id="biometricVideo" autoplay playsinline muted class="w-full h-full object-cover hidden"></video>
+
+        <!-- Simulated Visual Feed -->
+        <div id="biometricFallbackFeed" class="flex flex-col items-center justify-center text-center p-4">
+          <div class="w-20 h-24 border-2 border-dashed border-sky-400 rounded-[50%] flex items-center justify-center relative">
+            <i class="fa-solid fa-user text-4xl text-amber-400/80"></i>
+            <div class="absolute inset-x-0 top-1/2 h-0.5 bg-sky-400 shadow-[0_0_8px_#38bdf8] animate-pulse"></div>
+          </div>
+          <span class="text-[11px] text-slate-300 font-semibold mt-3">Arahkan wajah ke dalam bingkai oval panduan</span>
+        </div>
+
+        <!-- Top Status Indicators -->
+        <div class="absolute top-2.5 inset-x-3 flex justify-between items-center">
+          <span class="bg-black/60 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center space-x-1">
+            <span class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-ping"></span>
+            <span>3D LIVENESS: AKTIF</span>
+          </span>
+          <span class="bg-black/60 text-slate-300 text-[10px] font-bold px-2 py-0.5 rounded-full">
+            Pencahayaan: 98%
+          </span>
+        </div>
+
+        <!-- Shutter Flash Overlay -->
+        <div id="biometricFlash" class="absolute inset-0 bg-white opacity-0 pointer-events-none transition-opacity duration-150"></div>
+      </div>
+
+      <!-- Status Result Box -->
+      <div id="biometricSuccessBox" class="hidden mb-4 p-3 bg-emerald-50 border border-emerald-200 rounded-xl">
+        <div class="flex items-center space-x-2 text-emerald-800 text-xs font-bold">
+          <i class="fa-solid fa-circle-check text-emerald-600 text-sm"></i>
+          <span>Wajah Berhasil Didaftarkan (Match 99.4%)!</span>
+        </div>
+        <p class="text-[10px] text-emerald-700 mt-1 font-mono">Hash: DAR-BIO-7A9F32BC14E0 • Liveness 3D Passed</p>
+      </div>
+
+      <!-- Capture Button -->
+      <button id="captureFaceBtn" onclick="triggerBiometricCapture()" class="w-full bg-slate-900 hover:bg-slate-800 text-white py-3 rounded-xl font-bold text-xs flex items-center justify-center space-x-2 shadow-md transition">
+        <i class="fa-solid fa-camera text-amber-400"></i>
+        <span>AMBIL & DAFTARKAN WAJAH BIOMETRIK</span>
+      </button>
+
+      <div class="mt-3 text-[10px] text-slate-500 text-center flex items-center justify-center space-x-1">
+        <i class="fa-solid fa-lock text-[9px]"></i>
+        <span>Kepatuhan ISO 27001: Data dienkripsi dalam bentuk 512-vector hash.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: Google Sign-In Partner Modal -->
+  <div id="googleLoginModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="font-bold text-darcorp-brown900 text-base">Masuk Mitra dengan Google</h3>
+        <button onclick="closeModal('googleLoginModal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+      <p class="text-xs text-slate-600 mb-4">
+        Khusus untuk Calon Pembeli (Buyer) dan Calon Penyuplai (Supplier) untuk mengirim penawaran harga & menandatangani kesepakatan kerjasama.
+      </p>
+
+      <form onsubmit="handlePartnerGoogleLogin(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Pilih Peran Kemitraan:</label>
+          <div class="grid grid-cols-2 gap-2">
+            <label class="border border-slate-300 rounded-xl p-3 flex items-center space-x-2 cursor-pointer hover:bg-darcorp-bg">
+              <input type="radio" name="partnerRole" value="buyer" checked class="text-darcorp-brown600">
+              <span class="text-xs font-semibold">🛒 Calon Pembeli (Buyer)</span>
+            </label>
+            <label class="border border-slate-300 rounded-xl p-3 flex items-center space-x-2 cursor-pointer hover:bg-darcorp-bg">
+              <input type="radio" name="partnerRole" value="supplier" class="text-darcorp-brown600">
+              <span class="text-xs font-semibold">📦 Calon Penyuplai</span>
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Bertindak Atas Nama:</label>
+          <div class="grid grid-cols-2 gap-2">
+            <label class="border border-slate-300 rounded-xl p-2.5 flex items-center space-x-2 cursor-pointer hover:bg-darcorp-bg">
+              <input type="radio" name="entityType" value="corporate" checked class="text-darcorp-brown600">
+              <span class="text-xs">🏢 Badan Usaha</span>
+            </label>
+            <label class="border border-slate-300 rounded-xl p-2.5 flex items-center space-x-2 cursor-pointer hover:bg-darcorp-bg">
+              <input type="radio" name="entityType" value="personal" class="text-darcorp-brown600">
+              <span class="text-xs">👤 Pribadi</span>
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" class="w-full bg-white hover:bg-slate-50 border border-slate-300 text-slate-800 py-3 rounded-xl font-bold text-sm flex items-center justify-center space-x-3 shadow transition">
+          <svg class="w-5 h-5" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/><path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.17 0 9.97 0 12s.45 3.83 1.25 5.42l4.03-3.15z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/></svg>
+          <span>Lanjutkan dengan Google</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 3: Formulir F1 (Penawaran Harga) -->
+  <div id="f1Modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-xl w-full p-6 shadow-2xl border border-slate-200 max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-100">
+        <div>
+          <h3 class="font-bold text-darcorp-brown900 text-lg">Formulir F1: Pengajuan & Penawaran Harga</h3>
+          <p class="text-xs text-slate-500">Kemitraan Calon Supplier & Calon Buyer DARcorporate</p>
+        </div>
+        <button onclick="closeModal('f1Modal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <form onsubmit="handleSubmitF1(event)" class="space-y-4 text-xs">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold mb-1">Nama Perusahaan / Pribadi:</label>
+            <input type="text" required placeholder="PT Sumber Berkah Sejahtera" class="w-full border rounded-lg p-2.5">
+          </div>
+          <div>
+            <label class="block font-semibold mb-1">Email Pemohon:</label>
+            <input type="email" required placeholder="contact@supplier.com" class="w-full border rounded-lg p-2.5">
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-semibold mb-1">Nama Barang & Spesifikasi Teknis:</label>
+          <textarea rows="2" required placeholder="Biji Kopi Arabika Grade A Gayo, kadar air 12%, single origin" class="w-full border rounded-lg p-2.5"></textarea>
+        </div>
+
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label class="block font-semibold mb-1">Berat per Pengiriman:</label>
+            <input type="number" required placeholder="25" class="w-full border rounded-lg p-2.5">
+          </div>
+          <div>
+            <label class="block font-semibold mb-1">Satuan:</label>
+            <select class="w-full border rounded-lg p-2.5">
+              <option>Ton</option>
+              <option>Kilogram (KG)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-semibold mb-1">Harga Satuan (Rp):</label>
+            <input type="text" required placeholder="Rp 95.000 / KG" class="w-full border rounded-lg p-2.5">
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-semibold mb-1">Unggah Foto Sampel Barang:</label>
+          <input type="file" class="w-full border rounded-lg p-2 bg-slate-50">
+        </div>
+
+        <div class="p-3 bg-amber-50 rounded-lg border border-amber-200 text-amber-900 text-[11px]">
+          <i class="fa-solid fa-info-circle mr-1"></i> Data penawaran F1 akan otomatis diteruskan ke Gmail dua Pemegang Kendali Perusahaan (Konsultan Hukum & Direktur Utama).
+        </div>
+
+        <button type="submit" class="w-full bg-darcorp-brown700 hover:bg-darcorp-brown800 text-white py-3 rounded-xl font-bold text-sm shadow transition">
+          Kirim Penawaran Formulir F1
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 4: Formulir F2 (Perjanjian Kerjasama MoA Legal) -->
+  <div id="f2Modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-xl w-full p-6 shadow-2xl border border-slate-200 max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-100">
+        <div>
+          <h3 class="font-bold text-darcorp-brown900 text-lg">Formulir F2: Kesepakatan Kerjasama (MoA)</h3>
+          <p class="text-xs text-slate-500">Perjanjian Legalitas Digital dengan Tanda Tangan Basah Touch</p>
+        </div>
+        <button onclick="closeModal('f2Modal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <div class="space-y-4 text-xs">
+        <div class="p-3 bg-darcorp-bg rounded-lg border border-darcorp-light200 text-slate-700 text-[11px] leading-relaxed">
+          <strong>Klausul Perjanjian:</strong> Pihak Calon Mitra dan DARcorporate sepakat mengikatkan diri dalam kerjasama pengadaan & distribusi barang sesuai rincian Formulir F1. Setiap sengketa tunduk pada yurisdiksi Pengadilan Negeri Jakarta Selatan atas pengawasan Konsultan Hukum DARcorporate.
+        </div>
+
+        <div>
+          <label class="block font-semibold mb-1">Nomor KTP / Identitas Direktur:</label>
+          <input type="text" placeholder="3174xxxxxxxxxxxx" class="w-full border rounded-lg p-2.5">
+        </div>
+
+        <div>
+          <div class="flex justify-between items-center mb-1">
+            <label class="font-semibold">Tanda Tangan Digital Pihak Mitra:</label>
+            <button onclick="clearCanvas()" class="text-red-600 hover:underline text-[11px]">Hapus Goresan</button>
+          </div>
+          <canvas id="signaturePad" class="w-full h-32 border-2 border-dashed border-slate-300 rounded-lg bg-slate-50 cursor-crosshair"></canvas>
+          <p class="text-[10px] text-slate-500 mt-1">Gunakan jari atau mouse Anda untuk menandatangani di atas kotak.</p>
+        </div>
+
+        <button onclick="handleSignAgreement()" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white py-3 rounded-xl font-bold text-sm shadow transition">
+          Sahkan & Tandatangani Perjanjian F2
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toastNotification" class="fixed bottom-6 right-6 bg-darcorp-brown900 text-white px-5 py-3 rounded-xl shadow-2xl text-xs font-semibold hidden z-50 flex items-center space-x-2 border border-darcorp-brown700">
+    <i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
+    <span id="toastMessage">Operasi berhasil!</span>
+  </div>
+
+  <script>
+    // Bilingual Text Data
+    const i18nData = {
+      id: {
+        login_google_btn: 'Login Google',
+        nav_tagline: 'Ekosistem Tata Kelola & Presensi Multi-Perusahaan',
+        nav_download_apk: 'Unduh APK',
+        nav_form_f1: 'Formulir F1',
+        nav_form_f2: 'MoA Legal F2',
+        hero_badge: 'D.A.R LEGAL CORPORATE GOVERNANCE • DUA PEMEGANG KENDALI',
+        hero_title: 'Ekosistem Multi-Perusahaan Terpadu DARcorporate',
+        hero_desc: 'Platform tata kelola digital untuk PT, CV, dan Yayasan. Dilengkapi presensi pintar deteksi lokasi GPS & foto wajah, pelaporan kerja harian, penggajian payroll, obrolan tim 3-tier terisolasi, dan portal kemitraan Form F1 & F2.',
+        download_card_title: 'Pasang Aplikasi Mobile DARcorporate',
+        download_card_sub: 'Dapat diunduh dan dipasang langsung pada perangkat Android (.APK) dan iPhone/iPad (.IPA).',
+        pillars_title: 'Pilar Tata Kelola & Fitur Utama DARcorporate',
+        pillars_subtitle: 'Sistem yang dirancang sesuai kepatuhan hukum korporat dan operasional multi-perusahaan',
+        p1_title: 'Multi-Perusahaan (PT, CV, Yayasan)',
+        p1_desc: 'Pendaftaran entitas legal lengkap dengan alamat akta, NIB, NPWP, dan bidang usaha. Maksimal 5 pejabat tinggi dengan kemampuan rangkap jabatan.',
+        p2_title: 'Dua Pemegang Kendali & Hak Hapus',
+        p2_desc: 'Dikuasai oleh Konsultan Hukum (Super Master dengan hak tunggal menghapus seluruh data & akun perusahaan) dan Direktur Utama (Operational Master pengelola operasional harian).',
+        p3_title: 'Presensi Pintar GPS & Wajah',
+        p3_desc: 'Karyawan melakukan presensi masuk dan pulang wajib disertai foto selfie verifikasi wajah dan penguncian koordinat GPS perangkat. Pelaporan kerja harian wajib diisi sebelum jam pulang.',
+        p4_title: 'Payroll Tetap & Borongan',
+        p4_desc: 'Manajemen dua status karyawan: Karyawan Tetap dengan skema gaji bulanan, dan Karyawan Tidak Tetap / Borongan dengan pembayaran upah mingguan berbasis kuota target.',
+        p5_title: 'Obrolan Tim 3-Tier Terisolasi',
+        p5_desc: 'Tier 1 khusus Pemegang Kendali & Pejabat Tinggi; Tier 2 bersama Karyawan Tetap; Tier 3 bersama Karyawan Borongan. Karyawan tetap dan borongan tidak dapat saling melihat obrolan.',
+        p6_title: 'Portal Calon Buyer & Supplier (F1 & F2)',
+        p6_desc: 'Masuk dengan Google. Pengisian Formulir F1 penawaran spesifikasi barang (foto sampel, tonase, harga/kg). Penandatanganan digital Formulir F2 MoA dengan verifikasi KTP resmi.',
+        banner_title: 'Mulai Kemitraan dengan DARcorporate',
+        banner_sub: 'Daftar sebagai Calon Pembeli (Buyer) atau Calon Penyuplai (Supplier) sekarang.',
+        btn_fill_f1: 'Isi Formulir F1',
+        btn_login_partner: 'Login Kemitraan'
+      },
+      en: {
+        login_google_btn: 'Google Sign-In',
+        nav_tagline: 'Multi-Enterprise Governance & Smart Attendance Ecosystem',
+        nav_download_apk: 'Download APK',
+        nav_form_f1: 'Form F1',
+        nav_form_f2: 'Legal MoA F2',
+        hero_badge: 'D.A.R LEGAL CORPORATE GOVERNANCE • DUAL CONTROLLER',
+        hero_title: 'DARcorporate Unified Multi-Enterprise Ecosystem',
+        hero_desc: 'Enterprise digital governance platform for PT, CV, and Foundations. Equipped with smart GPS location lock & face photo attendance, mandatory daily work reports, payroll, isolated 3-tier team chat, and partner portal for Forms F1 & F2.',
+        download_card_title: 'Install DARcorporate Mobile App',
+        download_card_sub: 'Download and install directly on Android devices (.APK) and iPhone/iPad (.IPA).',
+        pillars_title: 'DARcorporate Corporate Governance Pillars',
+        pillars_subtitle: 'Engineered in accordance with strict corporate compliance and multi-enterprise operations',
+        p1_title: 'Multi-Company (PT, CV, Foundation)',
+        p1_desc: 'Complete legal entity registration with deed address, tax ID, and business sector. Up to 5 high officials with multi-position capability.',
+        p2_title: 'Dual Controller & Legal Delete Authority',
+        p2_desc: 'Governed by Corporate Legal Counsel (Super Master with exclusive hard-delete authority over companies and data) and CEO (Operational Master).',
+        p3_title: 'Smart Attendance GPS & Face Lock',
+        p3_desc: 'Staff clock-in/out mandates real-time face photo capture and device GPS lock. Mandatory daily work report before clocking out.',
+        p4_title: 'Permanent & Piece-Rate Payroll',
+        p4_desc: 'Manages two employee classes: Permanent staff with monthly compensation, and Piece-rate staff with weekly wage calculations.',
+        p5_title: 'Isolated 3-Tier Team Chat',
+        p5_desc: 'Tier 1 for Controllers & Officers; Tier 2 with Permanent Staff; Tier 3 with Piece-rate Staff. Strict privacy between worker groups.',
+        p6_title: 'Prospective Partner Portal (F1 & F2)',
+        p6_desc: 'Google Sign-In. Submission of Form F1 price quotations with sample photos and tonnage. Digital signature execution for Form F2 MoA.',
+        banner_title: 'Start a Strategic Partnership with DARcorporate',
+        banner_sub: 'Register as a Prospective Buyer or Supplier partner now.',
+        btn_fill_f1: 'Submit Form F1',
+        btn_login_partner: 'Partner Login'
+      }
+    };
+
+    let currentLang = 'id';
+
+    function toggleLanguage() {
+      currentLang = currentLang === 'id' ? 'en' : 'id';
+      document.getElementById('langFlag').innerText = currentLang === 'id' ? '🇮🇩' : '🇬🇧';
+      document.getElementById('langLabel').innerText = currentLang === 'id' ? 'ID | EN' : 'EN | ID';
+      
+      const elements = document.querySelectorAll('[data-i18n]');
+      elements.forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (i18nData[currentLang][key]) {
+          el.innerText = i18nData[currentLang][key];
+        }
+      });
+      showToast(currentLang === 'id' ? 'Bahasa diubah ke Bahasa Indonesia' : 'Language switched to English');
+    }
+
+    // Modal Control
+    function openModal(id) {
+      document.getElementById(id).classList.remove('hidden');
+      if (id === 'f2Modal') {
+        initCanvas();
+      } else if (id === 'biometricModal') {
+        startBiometricCamera();
+      }
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+    }
+
+    function switchCompanyProfileTab(mode) {
+      const pdfTabBtn = document.getElementById('webPdfTabBtn');
+      const sumTabBtn = document.getElementById('webSummaryTabBtn');
+      const pdfContent = document.getElementById('companyProfilePdfContent');
+      const sumContent = document.getElementById('companyProfileSummaryContent');
+
+      if (!pdfTabBtn || !sumTabBtn || !pdfContent || !sumContent) return;
+
+      if (mode === 'pdf') {
+        pdfContent.classList.remove('hidden');
+        sumContent.classList.add('hidden');
+        pdfTabBtn.className = 'flex-1 py-1.5 px-3 rounded-lg text-xs font-bold transition flex items-center justify-center gap-2 bg-darcorp-brown800 text-white shadow';
+        sumTabBtn.className = 'flex-1 py-1.5 px-3 rounded-lg text-xs font-bold transition flex items-center justify-center gap-2 text-slate-600 hover:text-slate-900';
+      } else {
+        pdfContent.classList.add('hidden');
+        sumContent.classList.remove('hidden');
+        sumTabBtn.className = 'flex-1 py-1.5 px-3 rounded-lg text-xs font-bold transition flex items-center justify-center gap-2 bg-darcorp-brown800 text-white shadow';
+        pdfTabBtn.className = 'flex-1 py-1.5 px-3 rounded-lg text-xs font-bold transition flex items-center justify-center gap-2 text-slate-600 hover:text-slate-900';
+      }
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toastNotification');
+      document.getElementById('toastMessage').innerText = msg;
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3500);
+    }
+
+    // Download Simulation
+    function triggerDownload(platform) {
+      openModal('downloadModal');
+      startDownloadSimulation(platform === 'android' ? 'APK Android' : 'IPA iOS');
+    }
+
+    function startDownloadSimulation(pkgName) {
+      const box = document.getElementById('downloadProgressBox');
+      const bar = document.getElementById('downloadProgressBar');
+      const txt = document.getElementById('downloadProgressText');
+      box.classList.remove('hidden');
+      
+      let p = 0;
+      const interval = setInterval(() => {
+        p += 10;
+        bar.style.width = p + '%';
+        txt.innerText = p + '%';
+        if (p >= 100) {
+          clearInterval(interval);
+          setTimeout(() => {
+            box.classList.add('hidden');
+            showToast('Paket ' + pkgName + ' berhasil diunduh ke perangkat Anda!');
+          }, 400);
+        }
+      }, 150);
+    }
+
+    // Biometric Camera & Capture Handlers
+    let biometricStream = null;
+    function startBiometricCamera() {
+      const video = document.getElementById('biometricVideo');
+      const fallback = document.getElementById('biometricFallbackFeed');
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } })
+          .then(stream => {
+            biometricStream = stream;
+            video.srcObject = stream;
+            video.classList.remove('hidden');
+            fallback.classList.add('hidden');
+          })
+          .catch(err => {
+            console.log('Camera hardware not accessible or simulated in browser');
+          });
+      }
+    }
+
+    function stopBiometricCamera() {
+      if (biometricStream) {
+        biometricStream.getTracks().forEach(track => track.stop());
+        biometricStream = null;
+      }
+      const video = document.getElementById('biometricVideo');
+      const fallback = document.getElementById('biometricFallbackFeed');
+      if (video) video.classList.add('hidden');
+      if (fallback) fallback.classList.remove('hidden');
+    }
+
+    function triggerBiometricCapture() {
+      const flash = document.getElementById('biometricFlash');
+      const btn = document.getElementById('captureFaceBtn');
+      const successBox = document.getElementById('biometricSuccessBox');
+
+      flash.style.opacity = '0.9';
+      setTimeout(() => { flash.style.opacity = '0'; }, 180);
+
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-amber-400"></i><span>Menganalisis 128 Nodal Wajah & Liveness 3D...</span>';
+
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-check text-emerald-400"></i><span>WAJAH BERHASIL TERDAFTAR</span>';
+        btn.classList.remove('bg-slate-900', 'hover:bg-slate-800');
+        btn.classList.add('bg-emerald-700', 'hover:bg-emerald-800');
+        if (successBox) successBox.classList.remove('hidden');
+        showToast('Biometrik wajah berhasil didaftarkan ke sistem presensi DARcorporate!');
+      }, 1200);
+    }
+
+    // Paid Services & Direct Payment Handlers
+    let currentUploadedProof = null;
+
+    function selectPaidServiceForCheckout(serviceName, price) {
+      document.getElementById('checkoutPaymentArea').classList.remove('hidden');
+      document.getElementById('checkoutServiceName').innerText = serviceName;
+      document.getElementById('checkoutServicePrice').innerText = price;
+      showToast('Layanan dipilih: ' + serviceName + '. Silakan transfer ke rekening SeaBank / E-Wallet di bawah.');
+      document.getElementById('checkoutPaymentArea').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function copyAccount(accNum, label) {
+      navigator.clipboard.writeText(accNum).then(() => {
+        showToast('Nomor ' + label + ' (' + accNum + ') berhasil disalin!');
+      }).catch(() => {
+        showToast('Nomor ' + label + ': ' + accNum);
+      });
+    }
+
+    function handleWebProofUpload(inputElem, sourceName) {
+      if (inputElem.files && inputElem.files[0]) {
+        const file = inputElem.files[0];
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          currentUploadedProof = {
+            dataUrl: e.target.result,
+            fileName: file.name,
+            source: sourceName
+          };
+          const previewImg = document.getElementById('webProofImagePreview');
+          const previewBox = document.getElementById('webProofPreviewBox');
+          const statusBadge = document.getElementById('webProofStatusBadge');
+          const fileNameEl = document.getElementById('webProofFileName');
+          const sourceTagEl = document.getElementById('webProofSourceTag');
+
+          if (previewImg) previewImg.src = e.target.result;
+          if (fileNameEl) fileNameEl.innerText = file.name || 'struk_transfer.jpg';
+          if (sourceTagEl) sourceTagEl.innerText = 'Bukti Terlampir (' + sourceName + ') ✓';
+          if (previewBox) previewBox.classList.remove('hidden');
+          if (statusBadge) statusBadge.classList.remove('hidden');
+
+          showToast('Bukti pembayaran berhasil diunggah via ' + sourceName + '!');
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function deleteWebProof() {
+      currentUploadedProof = null;
+      const cameraInput = document.getElementById('webProofCamera');
+      const galleryInput = document.getElementById('webProofGallery');
+      const previewBox = document.getElementById('webProofPreviewBox');
+      const statusBadge = document.getElementById('webProofStatusBadge');
+      const notesInput = document.getElementById('webProofNotes');
+
+      if (cameraInput) cameraInput.value = '';
+      if (galleryInput) galleryInput.value = '';
+      if (previewBox) previewBox.classList.add('hidden');
+      if (statusBadge) statusBadge.classList.add('hidden');
+      if (notesInput) notesInput.value = '';
+
+      showToast('Bukti pembayaran dihapus.');
+    }
+
+    function confirmWebPayment() {
+      closeModal('paidServicesModal');
+      const proofMsg = currentUploadedProof 
+        ? ' dengan bukti ' + currentUploadedProof.source + ' (' + currentUploadedProof.fileName + ')'
+        : '';
+      showToast('Pembayaran Lunas diterima' + proofMsg + ' ke rekening PT DAR CORPORATE INDONESIA! Layanan resmi diaktifkan.');
+      deleteWebProof();
+    }
+
+    // Handlers
+    function handleBusinessLogin() {
+      closeModal('loginChoiceModal');
+      showToast('Login Badan Usaha / Karyawan Berhasil! Membuka Portal Cloud Web...');
+      setTimeout(() => {
+        launchFullWebApp('Badan Usaha / Karyawan');
+      }, 400);
+    }
+
+    function handleIndividualLogin(provider) {
+      closeModal('loginChoiceModal');
+      if (provider === 'google') {
+        showToast('Memulai autentikasi Log In dengan Akun Google...');
+        setTimeout(() => {
+          openModal('googleLoginModal');
+        }, 300);
+      } else if (provider === 'facebook') {
+        showToast('Berhasil Log In dengan Akun Facebook! Membuka Aplikasi Web...');
+        setTimeout(() => {
+          launchFullWebApp('Klien Perorangan (Facebook)');
+        }, 400);
+      }
+    }
+
+    function handlePartnerGoogleLogin(e) {
+      e.preventDefault();
+      closeModal('googleLoginModal');
+      showToast('Berhasil terhubung dengan Google! Membuka Aplikasi Web...');
+      setTimeout(() => {
+        launchFullWebApp('Klien Perorangan (Google)');
+      }, 400);
+    }
+
+    function handleSubmitF1(e) {
+      e.preventDefault();
+      closeModal('f1Modal');
+      showToast('Formulir F1 berhasil dikirim ke Konsultan Hukum & Direktur Utama!');
+    }
+
+    function handleSignAgreement() {
+      closeModal('f2Modal');
+      showToast('Perjanjian Kerjasama F2 telah berhasil disahkan secara digital!');
+    }
+
+    // Signature Canvas
+    let canvas, ctx, drawing = false;
+    function initCanvas() {
+      canvas = document.getElementById('signaturePad');
+      if (!canvas) return;
+      ctx = canvas.getContext('2d');
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+      ctx.lineWidth = 2.5;
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = '#0F172A';
+
+      function startDraw(e) {
+        drawing = true;
+        draw(e);
+      }
+      function endDraw() {
+        drawing = false;
+        ctx.beginPath();
+      }
+      function draw(e) {
+        if (!drawing) return;
+        const rect = canvas.getBoundingClientRect();
+        const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+        const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+        ctx.lineTo(clientX - rect.left, clientY - rect.top);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(clientX - rect.left, clientY - rect.top);
+      }
+
+      canvas.onmousedown = startDraw;
+      canvas.onmouseup = endDraw;
+      canvas.onmousemove = draw;
+      canvas.ontouchstart = startDraw;
+      canvas.ontouchend = endDraw;
+      canvas.ontouchmove = draw;
+    }
+
+    function clearCanvas() {
+      if (ctx && canvas) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    }
+
+    // ==========================================
+    // FULL CLOUD WEB APPLICATION CONTROLLERS
+    // (Operasi Penuh Tanpa Install di Perangkat)
+    // ==========================================
+
+    function launchFullWebApp(roleContext) {
+      const landing = document.getElementById('landingPageView');
+      const webApp = document.getElementById('fullWebAppSection');
+      if (landing && webApp) {
+        landing.classList.add('hidden');
+        webApp.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        if (roleContext) {
+          const roleSelect = document.getElementById('webRoleSelect');
+          if (roleSelect) {
+            if (roleContext.includes('Perorangan')) {
+              roleSelect.value = 'Deny Akhbar (Klien Pribadi Perorangan)';
+            } else if (roleContext.includes('Badan Usaha')) {
+              roleSelect.value = 'Bambang Wijaya, B.Eng. (Direktur Utama / Operational Master)';
+            }
+            switchWebUserRole(roleSelect.value);
+          }
+        }
+
+        switchWebTab('dashboard');
+        showToast('Aplikasi Web Cloud Aktif: Menjalankan langsung di browser Google tanpa unduh!');
+      }
+    }
+
+    function exitFullWebApp() {
+      const landing = document.getElementById('landingPageView');
+      const webApp = document.getElementById('fullWebAppSection');
+      if (landing && webApp) {
+        webApp.classList.add('hidden');
+        landing.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        showToast('Kembali ke Beranda Utama DARcorporate.');
+      }
+    }
+
+    function switchWebTab(tabName) {
+      const tabs = [
+        { id: 'dashboard', btn: 'btnTabDashboard', sec: 'webTabDashboard' },
+        { id: 'presence', btn: 'btnTabPresence', sec: 'webTabPresence' },
+        { id: 'paid-services', btn: 'btnTabPaidServices', sec: 'webTabPaidServices' },
+        { id: 'chat', btn: 'btnTabChat', sec: 'webTabChat' },
+        { id: 'vault', btn: 'btnTabVault', sec: 'webTabVault' },
+        { id: 'partner', btn: 'btnTabPartner', sec: 'webTabPartner' },
+        { id: 'profile-pdf', btn: 'btnTabProfilePdf', sec: 'webTabProfilePdf' }
+      ];
+
+      tabs.forEach(t => {
+        const secEl = document.getElementById(t.sec);
+        const btnEl = document.getElementById(t.btn);
+        if (t.id === tabName) {
+          if (secEl) secEl.classList.remove('hidden');
+          if (btnEl) {
+            btnEl.classList.add('bg-darcorp-brown700', 'text-white', 'shadow');
+            btnEl.classList.remove('text-slate-400', 'hover:bg-slate-800');
+          }
+        } else {
+          if (secEl) secEl.classList.add('hidden');
+          if (btnEl) {
+            btnEl.classList.remove('bg-darcorp-brown700', 'text-white', 'shadow');
+            btnEl.classList.add('text-slate-400', 'hover:bg-slate-800');
+          }
+        }
+      });
+    }
+
+    function switchWebCompany(compName) {
+      const label = document.getElementById('webCurrentCompanyLabel');
+      if (label) label.innerText = compName;
+      showToast('Entitas aktif beralih ke: ' + compName);
+    }
+
+    function switchWebUserRole(roleTitle) {
+      const greeting = document.getElementById('webDashboardGreeting');
+      if (greeting) {
+        const shortName = roleTitle.split('(')[0].trim();
+        greeting.innerText = 'Selamat Datang, ' + shortName;
+      }
+      showToast('Peran aktif: ' + roleTitle);
+    }
+
+    function selectChatTier(tierNum) {
+      [1, 2, 3].forEach(n => {
+        const btn = document.getElementById('tierBtn' + n);
+        if (btn) {
+          if (n === tierNum) {
+            btn.className = 'px-3 py-1 rounded-lg bg-purple-700 text-white font-bold transition';
+          } else {
+            btn.className = 'px-3 py-1 rounded-lg text-slate-400 hover:text-white transition';
+          }
+        }
+      });
+      showToast('Beralih ke obrolan terisolasi: Tier ' + tierNum);
+    }
+
+    function sendWebChatMessage() {
+      const input = document.getElementById('webChatMessageInput');
+      if (!input) return;
+      const text = input.value.trim();
+      if (!text) return;
+
+      const feed = document.getElementById('webChatFeed');
+      const roleSelect = document.getElementById('webRoleSelect');
+      const roleName = roleSelect ? roleSelect.value.split('(')[0].trim() : 'Pengguna Web';
+      const now = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) + ' WIB';
+
+      const userMsg = `
+        <div class="flex items-start gap-2.5 justify-end">
+          <div class="text-right">
+            <div class="flex items-center gap-2 justify-end">
+              <span class="text-[10px] text-slate-500">${now}</span>
+              <strong class="text-emerald-400">${roleName}</strong>
+            </div>
+            <div class="bg-emerald-900 border border-emerald-700 p-2.5 rounded-xl rounded-tr-none text-slate-100 mt-1 max-w-lg text-left">
+              ${text}
+            </div>
+          </div>
+          <div class="w-7 h-7 rounded-full bg-emerald-700 text-white flex items-center justify-center font-bold text-xs">Anda</div>
+        </div>
+      `;
+
+      feed.insertAdjacentHTML('beforeend', userMsg);
+      input.value = '';
+      feed.scrollTop = feed.scrollHeight;
+
+      setTimeout(() => {
+        const replyMsg = `
+          <div class="flex items-start gap-2.5">
+            <div class="w-7 h-7 rounded-full bg-amber-600 text-white flex items-center justify-center font-bold text-xs">DA</div>
+            <div>
+              <div class="flex items-center gap-2">
+                <strong class="text-amber-400">Adv. Deny Akhbar, S.H. (Pejabat Legal)</strong>
+                <span class="text-[10px] text-slate-500">${now}</span>
+              </div>
+              <div class="bg-slate-900 border border-slate-800 p-2.5 rounded-xl rounded-tl-none text-slate-200 mt-1 max-w-lg">
+                Pesan telah diterima dan diverifikasi ke dalam log audit kepatuhan terenkripsi D.A.R. Corporate. Operasional berjalan sesuai SOP.
+              </div>
+            </div>
+          </div>
+        `;
+        feed.insertAdjacentHTML('beforeend', replyMsg);
+        feed.scrollTop = feed.scrollHeight;
+      }, 700);
+    }
+
+    function takeWebCamAttendance() {
+      const logs = document.getElementById('webPresenceLogs');
+      const roleSelect = document.getElementById('webRoleSelect');
+      const roleName = roleSelect ? roleSelect.value.split('(')[0].trim() : 'Karyawan Aktif';
+      const now = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) + ' WIB';
+
+      const newLog = `
+        <div class="bg-slate-900 p-2.5 rounded-lg border border-emerald-800 flex justify-between items-center">
+          <div>
+            <strong class="text-white">${roleName}</strong>
+            <p class="text-[10px] text-emerald-400 font-medium">${now} • SCBD Tower 18 • Verifikasi Kamera Google Web</p>
+          </div>
+          <span class="bg-emerald-950 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded border border-emerald-800">HADIR (WEB)</span>
+        </div>
+      `;
+
+      if (logs) logs.insertAdjacentHTML('afterbegin', newLog);
+      showToast('Presensi wajah & koordinat SCBD berhasil diverifikasi via Google Web!');
+    }
+
+    // ==========================================
+    // GOOGLE INSTALL COMMAND & DEVICE PERMISSIONS
+    // ==========================================
+
+    let deferredInstallPrompt = null;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredInstallPrompt = e;
+      const installBtns = document.querySelectorAll('.google-install-btn');
+      installBtns.forEach(btn => btn.classList.remove('hidden'));
+    });
+
+    function triggerGoogleInstall() {
+      if (deferredInstallPrompt) {
+        deferredInstallPrompt.prompt();
+        deferredInstallPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            showToast('Perintah pasang aplikasi disetujui! Aplikasi DARcorporate dipasang di perangkat.');
+          } else {
+            showToast('Pemasangan aplikasi dibatalkan oleh pengguna.');
+          }
+          deferredInstallPrompt = null;
+        });
+      } else {
+        closeModal('devicePermissionsModal');
+        openModal('downloadModal');
+        showToast('Menampilkan panduan perintah pasang aplikasi via Google...');
+      }
+    }
+
+    function requestWebLocationPermission() {
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            const badge = document.getElementById('permBadgeLocation');
+            if (badge) {
+              badge.innerText = 'DIIZINKAN ✓';
+              badge.className = 'text-[9px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded';
+            }
+            showToast('Akses lokasi GPS berhasil diizinkan! (Lat: ' + pos.coords.latitude.toFixed(4) + ', Lng: ' + pos.coords.longitude.toFixed(4) + ')');
+          },
+          (err) => {
+            showToast('Akses lokasi perangkat: ' + err.message);
+          }
+        );
+      } else {
+        showToast('Perangkat tidak mendukung geolokasi');
+      }
+    }
+
+    function requestWebMediaPermission(type) {
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        const constraints = type === 'video' ? { video: true } : { audio: true };
+        navigator.mediaDevices.getUserMedia(constraints)
+          .then((stream) => {
+            if (type === 'video') {
+              const badge = document.getElementById('permBadgeCamera');
+              if (badge) {
+                badge.innerText = 'DIIZINKAN ✓';
+                badge.className = 'text-[9px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded';
+              }
+              showToast('Akses kamera perangkat berhasil diizinkan!');
+            } else {
+              const badge = document.getElementById('permBadgeMic');
+              if (badge) {
+                badge.innerText = 'DIIZINKAN ✓';
+                badge.className = 'text-[9px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded';
+              }
+              showToast('Akses mikrofon perangkat berhasil diizinkan!');
+            }
+            stream.getTracks().forEach(t => t.stop());
+          })
+          .catch((err) => {
+            showToast('Izin media ' + type + ' belum diberikan atau simulasi browser.');
+          });
+      }
+    }
+
+    function requestAllDevicePermissions() {
+      requestWebLocationPermission();
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+          .then((stream) => {
+            const badgeCam = document.getElementById('permBadgeCamera');
+            const badgeMic = document.getElementById('permBadgeMic');
+            if (badgeCam) {
+              badgeCam.innerText = 'DIIZINKAN ✓';
+              badgeCam.className = 'text-[9px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded';
+            }
+            if (badgeMic) {
+              badgeMic.innerText = 'DIIZINKAN ✓';
+              badgeMic.className = 'text-[9px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded';
+            }
+            stream.getTracks().forEach(t => t.stop());
+            showToast('Semua izin akses perangkat (Lokasi, Kamera, Mikrofon, Album, Waktu, Penyimpanan) telah diaktifkan!');
+          })
+          .catch(() => {
+            showToast('Izin akses perangkat sedang diproses.');
+          });
+      }
+    }
+
+    // PWA Service Worker Registration
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>

@@ -191,9 +191,9 @@ fun LoginScreen(
 
             // Brand Typography on Light Blue
             Text(
-                text = "DARCORP",
+                text = "DARcorporate",
                 fontWeight = FontWeight.Black,
-                fontSize = 26.sp,
+                fontSize = 24.sp,
                 color = DarcorpBrown900,
                 letterSpacing = 2.sp
             )
@@ -211,16 +211,32 @@ fun LoginScreen(
                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
                 )
             }
-            Spacer(modifier = Modifier.height(6.dp))
-            Text(
-                text = if (isId) "Portal Multi-Perusahaan, Presensi Pintar & Kerjasama Mitra"
-                       else "Multi-Enterprise Ecosystem, Smart Attendance & Partner Portal",
-                fontSize = 11.sp,
-                color = DarcorpSlate700,
-                textAlign = TextAlign.Center
-            )
+            Spacer(modifier = Modifier.height(8.dp))
 
-            Spacer(modifier = Modifier.height(20.dp))
+            // Deskripsi Singkat Layanan Hukum
+            Card(
+                shape = RoundedCornerShape(12.dp),
+                colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0.95f)),
+                border = CardDefaults.outlinedCardBorder().copy(brush = androidx.compose.ui.graphics.SolidColor(DarcorpLightBlue300)),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 4.dp)
+            ) {
+                Text(
+                    text = if (isId) {
+                        "Aplikasi layanan hukum dengan ekosistem multi- Badan Usaha & Perorangan terpadu. Terdapat Fitur Fitur terbaik untuk Perusahaan anda, baik internal (absensi karyawan, laporan kerja harian dll) Maupun eksternal (Pengamanan Perjanjian Kerjasama, Penawaran harga) dengan form digital yang dapat di isi langsung oleh calon klien anda. Konsultasikan rencana atau masalah anda GRATIS."
+                    } else {
+                        "Comprehensive legal services with an integrated multi-business entity & individual ecosystem. Features premier tools for your enterprise, both internal (employee attendance, daily work reports) and external (MoA agreement security, price quotations). Consult your plans or disputes for FREE."
+                    },
+                    fontSize = 11.sp,
+                    color = DarcorpSlate700,
+                    lineHeight = 15.sp,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(10.dp)
+                )
+            }
+
+            Spacer(modifier = Modifier.height(14.dp))
 
             // Login Mode Selector Tabs (Bar Tombol Berwarna Cokelat)
             Surface(
@@ -238,24 +254,24 @@ fun LoginScreen(
                     horizontalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
                     LoginTabItem(
-                        title = if (isId) "Mitra Google" else "Google Partner",
-                        icon = Icons.Default.Handshake,
-                        isSelected = loginModeTab == 0,
-                        modifier = Modifier.weight(1f),
-                        onClick = { loginModeTab = 0 }
+                        title = if (isId) "Badan Usaha / Karyawan" else "Business / Staff",
+                        icon = Icons.Default.Apartment,
+                        isSelected = loginModeTab == 1,
+                        modifier = Modifier.weight(1.3f),
+                        onClick = { loginModeTab = 1 }
                     )
                     LoginTabItem(
-                        title = if (isId) "Karyawan" else "Employee",
-                        icon = Icons.Default.Badge,
-                        isSelected = loginModeTab == 1,
-                        modifier = Modifier.weight(1f),
-                        onClick = { loginModeTab = 1 }
+                        title = if (isId) "Perorangan" else "Individual",
+                        icon = Icons.Default.Person,
+                        isSelected = loginModeTab == 0,
+                        modifier = Modifier.weight(1.1f),
+                        onClick = { loginModeTab = 0 }
                     )
                     LoginTabItem(
                         title = if (isId) "Uji Akses" else "Fast-Track",
                         icon = Icons.Default.Speed,
                         isSelected = loginModeTab == 2,
-                        modifier = Modifier.weight(1f),
+                        modifier = Modifier.weight(0.9f),
                         onClick = { loginModeTab = 2 }
                     )
                 }
@@ -448,9 +464,72 @@ fun LoginScreen(
                             }
 
                             Spacer(modifier = Modifier.height(12.dp))
+
+                            // Divider "ATAU / OR"
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                HorizontalDivider(modifier = Modifier.weight(1f), color = Color(0xFFE2E8F0))
+                                Text(
+                                    text = if (isId) "  ATAU  " else "  OR  ",
+                                    fontSize = 11.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = DarcorpSlate600
+                                )
+                                HorizontalDivider(modifier = Modifier.weight(1f), color = Color(0xFFE2E8F0))
+                            }
+
+                            Spacer(modifier = Modifier.height(12.dp))
+
+                            // Pilihan 2: The Prominent Facebook Sign-In Button
+                            Surface(
+                                shape = RoundedCornerShape(12.dp),
+                                color = Color(0xFF1877F2),
+                                shadowElevation = 3.dp,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(52.dp)
+                                    .clickable {
+                                        val fbUser = UserProfile(
+                                            id = "usr_fb_partner_" + System.currentTimeMillis().toString().takeLast(4),
+                                            name = "Deny Akhbar (Facebook)",
+                                            email = "denyakhbar@facebook.com",
+                                            role = partnerRoleChoice,
+                                            companyId = "comp_1"
+                                        )
+                                        repository.switchUserRole(fbUser)
+                                        onLoginSuccess(fbUser)
+                                        Toast.makeText(
+                                            context,
+                                            if (isId) "Berhasil masuk dengan akun Facebook: ${fbUser.name}!" else "Signed in with Facebook: ${fbUser.name}!",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                    .testTag("facebook_signin_button")
+                            ) {
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .padding(horizontal = 16.dp),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.Center
+                                ) {
+                                    FacebookEmblem(modifier = Modifier.size(24.dp))
+                                    Spacer(modifier = Modifier.width(12.dp))
+                                    Text(
+                                        text = if (isId) "Masuk dengan Facebook" else "Sign in with Facebook",
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 14.sp,
+                                        color = Color.White
+                                    )
+                                }
+                            }
+
+                            Spacer(modifier = Modifier.height(12.dp))
                             Text(
-                                text = if (isId) "✓ Sesi login otomatis tersimpan secara persisten tanpa perlu login berulang kali."
-                                       else "✓ Login session persists securely across app relaunches without re-prompting.",
+                                text = if (isId) "✓ Sesi login akun Google & Facebook tersimpan otomatis dan persisten."
+                                       else "✓ Google & Facebook login sessions persist securely across app restarts.",
                                 fontSize = 10.sp,
                                 color = DarcorpSlate600,
                                 textAlign = TextAlign.Center,
@@ -533,7 +612,7 @@ fun LoginScreen(
                                 Icon(imageVector = Icons.Default.Login, contentDescription = null, tint = DarcorpGold400)
                                 Spacer(modifier = Modifier.width(8.dp))
                                 Text(
-                                    text = if (isId) "Masuk ke Sistem DARCORP" else "Sign In to DARCORP",
+                                    text = if (isId) "Masuk ke Sistem DARcorporate" else "Sign In to DARcorporate",
                                     fontWeight = FontWeight.Bold,
                                     color = Color.White
                                 )
@@ -744,3 +823,29 @@ fun GoogleGEmblem(modifier: Modifier = Modifier) {
         }
     }
 }
+
+@Composable
+fun FacebookEmblem(modifier: Modifier = Modifier) {
+    // Official Facebook blue circle with white bold 'f'
+    Surface(
+        shape = CircleShape,
+        color = Color.White,
+        modifier = modifier.size(24.dp)
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color(0xFF1877F2)),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = "f",
+                fontWeight = FontWeight.Black,
+                fontSize = 16.sp,
+                color = Color.White,
+                modifier = Modifier.padding(bottom = 2.dp)
+            )
+        }
+    }
+}
+

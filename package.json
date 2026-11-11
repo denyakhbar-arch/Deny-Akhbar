@@ -1,0 +1,22 @@
+{
+  "name": "darcorporate",
+  "version": "2.4.0",
+  "private": true,
+  "description": "DARcorporate Multi-Enterprise Governance Ecosystem Web Portal, PWA Cloud App & Mobile Downloads",
+  "scripts": {
+    "build": "node build.js",
+    "start": "npx serve public"
+  },
+  "keywords": [
+    "darcorporate",
+    "enterprise",
+    "legal",
+    "attendance",
+    "payroll",
+    "pwa",
+    "biometric",
+    "pdf-viewer"
+  ],
+  "author": "DAR Legal Corporate Indonesia",
+  "license": "UNLICENSED"
+}
